@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
    		<title><?php /* Afficher titre de la page */ ?></title>
 	</head>
     
