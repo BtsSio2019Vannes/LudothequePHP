@@ -18,11 +18,6 @@
                 <li><a href="emprunts.php">Gérer les Emprunts</a></li>
 	            <li><a href="parametres.php">Gérer Ludothèque</a></li>
             </ul>
-            <ol>
-            <li>test</li>
-            <li>css</li>
-            <li>html</li>
-            </ol>
         </nav>
   
         <section><!-- Méthode pour insérer chaque page -->
