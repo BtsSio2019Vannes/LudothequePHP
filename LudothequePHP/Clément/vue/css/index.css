@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+h1 {
+	text-align: center;
+	font-family: Verdana;
+	font-size: 30px;
+
+}
+html{
+	background-image: url("../vue/images/smallworld_745.png");
+	background-attachment: fixed;
+}
+img{
+	margin-left: 180px;
+	width:200px;
+	height:200px;
+	background-color: green;
+}
+
+
+
