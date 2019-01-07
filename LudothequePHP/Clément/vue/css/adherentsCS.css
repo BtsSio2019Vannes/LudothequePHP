@@ -1,0 +1,39 @@
+@charset "ISO-8859-1";
+
+img {
+	width: 50px;
+	height: 50px;
+	margin-top: 35px;
+	padding: 10px 10px 10px 0;
+	margin-right: 50px;
+	
+}
+
+nav {
+	width: 130px;
+	height: 750px;
+	background-color: grey;
+	border-radius: 2px black dashed;
+	margin-top: -20px;
+	float: left;
+}
+
+.echo {
+	border: 2px black solid;
+	text-align: center;
+	word-spacing: 15 px;
+	align-content: center;
+	width: 700px;
+	float: left;
+}
+
+h1 {
+	text-align: center;
+}
+body{
+	background-image: url(../vue/images/smallworld_745.jpg);
+	background-attachment: fixed;
+}
+input{
+	margin-right:0px;
+}
