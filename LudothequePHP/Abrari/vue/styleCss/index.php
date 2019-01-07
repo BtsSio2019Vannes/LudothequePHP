@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link type="text/css" rel="stylesheet" href="test.css" />
+<link type="text/css" rel="stylesheet" href="ludotheque.css" />
 <!--<link type="text/css" rel="stylesheet" href="stylesheet.css" />-->
 <meta charset="utf-8" />
 <title>Test</title>
@@ -45,7 +45,7 @@
 			</p>
 		</div> -->
 	
-	</div>
+	
 	<div id="right">
 		<div>
 
@@ -87,9 +87,8 @@ echo "nouveau adherent : $adherent";
 	</div>
 	<div id="footer">
 		<div id="button">
-			<p>
-				<span class="bold">S'abonner</span>!
-			</p>
+			
+			
 		</div>
 		<p>
 	
@@ -97,7 +96,7 @@ echo "nouveau adherent : $adherent";
 	<blockquote id="couleur">
 		<p align="right" > date du jour <?php echo date('d-m-y'); ?></p>
 	</blockquote>
-	</p>
+
 		
 	</div>
 </body>
