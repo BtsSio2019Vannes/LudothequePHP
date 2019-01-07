@@ -211,11 +211,12 @@ function afficherFormulaireMaj($personne, $adherent)
 					
 <?php
 
-        $idSelected = $adherent->retrouverAdherentAssocie();
+        $idSelected = $personne->retrouverAdherentAssocie();
 
         $listeAdherents = \DAO\Adherent\AdherentDAO::getAdherents();
         foreach ($listeAdherents as $adherent) {
-            echo "<option value=\"" . $adherent->getIdPersonne() . "\" " . $idSelected . ">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";
+            $selected = ($adherent->getIdPersonne() == $idSelected) ? "selected" : "";
+            echo "<option value=\"" . $adherent->getIdPersonne() . "\" " . $selected . ">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";
         }
 
         ?>
