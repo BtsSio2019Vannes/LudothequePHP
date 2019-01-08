@@ -119,7 +119,7 @@ namespace Jeu
 
     }
     
-    class jeuPhysique{
+    class jeuPhysique extends jeuPhysique {
         
         private $idJeuPhysique;
         private $idJeu;
