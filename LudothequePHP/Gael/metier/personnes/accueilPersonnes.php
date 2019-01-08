@@ -1,3 +1,6 @@
+<?php
+use Personne\Personne;
+?>
 <section>
 	<h1>Gérer les Personnes</h1>
 <?php
@@ -26,24 +29,19 @@ else if (htmlspecialchars(isset($_POST['supprimer'])) && htmlspecialchars(isset(
     $idPersonne = htmlspecialchars($_POST['personne']);
     $personne = new \Personne\Personne($idPersonne, "", "", "", "", "", "", "");
     $personne->supprimerPersonne();
-
     echo "<p><b>Personne bien supprimée !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
 } /* Après clic sur bouton maj */
 else if (htmlspecialchars(isset($_POST['maj'])) && htmlspecialchars(isset($_POST['personne']))) {
     $idPersonne = htmlspecialchars($_POST['personne']);
-    $personne = new \Personne\Personne($idPersonne, "", "", "", "", "", "", "");
-    $personne = $personne->identifierPersonne();
+    $personne = Personne::identifierPersonne($idPersonne);
 
     if ($personne->retrouverAdherentAssocie() == "") {
-        $adherent = $personne->identifierAdherent();
+        $adherent = Personne::identifierAdherent($idPersonne);
     } else {
-        $idAdherent = $personne->retrouverAdherentAssocie();
-        $adherent = new \Personne\Adherent\Adherent("", "", "", "");
-        $adherent->setIdPersonne($idAdherent);
-        $adherent = $adherent->identifierAdherent();
+        $listeAdherents = $personne->retrouverAdherentAssocie();
     }
 
-    afficherFormulaireMaj($personne, $adherent);
+    afficherFormulaireMaj($personne);
 } /* Après validation du formulaire d'ajout */
 else if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
     $messageErreur = "ERREUR";
@@ -124,14 +122,14 @@ else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
             $adherent->setIdPersonne($idPersonne);
             $adherent->passerAdherent();
         } else if (htmlspecialchars(isset($_POST['renouvelerAdhesion']))) {
-            $adherent = $personne->identifierAdherent();
+            $adherent = Personne::identifierAdherent($personne->getIdPersonne());
             $adherent->renouvelerAdhesion();
         }
         echo "<p><b>Personne bien mise à jour !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
     } else {
         echo $messageErreur;
 
-        afficherFormulaireMaj($personne, $adherent);
+        afficherFormulaireMaj($personne);
     }
 } /* Sinon afficher liste personnes */
 else {

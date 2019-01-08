@@ -102,10 +102,10 @@ namespace Personne
             $this->numeroTelephone = $numeroTelephone;
         }
 
-        public function identifierPersonne()
+        public static function identifierPersonne($idPersonne)
         {
             $daoPersonne = new \DAO\Personne\PersonneDAO();
-            $personne = $daoPersonne->read($this->idPersonne);
+            $personne = $daoPersonne->read($idPersonne);
 
             return $personne;
         }
@@ -118,7 +118,7 @@ namespace Personne
 
         public function supprimerPersonne()
         {
-            $adherent = $this->identifierAdherent();
+            $adherent = Personne::identifierAdherent($this->getIdPersonne());
             if ($adherent->getIdPersonne() == $this->getIdPersonne()) {
                 $daoAdherent = new \DAO\Adherent\AdherentDAO();
                 $daoAdherent->delete($this);
@@ -136,10 +136,10 @@ namespace Personne
             $daoPersonne->update($this);
         }
         
-        public function identifierAdherent()
+        public static function identifierAdherent($idPersonne)
         {
             $daoAdherent = new \DAO\Adherent\AdherentDAO();
-            $adherent = $daoAdherent->read($this->idPersonne);
+            $adherent = $daoAdherent->read($idPersonne);
             return $adherent;
         }
         
@@ -158,8 +158,8 @@ namespace Personne
         public function retrouverAdherentAssocie()
         {
             $daoPersonne = new \DAO\Personne\PersonneDAO();
-            $adherent = $daoPersonne->retrouverAdherentAssocie($this->getIdPersonne());
-            return $adherent;
+            $listeAdherents = $daoPersonne->retrouverAdherentAssocie($this->getIdPersonne());
+            return $listeAdherents;
         }
         
         public function supprimerBeneficiaire()
@@ -237,8 +237,8 @@ namespace Personne\Adherent
         public function retrouverBeneficiaire()
         {
             $daoAdherent = new \DAO\Adherent\AdherentDAO();
-            $personne = $daoAdherent->retrouverBeneficiaire($this->getIdPersonne());
-            return $personne;
+            $listeBeneficiaires = $daoAdherent->retrouverBeneficiaire($this->getIdPersonne());
+            return $listeBeneficiaires;
         }
         
         public function renouvelerAdhesion()
