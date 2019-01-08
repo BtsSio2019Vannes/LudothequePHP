@@ -85,11 +85,4 @@ namespace Parametre{
 }
 
 
-
-
-
-
-
-
-
 ?>
