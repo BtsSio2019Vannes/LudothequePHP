@@ -422,4 +422,87 @@ namespace DAO\Reglement
         }
     }
 }
+namespace DAO\Alerte
+{
+    
+    use DB\Connexion\Connexion;
+    
+    class AlerteDAO extends \DAO\DAO
+    {
+        
+        function __construct()
+        {
+            parent::__construct("idAlerte", "alerte");
+            // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
+        }
+        
+        public function read($idAlerte)
+        {
+            // On utilise le prepared statemet qui simplifie les typages
+            $sql = "SELECT * FROM $this->table WHERE $this->key=:idAlerte";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idAlerte', $idAlerte);
+            $stmt->execute();
+            
+            $row = $stmt->fetch();
+            $idAlerte = $row["idAlerte"];
+            $nom = $row["nom"];
+            $dateRetour = $row["dateRetour"];
+            $typeAlerte = $row["typeAlerte"];
+            $commentaire = $row["commentaire"];
+            
+            $reglement = new \Emprunt\;
+            
+            return $reglement;
+        }
+        
+        public function update($objet)
+        {
+            // On utilise le prepared statemet qui simplifie les typages
+            $sql = "UPDATE $this->table SET idReglement = :idReglement, nbrJeux = :nbrJeux, duree = :duree, retardTolere = :retardTolere, valeurCaution = :valeurCaution, coutAdhesion = :coutAdhesion WHERE $this->key=:idReglement";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idReglement = $objet->getIdReglement();
+            $nbrJeux = $objet->getNbrJeux();
+            $duree = $objet->getDuree();
+            $retardTolere = $objet->getRetardTolere();
+            $valeurCaution = $objet->getValeurCaution();
+            $coutAdhesion = $objet->getCoutAdhesion();
+            $stmt->bindParam(':idReglement', $idReglement);
+            $stmt->bindParam(':nbrJeux', $nbrJeux);
+            $stmt->bindParam(':duree', $duree);
+            $stmt->bindParam(':retardTolere', $retardTolere);
+            $stmt->bindParam(':valeurCaution', $valeurCaution);
+            $stmt->bindParam(':coutAdhesion', $coutAdhesion);
+            $stmt->execute();
+        }
+        
+        public function delete($objet)
+        {
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idReglement";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idReglement = $objet->getIdReglement();
+            $stmt->bindParam(':idCoordonnees', $idReglement);
+            $stmt->execute();
+        }
+        
+        public function create($objet)
+        {
+            $sql = "INSERT INTO $this->table (idReglement,nbrJeux,duree,retardTolere,valeurCaution,coutAdhesion) VALUES (:idReglement, :nbrJeux, :duree, :retardTolere, :valeurCaution, :coutAdhesion)";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idReglement = $objet->getIdReglement();
+            $nbrJeux = $objet->getNbrJeux();
+            $duree = $objet->getDuree();
+            $retardTolere = $objet->getRetardTolere();
+            $valeurCaution = $objet->getValeurCaution();
+            $coutAdhesion = $objet->getCoutAdhesion();
+            $stmt->bindParam(':idReglement', $idReglement);
+            $stmt->bindParam(':nbrJeux', $nbrJeux);
+            $stmt->bindParam(':duree', $duree);
+            $stmt->bindParam(':retardTolere', $retardTolere);
+            $stmt->bindParam(':valeurCaution', $valeurCaution);
+            $stmt->bindParam(':coutAdhesion', $coutAdhesion);
+            $stmt->execute();
+        }
+    }
+}
 ?>
