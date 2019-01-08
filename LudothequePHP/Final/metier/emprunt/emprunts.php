@@ -4,8 +4,8 @@ namespace Emprunt{
     class Emprunt{
         
         private $idJeuPhysique;
-        private $idAdherent = "";
-        private $dateEmprunt = "";
+        private $idAdherent;
+        private $dateEmprunt;
         private $dateRetourEffectif;
         private $idAlerte;
         
