@@ -33,8 +33,7 @@ namespace Emprunt{
             return $this->dateEmprunt;
         }
     
-        public function getDateRetourEffectif()
-        {
+        public function getDateRetourEffectif()        {
             return $this->dateRetourEffectif;
         }
     

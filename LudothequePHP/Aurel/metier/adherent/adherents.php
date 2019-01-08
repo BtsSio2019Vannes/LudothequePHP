@@ -94,8 +94,7 @@ namespace Adherent
             $this->mel = $mel;
         }
     
-        public function setIdCoordonnees($idCoordonnees)
-        {
+        public function setIdCoordonnees($idCoordonnees)        {
             $this->idCoordonnees = $idCoordonnees;
         }  
     }
