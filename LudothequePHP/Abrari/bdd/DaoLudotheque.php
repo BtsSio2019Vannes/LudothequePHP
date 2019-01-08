@@ -2,10 +2,8 @@
 namespace DAO
 {
 
-    use BDD\ConnexionLudotheque\ConnexionLudotheque;
-
-    
-    include ("../metier/Ludotheque.php");
+    use BDD\ConnexionLudotheque\ConnexionLudotheque;   
+    include ("../metier/adherent.php");
 
     abstract class DAO
     {
@@ -40,5 +38,33 @@ namespace DAO
 }
 
 
+namespace DAO\adherent
+{
+    
+    use BDD\ConnexionLudotheque\ConnexionLudotheque;
+    
+    class Adherent extends \DAO\DAO
+    {
+        
+        function __construct()
+        {
+            parent::__construct("idPersonne", "Personne");
+            // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
+        }
+        
+        public function read($id)
+        {
+            
+            $sql = "SELECT * FROM $this->table WHERE $this->key=:id";
+            $stmt = ConnexionLudotheque::getInstance()->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            
+            $row = $stmt->fetch();
+            $num = $row["nom"];
+            $nom = $row["prenom"];
+            $adr = $row["dateNaissance"];
+            $sal = $row["mel"];
+            
 
 ?>
