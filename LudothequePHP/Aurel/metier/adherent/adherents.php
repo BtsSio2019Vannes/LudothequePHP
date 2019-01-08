@@ -28,72 +28,76 @@ namespace Adherent
             $this->mel = $mel;
             $this->idCoordonnees = $idCoordonnees;
         }
-
+        
+        public function getIdPersonne()
+        {
+            return $this->idPersonne;
+        }
+    
         public function getNom()
         {
             return $this->nom;
         }
-
-        public function setNom()
-        {
-            $this->nom = $nom;
-            return $this;
-        }
-
+    
         public function getPrenom()
         {
             return $this->prenom;
         }
-
-        public function setPrenom()
-        {
-            $this->prenom = $prenom;
-            return $this;
-        }
-
+    
         public function getDateNaissance()
         {
-            return $this->date_naissance;
+            return $this->dateNaissance;
         }
-
-        public function setDateNaissance()
-        {
-            $this->date_naissance = $date_naissance;
-            return $this;
-        }
-
+    
         public function getNumeroTelephone()
         {
-            return $this->numero_telephone;
+            return $this->numeroTelephone;
         }
-
-        public function setNumeroTelephone()
-        {
-            $this->numero_telephone = $numero_telephone;
-            return $this;
-        }
-
+    
         public function getMel()
         {
             return $this->mel;
         }
-
-        public function setMel()
-        {
-            $this->mel = $mel;
-            return $this;
-        }
-
+    
         public function getIdCoordonnees()
         {
             return $this->idCoordonnees;
         }
-
-        public function setIdCoordonnees()
+    
+        public function setIdPersonne($idPersonne)
+        {
+            $this->idPersonne = $idPersonne;
+        }
+    
+        public function setNom($nom)
+        {
+            $this->nom = $nom;
+        }
+    
+        public function setPrenom($prenom)
+        {
+            $this->prenom = $prenom;
+        }
+    
+        public function setDateNaissance($dateNaissance)
+        {
+            $this->dateNaissance = $dateNaissance;
+        }
+    
+        public function setNumeroTelephone($numeroTelephone)
+        {
+            $this->numeroTelephone = $numeroTelephone;
+        }
+    
+        public function setMel($mel)
+        {
+            $this->mel = $mel;
+        }
+    
+        public function setIdCoordonnees($idCoordonnees)
         {
             $this->idCoordonnees = $idCoordonnees;
-            return $this;
-        }
+        }  
     }
 
     class Adherent extends Personne
@@ -118,47 +122,56 @@ namespace Adherent
             $this->beneficiaire_associe = $beneficiaire_associe;
             $this->isAdherent = $isAdherent;
         }
-
-        public function getIdReglement(){
+        
+        public function getIdReglement()
+        {
             return $this->idReglement;
         }
-        
-        public function setIdReglement(){
-            $this->idReglement = $idReglement;
-            return $this;
-        }
-        
-        public function getDateAdhesion(){
+    
+        public function getDate_adhesion()
+        {
             return $this->date_adhesion;
         }
-        
-        public function setDateAdhesion(){
-            $this -> date_adhesion = $date_adhesion;
-            return $this;
-        }
-        
-        public function getDateFinAdhesion(){
+    
+        public function getDate_fin_adhesion()
+        {
             return $this->date_fin_adhesion;
         }
-            
-        public function setDateFinAdhesion(){
-          $this->date_fin_adhesion = $date_fin_adhesion;
-          return  $this;
-        }
-        
-        public function getBeneficiaireAssocie(){
+    
+        public function getBeneficiaire_associe()
+        {
             return $this->beneficiaire_associe;
         }
-            
-        public function setBeneficiaireAssocie(){
-            $this->beneficiaire_associe = $beneficiaire_associe;
-            return $this;
-        }
-       
-        function isAdherent()
+    
+        public function getIsAdherent()
         {
-            return $isAdherent = true;
+            return $this->isAdherent;
         }
+    
+        public function setIdReglement($idReglement)
+        {
+            $this->idReglement = $idReglement;
+        }
+    
+        public function setDate_adhesion($date_adhesion)
+        {
+            $this->date_adhesion = $date_adhesion;
+        }
+    
+        public function setDate_fin_adhesion($date_fin_adhesion)
+        {
+            $this->date_fin_adhesion = $date_fin_adhesion;
+        }
+    
+        public function setBeneficiaire_associe($beneficiaire_associe)
+        {
+            $this->beneficiaire_associe = $beneficiaire_associe;
+        }
+    
+        public function setIsAdherent($isAdherent)
+        {
+            $this->isAdherent = $isAdherent;
+        }  
     }
 
     class Coordonnees extends Personne
@@ -179,50 +192,46 @@ namespace Adherent
             $this->codePostal = $codePostal;
             $this->ville = $ville;
         }
-
         public function getIdCoordonnees()
         {
             return $this->idCoordonnees;
         }
-
-        public function setIdCoordonnees()
-        {
-            $this->idCoordonnees = $idCoordonnees;
-            return $this;
-        }
-
+    
         public function getRue()
         {
             return $this->rue;
         }
-
-        public function setRue()
-        {
-            $this->rue = $rue;
-            return $this;
-        }
-
+    
         public function getCodePostal()
         {
             return $this->codePostal;
         }
-
-        public function setCodePostal()
-        {
-            $this->codePostal = $codePostal;
-            return $this;
-        }
-
+    
         public function getVille()
         {
             return $this->ville;
         }
-
-        public function setVille()
+    
+        public function setIdCoordonnees($idCoordonnees)
+        {
+            $this->idCoordonnees = $idCoordonnees;
+        }
+    
+        public function setRue($rue)
+        {
+            $this->rue = $rue;
+        }
+    
+        public function setCodePostal($codePostal)
+        {
+            $this->codePostal = $codePostal;
+        }
+    
+        public function setVille($ville)
         {
             $this->ville = $ville;
-            return $this;
         }
+    
     }
 }
 
