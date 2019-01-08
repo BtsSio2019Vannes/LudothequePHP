@@ -324,17 +324,16 @@ namespace DAO\Coordonnees
 
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idCoordonnees,rue,codePostal,ville) VALUES (:idCoordonnees, :rue, :codePostal, :ville)";
+            $sql = "INSERT INTO $this->table (rue,codePostal,ville) VALUES (:rue, :codePostal, :ville)";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idCoordonnees = $objet->getIdCoordonnees();
             $rue = $objet->getRue();
             $codePostal = $objet->getCodePostal();
             $ville = $objet->getVille();
-            $stmt->bindParam(':idCoordonnees', $idCoordonnees);
             $stmt->bindParam(':rue', $rue);
             $stmt->bindParam(':codePostal', $codePostal);
             $stmt->bindParam(':ville', $ville);
             $stmt->execute();
+            $objet->setIdCoordonnees(parent::getLastKey());
         }
     }
 }
@@ -404,21 +403,20 @@ namespace DAO\Reglement
         
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idReglement,nbrJeux,duree,retardTolere,valeurCaution,coutAdhesion) VALUES (:idReglement, :nbrJeux, :duree, :retardTolere, :valeurCaution, :coutAdhesion)";
+            $sql = "INSERT INTO $this->table (nbrJeux,duree,retardTolere,valeurCaution,coutAdhesion) VALUES (:nbrJeux, :duree, :retardTolere, :valeurCaution, :coutAdhesion)";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idReglement = $objet->getIdReglement();
             $nbrJeux = $objet->getNbrJeux();
             $duree = $objet->getDuree();
             $retardTolere = $objet->getRetardTolere();
             $valeurCaution = $objet->getValeurCaution();
             $coutAdhesion = $objet->getCoutAdhesion();
-            $stmt->bindParam(':idReglement', $idReglement);
             $stmt->bindParam(':nbrJeux', $nbrJeux);
             $stmt->bindParam(':duree', $duree);
             $stmt->bindParam(':retardTolere', $retardTolere);
             $stmt->bindParam(':valeurCaution', $valeurCaution);
             $stmt->bindParam(':coutAdhesion', $coutAdhesion);
             $stmt->execute();
+            $objet->setIdReglement(parent::getLastKey());
         }
     }
 }
@@ -451,57 +449,52 @@ namespace DAO\Alerte
             $typeAlerte = $row["typeAlerte"];
             $commentaire = $row["commentaire"];
             
-            $reglement = new \Emprunt\;
+            $alerte = new \Jeu\Alerte($idAlerte, $nom, $dateRetour, $typeAlerte, $commentaire);
             
-            return $reglement;
+            return $alerte;
         }
         
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
-            $sql = "UPDATE $this->table SET idReglement = :idReglement, nbrJeux = :nbrJeux, duree = :duree, retardTolere = :retardTolere, valeurCaution = :valeurCaution, coutAdhesion = :coutAdhesion WHERE $this->key=:idReglement";
+            $sql = "UPDATE $this->table SET idAlerte = :idAlerte, nom = :nom, dateRetour = :dateRetour, typeAlerte = :typeAlerte, commentaire = :commentaire WHERE $this->key=:idAlerte";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idReglement = $objet->getIdReglement();
-            $nbrJeux = $objet->getNbrJeux();
-            $duree = $objet->getDuree();
-            $retardTolere = $objet->getRetardTolere();
-            $valeurCaution = $objet->getValeurCaution();
-            $coutAdhesion = $objet->getCoutAdhesion();
-            $stmt->bindParam(':idReglement', $idReglement);
-            $stmt->bindParam(':nbrJeux', $nbrJeux);
-            $stmt->bindParam(':duree', $duree);
-            $stmt->bindParam(':retardTolere', $retardTolere);
-            $stmt->bindParam(':valeurCaution', $valeurCaution);
-            $stmt->bindParam(':coutAdhesion', $coutAdhesion);
+            $idAlerte = $objet->getIdAlerte();
+            $nom = $objet->getNom();
+            $dateRetour = $objet->getDateRetour();
+            $typeAlerte = $objet->getTypeAlerte();
+            $commentaire = $objet->getCommentaire();
+            $stmt->bindParam(':idAlerte', $idAlerte);
+            $stmt->bindParam(':nom', $nom);
+            $stmt->bindParam(':dateRetour', $dateRetour);
+            $stmt->bindParam(':typeAlerte', $typeAlerte);
+            $stmt->bindParam(':commentaire', $commentaire);
             $stmt->execute();
         }
         
         public function delete($objet)
         {
-            $sql = "DELETE FROM $this->table WHERE $this->key=:idReglement";
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idAlerte";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idReglement = $objet->getIdReglement();
-            $stmt->bindParam(':idCoordonnees', $idReglement);
+            $idAlerte = $objet->getIdAlerte();
+            $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
         
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idReglement,nbrJeux,duree,retardTolere,valeurCaution,coutAdhesion) VALUES (:idReglement, :nbrJeux, :duree, :retardTolere, :valeurCaution, :coutAdhesion)";
+            $sql = "INSERT INTO $this->table (nom,dateRetour,typeAlerte,commentaire) VALUES (:nom, :dateRetour, :typeAlerte, :commentaire)";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idReglement = $objet->getIdReglement();
-            $nbrJeux = $objet->getNbrJeux();
-            $duree = $objet->getDuree();
-            $retardTolere = $objet->getRetardTolere();
-            $valeurCaution = $objet->getValeurCaution();
-            $coutAdhesion = $objet->getCoutAdhesion();
-            $stmt->bindParam(':idReglement', $idReglement);
-            $stmt->bindParam(':nbrJeux', $nbrJeux);
-            $stmt->bindParam(':duree', $duree);
-            $stmt->bindParam(':retardTolere', $retardTolere);
-            $stmt->bindParam(':valeurCaution', $valeurCaution);
-            $stmt->bindParam(':coutAdhesion', $coutAdhesion);
+            $nom = $objet->getNom();
+            $dateRetour = $objet->getDateRetour();
+            $typeAlerte = $objet->getTypeAlerte();
+            $commentaire = $objet->getCommentaire();
+            $stmt->bindParam(':nom', $nom);
+            $stmt->bindParam(':dateRetour', $dateRetour);
+            $stmt->bindParam(':typeAlerte', $typeAlerte);
+            $stmt->bindParam(':commentaire', $commentaire);
             $stmt->execute();
+            $objet->setIdAlerte(parent::getLastKey());
         }
     }
 }
