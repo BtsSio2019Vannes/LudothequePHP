@@ -824,5 +824,6 @@ namespace DAO\Jeu{
             $stmt->execute();
         }
     }
+    
 }
 ?>
