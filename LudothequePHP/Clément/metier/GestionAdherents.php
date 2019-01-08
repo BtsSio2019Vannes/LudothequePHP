@@ -34,10 +34,10 @@ try {
 			
 		</ul>
 	</nav>
-	<a href="" ><input type="submit" name="maj" value="Mettre à jour Personne"></a>
-	<a href=""><input type="submit" name="ajout" value="Ajouter Personne"></a>
+	<a href=""><input type="submit" name="maj" value="Mettre à jour Personne"></a>
+	<a href="formulaire.php "><input type="submit" name="ajout" value="Ajouter Personne"></a>
 	<a href=""><input type="submit" name="supprimer" value="Supprimer Personne"></a>
-	
+	<br>
 	<table class="echo">
 		<tr>
 			<td>Identifiant</td>
