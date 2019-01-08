@@ -80,7 +80,7 @@ namespace DAO\Personne
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $idAdherent = $daoPersonne->retrouverAdherentAssocie($idPersonne);
 
-            $rep = new \Personne\Personne($idPersonne, $nom, $prenom, $dateNaissance, $idCoordonnees, $mel, $numeroTelephone, $idAdherent);
+            $rep = new \Adherent\Personne($idPersonne, $nom, $prenom, $dateNaissance, $idCoordonnees, $mel, $numeroTelephone, $idAdherent);
             return $rep;
         }
 
@@ -181,7 +181,7 @@ namespace DAO\Adherent
             $dateFinAdhesion = $row["dateFinAdhesion"];
             $valeurCaution = $row["valeurCaution"];
 
-            $adherent = new \Personne\Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
 
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $personne = $daoPersonne->read($idAdherent);
@@ -288,11 +288,11 @@ namespace DAO\Coordonnees
 
             $row = $stmt->fetch();
             $idCoordonnees = $row["idCoordonnees"];
-            $adresse = $row["adresse"];
+            $rue = $row["rue"];
             $codePostal = $row["codePostal"];
             $ville = $row["ville"];
 
-            $coordonnees = new \Coordonnees\Coordonnees($idCoordonnees, $adresse, $codePostal, $ville);
+            $coordonnees = new \Adherent\Coordonnees($idCoordonnees, $rue, $codePostal, $ville);
 
             return $coordonnees;
         }
@@ -300,14 +300,14 @@ namespace DAO\Coordonnees
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
-            $sql = "UPDATE $this->table SET idCoordonnees = :idCoordonnees, adresse = :adresse, codePostal = :codePostal, ville = :ville WHERE $this->key=:idCoordonnees";
+            $sql = "UPDATE $this->table SET idCoordonnees = :idCoordonnees, rue = :rue, codePostal = :codePostal, ville = :ville WHERE $this->key=:idCoordonnees";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idCoordonnees = $objet->getIdCoordonnees();
-            $adresse = $objet->getAdresse();
+            $rue = $objet->getRue();
             $codePostal = $objet->getCodePostal();
             $ville = $objet->getVille();
             $stmt->bindParam(':idCoordonnees', $idCoordonnees);
-            $stmt->bindParam(':adresse', $adresse);
+            $stmt->bindParam(':rue', $rue);
             $stmt->bindParam(':codePostal', $codePostal);
             $stmt->bindParam(':ville', $ville);
             $stmt->execute();
@@ -324,14 +324,14 @@ namespace DAO\Coordonnees
 
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idCoordonnees,adresse,codePostal,ville) VALUES (:idCoordonnees, :adresse, :codePostal, :ville)";
+            $sql = "INSERT INTO $this->table (idCoordonnees,rue,codePostal,ville) VALUES (:idCoordonnees, :rue, :codePostal, :ville)";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idCoordonnees = $objet->getIdCoordonnees();
-            $adresse = $objet->getAdresse();
+            $rue = $objet->getRue();
             $codePostal = $objet->getCodePostal();
             $ville = $objet->getVille();
             $stmt->bindParam(':idCoordonnees', $idCoordonnees);
-            $stmt->bindParam(':adresse', $adresse);
+            $stmt->bindParam(':rue', $rue);
             $stmt->bindParam(':codePostal', $codePostal);
             $stmt->bindParam(':ville', $ville);
             $stmt->execute();
