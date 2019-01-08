@@ -88,7 +88,9 @@ namespace DAO\Personne
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
-            $sql = "UPDATE $this->table SET idPersonne = :idPersonne, nom = :nom, prenom = :prenom, dateNaissance = :dateNaissance, idCoordonnees = :idCoordonnees, mel = :mel, numeroTelephone = :numeroTelephone  WHERE $this->key=:idPersonne";
+            $sql = "UPDATE $this->table SET idPersonne = :idPersonne, nom = :nom, prenom = :prenom,
+            dateNaissance = :dateNaissance, idCoordonnees = :idCoordonnees, mel = :mel,
+            numeroTelephone = :numeroTelephone  WHERE $this->key=:idPersonne";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idPersonne = $objet->getIdPersonne();
             $nom = $objet->getNom();
