@@ -30,17 +30,6 @@ namespace DAO
         function getLastKey()
         {
             return Connexion::getInstance()->lastInsertId();
-
-            /*
-             * Version Ã  la main qui rÃ©cupÃ¨re le max de la clÃ©, qui n'assure pas que ce soit la bonne clÃ© !
-             * $sql = "SELECT Max($this->key) as max FROM $this->table";
-             * $stmt = Connexion::getInstance()->prepare($sql);
-             * $stmt->execute();
-             *
-             * $row = $stmt->fetch();
-             * $newKey = $row["max"];
-             * return $newKey;
-             */
         }
     }
 }
