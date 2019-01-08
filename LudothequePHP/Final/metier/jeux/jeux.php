@@ -162,6 +162,78 @@ namespace Jeu
         }
     }
     
+    class Alerte{
+        
+        private $idAlerte;
+        
+        private $nom;
+        
+        private $dateRetour;
+        
+        private $typeAlerte;
+        
+        private $commentaire;
+        
+        function __construct($idAlerte, $nom, $dateRetour, $typeAlerte, $commentaire){
+            $this->idAlerte = $idAlerte;
+            $this->nom = $nom;
+            $this->dateRetour = $dateRetour;
+            $this->typeAlerte = $typeAlerte;
+            $this->commentaire = $commentaire;
+        }
+
+        public function getIdAlerte()
+        {
+            return $this->idAlerte;
+        }
+        
+        public function getNom()
+        {
+            return $this->nom;
+        }
+
+        public function getDateRetour()
+        {
+            return $this->dateRetour;
+        }
+
+        public function getTypeAlerte()
+        {
+            return $this->typeAlerte;
+        }
+
+        public function getCommentaire()
+        {
+            return $this->commentaire;
+        }
+
+        public function setIdAlerte($idAlerte)
+        {
+            $this->idAlerte = $idAlerte;
+        }
+
+        public function setNom($nom)
+        {
+            $this->nom = $nom;
+        }
+
+        public function setDateRetour($dateRetour)
+        {
+            $this->dateRetour = $dateRetour;
+        }
+
+        public function setTypeAlerte($typeAlerte)
+        {
+            $this->typeAlerte = $typeAlerte;
+        }
+
+        public function setCommentaire($commentaire)
+        {
+            $this->commentaire = $commentaire;
+        }
+        
+    }
+    
     class TypeAlerte{
         
         private $designation;
