@@ -47,10 +47,10 @@ namespace DAO
 // les espaces de noms ne peuvent Ãªtre imbriquÃ©s, alors on simule
 namespace DAO\Personne
 {
-    
-    use DB\Connexion\Connexion;
-    use Personne\Personne;
-    
+
+    use Connexion\Connexion;
+use DAO;
+                                    
     class PersonneDAO extends \DAO\DAO
     {
         
@@ -143,12 +143,125 @@ namespace DAO\Personne
             $sql = "SELECT * FROM personne";
             $listePersonnes = new \ArrayObject();
             foreach (Connexion::getInstance()->query($sql) as $row) {
-                $personne = new Personne($row["idPersonne"], $row["nom"], $row["prenom"], $row["dateNaissance"], $row["idCoordonnees"], $row["mel"], $row["numeroTelephone"]);
+                $daoPersonne = new DAO\Personne\PersonneDAO();
+                $personne = $daoPersonne->read($row["idPersonne"]);
                 $listePersonnes->append($personne);
             }
             return $listePersonnes;
         }
     }
 }
-
+namespace DAO\Adherent
+{
+    
+    use DB\Connexion\Connexion;
+use DAO;
+                    
+    class AdherentDAO extends \DAO\DAO
+    {
+        
+        function __construct()
+        {
+            parent::__construct("idAdherent", "adherent");
+            // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
+        }
+        
+        public function read($idAdherent)
+        {
+            // On utilise le prepared statemet qui simplifie les typages
+            $sql = "SELECT * FROM $this->table WHERE $this->key=:idAdherent";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->execute();
+            
+            $row = $stmt->fetch();
+            $idAdherent = $row["idAdherent"];
+            $idReglement = $row["idReglement"];
+            $datePremiereAdhesion = $row["datePremiereAdhesion"];
+            $dateFinAdhesion = $row["dateFinAdhesion"];
+            $valeurCaution = $row["valeurCaution"];
+            
+            $adherent = new \Personne\Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            
+            $daoPersonne = new \DAO\Personne\PersonneDAO();
+            $personne = $daoPersonne->read($idAdherent);
+            
+            $adherent->setIdPersonne($personne->getIdPersonne());
+            $adherent->setNom($personne->getNom());
+            $adherent->setPrenom($personne->getPrenom());
+            $adherent->setDateNaissance($personne->getDateNaissance());
+            $adherent->setIdCoordonnees($personne->getIdCoordonnees());
+            $adherent->setMel($personne->getMel());
+            $adherent->setNumeroTelephone($personne->getNumeroTelephone());
+            
+            return $adherent;
+        }
+        
+        public function update($objet)
+        {
+            // On utilise le prepared statemet qui simplifie les typages
+            $sql = "UPDATE $this->table SET idAdherent = :idAdherent, idReglement = :idReglement, datePremiereAdhesion = :datePremiereAdhesion, dateFinAdhesion = :dateFinAdhesion, valeurCaution = :valeurCaution WHERE $this->key=:idAdherent";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idAdherent = $objet->getIdPersonne();
+            $idReglement = $objet->getIdReglement();
+            $datePremiereAdhesion = $objet->getDatePremiereAdhesion();
+            $dateFinAdhesion = $objet->getDateFinAdhesion();
+            $valeurCaution = $objet->getValeurCaution();
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->bindParam(':idReglement', $idReglement);
+            $stmt->bindParam(':datePremiereAdhesion', $datePremiereAdhesion);
+            $stmt->bindParam(':dateFinAdhesion', $dateFinAdhesion);
+            $stmt->bindParam(':valeurCaution', $valeurCaution);
+            $stmt->execute();
+            
+            $daoPersonne = new \DAO\Personne\PersonneDAO();
+            $daoPersonne->update($objet);
+        }
+        
+        public function delete($objet)
+        {
+            $daoAdherent = new \DAO\Adherent\AdherentDAO();
+            $idAdherent = $objet->getIdPersonne();
+            $daoAdherent->supprimerAdherentEtBeneficiaire($idAdherent);
+            
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idAdherent";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idAdherent = $objet->getIdPersonne();
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->execute();
+            
+            $daoPersonne = new \DAO\Personne\PersonneDAO();
+            $daoPersonne->delete($objet);
+        }
+        
+        public function create($objet)
+        {
+            $sql = "INSERT INTO $this->table (idAdherent,idReglement,datePremiereAdhesion,dateFinAdhesion,valeurCaution) VALUES (:idAdherent, :idReglement, :datePremiereAdhesion, :dateFinAdhesion, :valeurCaution)";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idAdherent = $objet->getIdPersonne();
+            $idReglement = $objet->getIdReglement();
+            $datePremiereAdhesion = $objet->getDatePremiereAdhesion();
+            $dateFinAdhesion = $objet->getDateFinAdhesion();
+            $valeurCaution = $objet->getValeurCaution();
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->bindParam(':idReglement', $idReglement);
+            $stmt->bindParam(':datePremiereAdhesion', $datePremiereAdhesion);
+            $stmt->bindParam(':dateFinAdhesion', $dateFinAdhesion);
+            $stmt->bindParam(':valeurCaution', $valeurCaution);
+            $stmt->execute();
+        }
+        
+        static function getAdherents()
+        {
+            $sql = "SELECT * FROM personne, adherent WHERE idPersonne = idAdherent";
+            $listeAdherents = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $daoAdherent = new DAO\Adherent\AdherentDAO();
+                $adherent = $daoAdherent->read($row["idAdherent"]);
+                $listeAdherents->append($adherent);
+            }
+            return $listeAdherents;
+        }
+    }
+}
 ?>
