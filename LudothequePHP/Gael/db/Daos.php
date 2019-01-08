@@ -3,7 +3,7 @@ namespace DAO
 {
 
     use DB\Connexion\Connexion;
-    include ("../db/Connexion.php");
+    include ("Connexion.php");
 
     abstract class DAO
     {
