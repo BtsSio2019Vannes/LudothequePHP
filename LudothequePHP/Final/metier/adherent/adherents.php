@@ -165,7 +165,7 @@ namespace Adherent
     
     }
 
-    class Coordonnees extends Personne
+    class Coordonnees
     {
 
         private $idCoordonnees;
@@ -189,43 +189,39 @@ namespace Adherent
             return $this->idCoordonnees;
         }
 
-        public function setIdCoordonnees()
-        {
-            $this->idCoordonnees = $idCoordonnees;
-            return $this;
-        }
-
         public function getRue()
         {
             return $this->rue;
         }
-
-        public function setRue()
-        {
-            $this->rue = $rue;
-            return $this;
-        }
-
+        
         public function getCodePostal()
         {
             return $this->codePostal;
         }
-
-        public function setCodePostal()
-        {
-            $this->codePostal = $codePostal;
-            return $this;
-        }
-
+        
         public function getVille()
         {
             return $this->ville;
         }
+        
+        public function setIdCoordonnees($idCoordonnees)
+        {
+            $this->idCoordonnees = $idCoordonnees;
+        }
 
-        public function setVille()
+        public function setRue($rue)
+        {
+            $this->rue = $rue;
+        }
+
+        public function setCodePostal($codePostal)
+        {
+            $this->codePostal = $codePostal;
+        }
+
+        public function setVille($ville)
         {
             $this->ville = $ville;
-            return $this;
         }
     }
 }
