@@ -268,7 +268,6 @@ namespace DAO\Coordonnees
 {
 
     use DB\Connexion\Connexion;
-    use DAO;
 
     class CoordonneesDAO extends \DAO\DAO
     {
