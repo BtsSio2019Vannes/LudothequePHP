@@ -18,50 +18,55 @@ namespace Emprunt{
             $this->idAlerte = $idAlerte;
         }
         
-        public function getIdJeu(){
-            return $this->idJeu;
-        }
-        
-        public function setIdJeu(){
-            $this->idJeu = $IdJeuPhysique;
-            return $this;
+        public function getIdJeuPhysique()
+        {
+            return $this->idJeuPhysique;
         }
     
-        public function getIdAdh(){
-            return $this->idAdh;
+        public function getIdAdherent()
+        {
+            return $this->idAdherent;
         }
-        
-        public function setIdAdh(){
-            $this->idAdh = $idAdherent;
-            return $this;
-        }
-        
-        public function dateEmprunt(){
+    
+        public function getDateEmprunt()
+        {
             return $this->dateEmprunt;
         }
-        
-        public function setDateEmprunt(){
-            $this->dateEmprunt = $dateEmprunt;
-            return $this;
+    
+        public function getDateRetourEffectif()        {
+            return $this->dateRetourEffectif;
         }
-        
-        public function dateRetour(){
-            return $this->dateRetour;
-        }
-        
-        public function setDateRetour(){
-            $this->dateRetour = $dateRetour;
-            return $this;
-        }
-        
-        public function idAlerte(){
+    
+        public function getIdAlerte()
+        {
             return $this->idAlerte;
         }
-        
-        public function setIdAlerte(){
-            $this->idAlerte = $idAlerte;
-            return $this;
+    
+        public function setIdJeuPhysique($idJeuPhysique)
+        {
+            $this->idJeuPhysique = $idJeuPhysique;
         }
+    
+        public function setIdAdherent($idAdherent)
+        {
+            $this->idAdherent = $idAdherent;
+        }
+    
+        public function setDateEmprunt($dateEmprunt)
+        {
+            $this->dateEmprunt = $dateEmprunt;
+        }
+    
+        public function setDateRetourEffectif($dateRetourEffectif)
+        {
+            $this->dateRetourEffectif = $dateRetourEffectif;
+        }
+    
+        public function setIdAlerte($idAlerte)
+        {
+            $this->idAlerte = $idAlerte;
+        }
+    
     }
 }
 ?>
