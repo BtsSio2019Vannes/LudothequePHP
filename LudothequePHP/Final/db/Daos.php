@@ -510,7 +510,7 @@ namespace DAO\Editeur
         
         function __construct()
         {
-            parent::__construct("idEditeur", "nom", "idCoordonnees");
+            parent::__construct("idEditeur", "editeur");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
         
@@ -581,6 +581,12 @@ namespace DAO\Emprunt
     
     class EmpruntDAO extends \DAO\DAO
     {
+        function __construct()
+        {
+            parent::__construct("idJeuPhysique", "emprunt");
+            // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
+        }
+        
         public function read($id)
         {
             $sql = "SELECT * FROM $this->table WHERE $this->key=:id";
@@ -646,6 +652,188 @@ namespace DAO\Emprunt
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->execute();
         } 
+    }
+}
+
+namespace DAO\JeuPhysique{
+    
+    use DB\Connexion\Connexion;
+    use Jeu\jeuPhysique;
+    
+    class JeuPhysiqueDAO extends  \DAO\DAO{
+        
+        function __construct()
+        {
+            parent::__construct("idJeuPhysique", "jeuphysique");
+            // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
+        }
+        
+        public function read($idJeuPhyique)
+        {
+            $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeuPhysique";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
+            $stmt->execute();
+            
+            $row = $stmt->fetch();
+            $idJeuPhysique = $row["idJeuPhysique"];
+            $idJeu = $row["idJeu"];
+            $contenuActuel = $row["contenuActuel"];
+            
+            // echo "contenu de la base $num $nom $adr $sal ";
+            $rep = new JeuPhysique($idJeu, $contenuContenu);
+            $rep->setIdJeuPhysique($idJeuPhysique);
+            return $rep;
+        }
+        
+        public function update($objet)
+        {
+            $sql = "UPDATE $this->table SET idJeuPhysique = :idJeuPhysique, idJeu = :idJeu,
+            contenuActuel = :contenuActuel
+            WHERE $this->key=:idJeuPhysique";
+            
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeu = $objet->getIdJeu();
+            $contenuActuel = $objet->getContenuActuel();
+            $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
+            $stmt->bindParam(':idJeu', $idJeu);
+            $stmt->bindParam(':contenuActuel', $contenuActuel);
+            
+            $stmt->execute();
+        }
+        
+        public function create($objet)
+        {
+            $sql = "INSERT INTO $this->table (idJeu,contenuActuel)
+             VALUES (:idJeu, :contenuActuel)";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idJeu = $objet->getIdJeu();
+            $contenuActuel = $objet->getContenuActuel();
+            $stmt->bindParam(':idJeu', $idJeu);
+            $stmt->bindParam(':contenuActuel', $contenuActuel);
+            $stmt->execute();
+            $objet->setIdJeuPhysique(parent::getLastKey());
+        }
+        
+        public function delete($objet)
+        {
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $num = $objet->getIdJeuPhysique();
+            $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
+            $stmt->execute();
+        }
+    }
+}
+
+namespace DAO\Jeu{
+    
+    use DB\Connexion\Connexion;
+    use Jeu\Jeu;
+    
+    class JeuDAO extends \DAO\DAO{
+        
+        function __construct()
+        {
+            parent::__construct("idJeu", "jeu");
+            // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
+        }
+        
+        
+        public function read($idJeu)
+        {
+            
+            $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeu";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idJeu', $idJeu);
+            $stmt->execute();
+            
+            $row = $stmt->fetch();
+            $idJeu = $row["idJeu"];
+            $idRegle = $row["idRegle"];
+            $titre = $row["titre"];
+            $anneeSortie =$row["anneeSortie"];
+            $auteur = $row["auteur"];
+            $idEditeur = $row["editeur"];
+            $categorie = $row["categorie"];
+            $univers = $row["univers"];
+            $contenuInitial = $row["contenuInitial"];
+            
+            // echo "contenu de la base $num $nom $adr $sal ";
+            $rep = new Jeu($idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $contenuInitial);
+            $rep->setIdJeuPhysique($idJeuPhysique);
+            return $rep;
+        }
+        
+        public function update($objet)
+        {
+            $sql = "UPDATE $this->table SET idJeu = :idJeu, idRegle = :idRegle, titre= :titre,
+            anneeSortie = :anneeSortie, auteur = :auteur, idEditeur = :idEditeur, categorie = :categorie
+            univers = :univers, contenuInitial = :contenuInitial
+            WHERE $this->key=:idJeuPhysique";
+            
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idJeu = $objet->getIdJeu();
+            $idRegle = $objet->getIdRegle();
+            $titre = $objet->getTitre();
+            $anneeSortie = $objet->getAnneeSortie();
+            $auteur = $objet->getAuteur();
+            $idEditeur = $objet->getIdEditeur();
+            $categorie = $objet->getCategorie();
+            $univers = $objet->getunivers();
+            $contenuinitial = $objet->getContenuInitial();
+            $stmt->bindParam(':idJeu', $idJeu);
+            $stmt->bindParam(':idRegle', $idRegle);
+            $stmt->bindParam(':titre', $titre);
+            $stmt->bindParam(':anneeSortie', $anneeSortie);
+            $stmt->bindParam(':auteur', $auteur);
+            $stmt->bindParam(':idEditeur', $idEditeur);
+            $stmt->bindParam(':categorie', $categorie);
+            $stmt->bindParam('univers', $univers);
+            $stmt->bindParam(':contenuInitial', $contenuInitial);
+            
+            $stmt->execute();
+        }
+        
+        public function create($objet)
+        {
+            $sql = "INSERT INTO $this->table (idRegle,titre, anneeSortie, auteur, idEditeur,
+            categorie, univers, contenuInitial)
+            VALUES (:idRegle, :titre, :anneeSortie, :auteur, :idEditeur,:categorie, :univers,
+            :contenuActuel)";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $idJeu = $objet->getIdJeu();
+            $idRegle = $objet->getIdRegle();
+            $titre = $objet->getTitre();
+            $anneeSortie = $objet->getAnneeSortie();
+            $auteur = $objet->getAuteur();
+            $idEditeur = $objet->getIdEditeur();
+            $categorie = $objet->getCategorie();
+            $univers = $objet->getunivers();
+            $contenuinitial = $objet->getContenuInitial();
+            $stmt->bindParam(':idJeu', $idJeu);
+            $stmt->bindParam(':idRegle', $idRegle);
+            $stmt->bindParam(':titre', $titre);
+            $stmt->bindParam(':anneeSortie', $anneeSortie);
+            $stmt->bindParam(':auteur', $auteur);
+            $stmt->bindParam(':idEditeur', $idEditeur);
+            $stmt->bindParam(':categorie', $categorie);
+            $stmt->bindParam('univers', $univers);
+            $stmt->bindParam(':contenuInitial', $contenuInitial);
+            $stmt->execute();
+            
+            $objet->setIdJeu(parent::getLastKey());
+        }
+        
+        public function delete($objet)
+        {
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idJeu";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $num = $objet->getIdJeu();
+            $stmt->bindParam(':idJeu', $idJeu);
+            $stmt->execute();
+        }
     }
 }
 ?>
