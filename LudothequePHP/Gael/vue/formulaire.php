@@ -67,6 +67,7 @@ function afficherGestionPersonne()
 /* Formulaire d'ajout de bénéficiaire */
 function afficherFormulaireAjout($personne)
 {
+    $listeAdherentsAssocies = $personne->retrouverAdherentAssocie();
     ?>
 <form class="ajoutModif" method="post" action="index.php?page=personnes">
 	<table>
@@ -110,7 +111,9 @@ function afficherFormulaireAjout($personne)
 
     $listeAdherents = \DAO\Adherent\AdherentDAO::getAdherents();
     foreach ($listeAdherents as $adherent) {
-        echo "<option value=\"" . $adherent->getIdPersonne() . "\">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";
+        if (in_array($adherent, $listeAdherentsAssocies)) {
+            echo "<option value=\"" . $adherent->getIdPersonne() . "\">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";
+        }
     }
     ?>
 
@@ -130,7 +133,7 @@ function afficherFormulaireAjout($personne)
 }
 
 /* Formulaire de mise à jour de bénéficiaire */
-function afficherFormulaireMaj($personne, $adherent)
+function afficherFormulaireMaj($personne)
 {
     ?>
 <form class="ajoutModif" method="post" action="index.php?page=personnes">
@@ -139,8 +142,6 @@ function afficherFormulaireMaj($personne, $adherent)
 			<td><b>Nom :</b></td>
 			<td><input type="hidden" name="idPersonne"
 				value="<?php echo $personne->getIdPersonne(); ?>"> <input
-				type="hidden" name="adherents"
-				value="<?php echo $personne->retrouverAdherentAssocie(); ?>"> <input
 				type="text" name="nom" value="<?php echo $personne->getNom(); ?>"></td>
 		</tr>
 		<tr>
@@ -211,11 +212,12 @@ function afficherFormulaireMaj($personne, $adherent)
 					
 <?php
 
-        $idSelected = $adherent->retrouverAdherentAssocie();
+        $idSelected = $personne->retrouverAdherentAssocie();
 
         $listeAdherents = \DAO\Adherent\AdherentDAO::getAdherents();
         foreach ($listeAdherents as $adherent) {
-            echo "<option value=\"" . $adherent->getIdPersonne() . "\" " . $idSelected . ">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";
+            $selected = ($adherent->getIdPersonne() == $idSelected) ? "selected" : "";
+            echo "<option value=\"" . $adherent->getIdPersonne() . "\" " . $selected . ">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";
         }
 
         ?>
