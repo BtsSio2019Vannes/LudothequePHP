@@ -181,7 +181,7 @@ namespace DAO\Adherent
             $adherent->setNom($personne->getNom());
             $adherent->setPrenom($personne->getPrenom());
             $adherent->setDateNaissance($personne->getDateNaissance());
-            $adherent->setIdCoordonnees($personne->getIdCoordonnees());
+            $adherent->setCoordonnees($personne->getCoordonnees());
             $adherent->setMel($personne->getMel());
             $adherent->setNumeroTelephone($personne->getNumeroTelephone());
 
