@@ -4,29 +4,28 @@ namespace Adherent
            
     class Personne
     {
-
         private $idPersonne;
 
-        private $nom = "";
+        private $nom;
 
-        private $prenom = "";
+        private $prenom;
 
         private $dateNaissance;
 
         private $numeroTelephone;
 
-        private $mel = "";
+        private $mel;
 
-        private $idCoordonnees;
+        private $coordonnees;
 
-        function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $idCoordonnees)
+        function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees)
         {
             $this->nom = $nom;
             $this->prenom = $prenom;
-            $this->date_naissance = $date_naissance;
-            $this->numero_telephone = $numero_telephone;
+            $this->dateNaissance = $dateNaissance;
+            $this->numeroTelephone = $numeroTelephone;
             $this->mel = $mel;
-            $this->idCoordonnees = $idCoordonnees;
+            $this->coordonnees = $coordonnees;  
         }
         
         public function getIdPersonne()
@@ -59,9 +58,9 @@ namespace Adherent
             return $this->mel;
         }
     
-        public function getIdCoordonnees()
+        public function getCoordonnees()
         {
-            return $this->idCoordonnees;
+            return $this->coordonnees;
         }
     
         public function setIdPersonne($idPersonne)
@@ -94,9 +93,11 @@ namespace Adherent
             $this->mel = $mel;
         }
     
-        public function setIdCoordonnees($idCoordonnees)        {
-            $this->idCoordonnees = $idCoordonnees;
-        }  
+        public function setCoordonnees($coordonnees)
+        {
+            $this->coordonnees = $coordonnees;
+        }
+    
     }
 
     class Adherent extends Personne
@@ -104,22 +105,22 @@ namespace Adherent
 
         private $idReglement;
 
-        private $date_adhesion;
+        private $dateAdhesion;
 
         // private $date_creation_groupe;
-        private $date_fin_adhesion;
+        private $dateFinAdhesion;
 
-        private $beneficiaire_associe = array();
+        private $beneficiaireAssocie;
 
-        private $isAdherent = false;
+       
 
-        function __contruct($idReglement, $date_adhesion, $date_fin_adhesion, $beneficiaire_associe, $isAdherent)
+        function __contruct($idReglement, $dateAdhesion, $dateFinAdhesion, $beneficiaireAssocie)
         {
             $this->idReglement = $idReglement;
-            $this->date_adhesion = $date_adhesion;
-            $this->date_fin_adhesion = $date_fin_adhesion;
-            $this->beneficiaire_associe = $beneficiaire_associe;
-            $this->isAdherent = $isAdherent;
+            $this->dateAdhesion = $dateAdhesion;
+            $this->dateFinAdhesion = $dateFinAdhesion;
+            $this->beneficiaireAssocie = $beneficiaireAssocie;
+            
         }
         
         public function getIdReglement()
@@ -127,24 +128,19 @@ namespace Adherent
             return $this->idReglement;
         }
     
-        public function getDate_adhesion()
+        public function getDateAdhesion()
         {
-            return $this->date_adhesion;
+            return $this->dateAdhesion;
         }
     
-        public function getDate_fin_adhesion()
+        public function getDateFinAdhesion()
         {
-            return $this->date_fin_adhesion;
+            return $this->dateFinAdhesion;
         }
     
-        public function getBeneficiaire_associe()
+        public function getBeneficiaireAassocie()
         {
-            return $this->beneficiaire_associe;
-        }
-    
-        public function getIsAdherent()
-        {
-            return $this->isAdherent;
+            return $this->beneficiaireAassocie;
         }
     
         public function setIdReglement($idReglement)
@@ -152,28 +148,24 @@ namespace Adherent
             $this->idReglement = $idReglement;
         }
     
-        public function setDate_adhesion($date_adhesion)
+        public function setDateAdhesion($dateAdhesion)
         {
-            $this->date_adhesion = $date_adhesion;
+            $this->dateAdhesion = $dateAdhesion;
         }
     
-        public function setDate_fin_adhesion($date_fin_adhesion)
+        public function setDateFinAdhesion($dateFinAdhesion)
         {
-            $this->date_fin_adhesion = $date_fin_adhesion;
+            $this->dateFinAdhesion = $dateFinAdhesion;
         }
     
-        public function setBeneficiaire_associe($beneficiaire_associe)
+        public function setBeneficiaireAassocie($beneficiaireAassocie)
         {
-            $this->beneficiaire_associe = $beneficiaire_associe;
+            $this->beneficiaireAassocie = $beneficiaireAassocie;
         }
     
-        public function setIsAdherent($isAdherent)
-        {
-            $this->isAdherent = $isAdherent;
-        }  
     }
 
-    class Coordonnees extends Personne
+    class Coordonnees
     {
 
         private $idCoordonnees;
@@ -191,46 +183,46 @@ namespace Adherent
             $this->codePostal = $codePostal;
             $this->ville = $ville;
         }
+
         public function getIdCoordonnees()
         {
             return $this->idCoordonnees;
         }
-    
+
         public function getRue()
         {
             return $this->rue;
         }
-    
+        
         public function getCodePostal()
         {
             return $this->codePostal;
         }
-    
+        
         public function getVille()
         {
             return $this->ville;
         }
-    
+        
         public function setIdCoordonnees($idCoordonnees)
         {
             $this->idCoordonnees = $idCoordonnees;
         }
-    
+
         public function setRue($rue)
         {
             $this->rue = $rue;
         }
-    
+
         public function setCodePostal($codePostal)
         {
             $this->codePostal = $codePostal;
         }
-    
+
         public function setVille($ville)
         {
             $this->ville = $ville;
         }
-    
     }
 }
 
