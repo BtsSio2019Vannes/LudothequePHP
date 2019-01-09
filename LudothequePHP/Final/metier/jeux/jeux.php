@@ -123,7 +123,7 @@ namespace Jeu
         
         private $idJeuPhysique;
         private $idJeu;
-        private $contenuActuel = "";
+        private $contenuActuel;
         
         function  __construct($idJeuPhysique, $idJeu, $contenuActuel){
             $this->idJeuPhysique = $idJeuPhysique;
@@ -257,7 +257,7 @@ namespace Jeu
     class Editeur{
         
         private $idEditeur;
-        private $nom = "";
+        private $nom;
         private $idCoordonnees;
         
         

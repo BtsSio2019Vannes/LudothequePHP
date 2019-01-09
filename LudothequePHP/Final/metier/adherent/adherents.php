@@ -6,15 +6,15 @@ namespace Adherent
     {
         private $idPersonne;
 
-        private $nom = "";
+        private $nom;
 
-        private $prenom = "";
+        private $prenom;
 
         private $dateNaissance;
 
         private $numeroTelephone;
 
-        private $mel = "";
+        private $mel;
 
         private $idCoordonnees;
 
@@ -110,7 +110,7 @@ namespace Adherent
         // private $date_creation_groupe;
         private $dateFinAdhesion;
 
-        private $beneficiaireAassocie = array();
+        private $beneficiaireAssocie;
 
        
 

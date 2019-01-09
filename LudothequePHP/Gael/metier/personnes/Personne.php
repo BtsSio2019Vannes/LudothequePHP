@@ -15,19 +15,19 @@ namespace Personne
 
         private $dateNaissance;
 
-        private $idCoordonnees;
+        private $coordonnees;
         
         private $mel;
 
         private $numeroTelephone;
 
-        function __construct($idPersonne, $nom, $prenom, $dateNaissance, $idCoordonnees, $mel, $numeroTelephone)
+        function __construct($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone)
         {
             $this->idPersonne = $idPersonne;
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->dateNaissance = $dateNaissance;
-            $this->idCoordonnees = $idCoordonnees;
+            $this->coordonnees = $coordonnees;
             $this->mel = $mel;
             $this->numeroTelephone = $numeroTelephone;
         }
@@ -52,7 +52,7 @@ namespace Personne
             return $this->dateNaissance;
         }
 
-        public function getIdCoordonnees()
+        public function getCoordonnees()
         {
             return $this->idCoordonnees;
         }
