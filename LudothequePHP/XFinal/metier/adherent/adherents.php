@@ -25,7 +25,7 @@ namespace Adherent
             $this->dateNaissance = $dateNaissance;
             $this->numeroTelephone = $numeroTelephone;
             $this->mel = $mel;
-            $this->coordonnees = $coordonnees;
+            $this->coordonnees = $coordonnees; 
         }
         
         public function getIdPersonne()
