@@ -24,16 +24,16 @@ if (isset($_GET['page'])) {
     }
     switch ($_GET['page']) {
         case "personnes":
-            include ('../metier/personnes/accueilPersonnes.php');
+            include ('../controleur/personnes/accueilPersonnes.php');
             break;
         case "jeux":
-            include ('../metier/jeux/accueilJeux.php');
+            include ('../controleur/jeux/accueilJeux.php');
             break;
         case "emprunts":
-            include ('../metier/emprunts/accueilEmprunts.php');
+            include ('../controleur/emprunts/accueilEmprunts.php');
             break;
         case "parametres":
-            include ('../metier/parametres/accueilParametres.php');
+            include ('../controleur/parametres/accueilParametres.php');
             break;
         default:
             include ('accueil.php');
