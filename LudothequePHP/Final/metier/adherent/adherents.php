@@ -16,16 +16,16 @@ namespace Adherent
 
         private $mel;
 
-        private $coordonnees;
+        private $idCoordonnees;
 
-        function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees)
+        function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $idCoordonnees)
         {
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->dateNaissance = $dateNaissance;
             $this->numeroTelephone = $numeroTelephone;
             $this->mel = $mel;
-            $this->coordonnees = $coordonnees;
+            $this->idCoordonnees = $idCoordonnees;
         }
         
         public function getIdPersonne()
@@ -58,9 +58,9 @@ namespace Adherent
             return $this->mel;
         }
     
-        public function getCoordonnees()
+        public function getIdCoordonnees()
         {
-            return $this->coordonnees;
+            return $this->idCoordonnees;
         }
     
         public function setIdPersonne($idPersonne)
@@ -93,9 +93,9 @@ namespace Adherent
             $this->mel = $mel;
         }
     
-        public function setCoordonnees($coordonnees)
+        public function setIdCoordonnees($idCoordonnees)
         {
-            $this->coordonnees = $coordonnees;
+            $this->idCoordonnees = $idCoordonnees;
         }
     
     }

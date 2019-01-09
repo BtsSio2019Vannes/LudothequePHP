@@ -1,0 +1,12 @@
+@charset "ISO-8859-1";
+
+body{
+	font-family: 'althea', 'sugar_spice','Lucida Console';
+}
+
+nav{
+	background-color: black;
+	border : 3px black double;
+	border-radius : 10px;
+	
+}
