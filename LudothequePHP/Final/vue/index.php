@@ -13,7 +13,7 @@
 <?php
 if (isset($_GET['page'])) {
     $page = htmlentities($_GET['page']);
-    if ($page == "personnes" || $page == "jeux" || $page == "emprunts" || $page == "parametres") {
+    if ($page == "adherents" || $page == "jeux" || $page == "emprunts" || $page == "parametres") {
         ?>
 	<nav>
         <?php
@@ -23,14 +23,14 @@ if (isset($_GET['page'])) {
         <?php
     }
     switch ($_GET['page']) {
-        case "personnes":
-            include ('../controleur/personnes/accueilPersonnes.php');
+        case "adherents":
+            include ('../controleur/adherent/accueilAdherents.php');
             break;
         case "jeux":
             include ('../controleur/jeux/accueilJeux.php');
             break;
         case "emprunts":
-            include ('../controleur/emprunts/accueilEmprunts.php');
+            include ('../controleur/emprunt/accueilEmprunts.php');
             break;
         case "parametres":
             include ('../controleur/parametres/accueilParametres.php');
