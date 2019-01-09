@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link type="text/css" rel="stylesheet" href="ludotheque.css" />
+<link type="text/css" rel="stylesheet" href="test.css" />
 <!--<link type="text/css" rel="stylesheet" href="stylesheet.css" />-->
 <meta charset="utf-8" />
-<title>Test</title>
+<title>ludoth�que</title>
 </head>
 <body>
-
 
 	<div id="header">
 
@@ -31,6 +30,7 @@
 			</p>
 		</h2>
 	</div>
+	
 	<!-- <p align="right">	
 	<form action="Test.php" method="POST">
 		<label for="field_1"> Recherche </label> <input type="text"
@@ -44,8 +44,7 @@
 				<font size="3" face="georgia" color="red"> <span class="bold"></span></font>
 			</p>
 		</div> -->
-	
-	
+		
 	<div id="right">
 		<div>
 
@@ -59,39 +58,14 @@
 				</p>
 			</form>
 		</div>
-		<?php
-//On gère les include dès le début du programme
-include ("../bdd/ConnexionLudotheque.php");
-include ("../bdd/DaoLudotheque.php");
-
-// Affichage des tables
-
-
-// Affichage d'une colonne particulier
-
-
-
-//    test read / create sur Pilote avec récupération de la clé générée Connexion::getInstance()->lastInsertId();
-/*
-$adherent=$daoaAdherent->read(1);
-echo " : $adherent";
-$adherent->setNomAdherent("A");
-$daoadherent->create($adherent);
-$adherent=$daoadherent->read($adherent->getNumPil());
-echo "nouveau adherent : $adherent";
-*/
-
-
-?>
+		
 		
 	</div>
 	<div id="footer">
 		<div id="button">
-			
-			
+						
 		</div>
 		<p>
-	
 	
 	<blockquote id="couleur">
 		<p align="right" > date du jour <?php echo date('d-m-y'); ?></p>
