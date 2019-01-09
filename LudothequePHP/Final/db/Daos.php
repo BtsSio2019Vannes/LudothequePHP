@@ -39,7 +39,8 @@ namespace DAO\Personne
 
     use Connexion\Connexion;
     use DAO;
-
+use DAO\Coordonnees\CoordonneesDAO;
+                
     class PersonneDAO extends \DAO\DAO
     {
 
@@ -63,10 +64,14 @@ namespace DAO\Personne
             $prenom = $row["prenom"];
             $dateNaissance = $row["dateNaissance"];
             $idCoordonnees = $row["idCoordonnees"];
+            
+            $daoCoordonnees = new CoordonneesDAO();
+            $coordonnees = $daoCoordonnees->read($idCoordonnees);
+            
             $mel = $row["mel"];
             $numeroTelephone = $row["numeroTelephone"];
 
-            $rep = new \Adherent\Personne($idPersonne, $nom, $prenom, $dateNaissance, $idCoordonnees, $mel, $numeroTelephone);
+            $rep = new \Adherent\Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
             return $rep;
         }
 
@@ -79,7 +84,7 @@ namespace DAO\Personne
             $nom = $objet->getNom();
             $prenom = $objet->getPrenom();
             $dateNaissance = $objet->getDateNaissance();
-            $idCoordonnees = $objet->getIdCoordonnees();
+            $idCoordonnees = $objet->getCoordonnees()->getIdCoordonnees();
             $mel = $objet->getMel();
             $numeroTelephone = $objet->getNumeroTelephone();
             $stmt->bindParam(':idPersonne', $idPersonne);
@@ -111,7 +116,7 @@ namespace DAO\Personne
             $nom = $objet->getNom();
             $prenom = $objet->getPrenom();
             $dateNaissance = $objet->getDateNaissance();
-            $idCoordonnees = $objet->getIdCoordonnees();
+            $idCoordonnees = $objet->getCoordonnees()->getIdCoordonnees();
             $mel = $objet->getMel();
             $numeroTelephone = $objet->getNumeroTelephone();
             $stmt->bindParam(':nom', $nom);

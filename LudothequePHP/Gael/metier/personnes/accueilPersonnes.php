@@ -110,7 +110,7 @@ else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
         $personne->mettreAJourPersonne();
         $personne->supprimerBeneficiaire();
         $personne->associerAdherent($idPersonneAssociee);
-        
+
         if (htmlspecialchars(isset($_POST['passerAdherent']))) {
             $idReglement = 1;
             $date = new DateTime();
