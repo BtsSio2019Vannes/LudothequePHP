@@ -30,7 +30,7 @@ if (isset($_GET['page'])) {
             include ('../../XFinal/controleur/jeux/accueilJeux.php');
             break;
         case "emprunts":
-            include ('../../XFinal/controleur/emprunts/accueilEmprunts.php');
+            include ('../../XFinal/controleur/emprunt/accueilEmprunts.php');
             break;
         case "parametres":
             include ('../../XFinal/controleur/parametres/accueilParametres.php');
