@@ -41,8 +41,9 @@ namespace DAO\Personne
     use Connexion\Connexion;
     use DAO\DAO;
     use DAO\Coordonnees\CoordonneesDAO;
+    use Dao\Dao;
                 
-    class PersonneDAO extends DAO\DAO
+    class PersonneDAO extends DAO
     {
 
         function __construct()
