@@ -1,5 +1,5 @@
 <?php
-use Personne\Personne;
+use Adherent\Personne;
 ?>
 <section>
 	<h1>Gérer les Personnes</h1>

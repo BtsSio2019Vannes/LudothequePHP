@@ -2,7 +2,8 @@
 namespace DAO
 {
 
-    use DB\Connexion\Connexion;
+    use Connexion\Connexion;
+
     include ("Connexion.php");
 
     abstract class DAO
@@ -38,10 +39,10 @@ namespace DAO\Personne
 {
 
     use Connexion\Connexion;
-    use DAO;
-use DAO\Coordonnees\CoordonneesDAO;
+    use DAO\DAO;
+    use DAO\Coordonnees\CoordonneesDAO;
                 
-    class PersonneDAO extends \DAO\DAO
+    class PersonneDAO extends DAO
     {
 
         function __construct()
@@ -146,7 +147,6 @@ namespace DAO\Adherent
 {
 
     use DB\Connexion\Connexion;
-    use DAO;
 
     class AdherentDAO extends \DAO\DAO
     {
