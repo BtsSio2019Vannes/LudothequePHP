@@ -8,9 +8,9 @@ namespace DB\Connexion {
         static function getInstance() {
             static $dbh = NULL;
             if ($dbh==NULL) {
-                $dsn = "mysql:host=localhost:3306;dbname=ludotheque";
-                $username = "root";
-                $password = "";
+                $dsn = "mysql:host=sio56.org/siosql;dbname=promo19_aurelien";
+                $username = "promo19";
+                $password = "user@sio19";
                 //Goto project -> properties -> Project Facets and enable both facets
                 //pour expliciter le namespace, on préfixe la classe avec \
                 $options = array (
