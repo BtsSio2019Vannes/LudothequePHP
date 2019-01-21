@@ -42,7 +42,7 @@ namespace DAO\Personne
     use DAO\DAO;
     use DAO\Coordonnees\CoordonneesDAO;
                 
-    class PersonneDAO extends DAO
+    class PersonneDAO extends DAO\DAO
     {
 
         function __construct()

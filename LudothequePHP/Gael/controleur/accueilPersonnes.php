@@ -22,12 +22,12 @@ include ("formulaire.php");
 
 /* Après clic sur bouton ajouter */
 if (htmlspecialchars(isset($_POST['ajouter']))) {
-    $personne = new \Personne\Personne("", "", "", "", "", "", "", "");
+    $personne = new Personne("", "", "", "", "", "", "", "");
     afficherFormulaireAjout($personne);
 } /* Après clic sur bouton supprimer */
 else if (htmlspecialchars(isset($_POST['supprimer'])) && htmlspecialchars(isset($_POST['personne']))) {
     $idPersonne = htmlspecialchars($_POST['personne']);
-    $personne = new \Personne\Personne($idPersonne, "", "", "", "", "", "", "");
+    $personne = new Personne($idPersonne, "", "", "", "", "", "", "");
     $personne->supprimerPersonne();
     echo "<p><b>Personne bien supprimée !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
 } /* Après clic sur bouton maj */
@@ -60,7 +60,7 @@ else if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
     $coordonnees = isset($coordonnees) && $coordonnees != "" ? $coordonnees : $messageErreur;
     $mel = isset($mel) && $mel != "" ? $mel : $messageErreur;
     $numero = isset($numero) && $numero != "" ? $numero : $messageErreur;
-    $personne = new \Personne\Personne("", $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
+    $personne = new Personne("", $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
 
     if ($nom != $messageErreur && $prenom != $messageErreur && $dateNaissance != $messageErreur && $mel != $messageErreur && $coordonnees != $messageErreur && $numero != $messageErreur) {
         $personne->ajouterPersonne();
@@ -72,7 +72,7 @@ else if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
             $date->modify('+1 year');
             $dateFinAdhesion = $date->format('Y-m-d');
             $valeurCaution = 15;
-            $adherent = new \Personne\Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
             $adherent->setIdPersonne($personne->getIdPersonne());
             $adherent->passerAdherent();
         } else {
@@ -104,7 +104,7 @@ else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
     $mel = isset($mel) && $mel != "" ? $mel : $messageErreur;
     $numero = isset($numero) && $numero != "" ? $numero : $messageErreur;
 
-    $personne = new \Personne\Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
+    $personne = new Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
 
     if ($nom != $messageErreur && $prenom != $messageErreur && $dateNaissance != $messageErreur && $mel != $messageErreur && $coordonnees != $messageErreur) {
         $personne->mettreAJourPersonne();
@@ -118,7 +118,7 @@ else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
             $date->modify('+1 year');
             $dateFinAdhesion = $date->format('Y-m-d');
             $valeurCaution = 15;
-            $adherent = new \Personne\Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
             $adherent->setIdPersonne($idPersonne);
             $adherent->passerAdherent();
         } else if (htmlspecialchars(isset($_POST['renouvelerAdhesion']))) {
