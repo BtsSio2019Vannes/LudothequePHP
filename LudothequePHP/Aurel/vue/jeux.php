@@ -1,6 +1,5 @@
 <?php
-
-session_start();
+//session_start();
 ?>
 
 <!DOCTYPE html>
@@ -39,66 +38,64 @@ session_start();
 
 	<div class="infoLudo">
 		<h1>Betton Ludique</h1>
-
 		<div class="fenetreInfo" style="overflow-y: scroll;">
 			<form class="affichePersonne" method="post"
-				action="formulaireModifAdh.php">
-				<table style="width: 100%">
-				<tr>
-						<td colspan="10"></td>
-						<td></td>
-					</tr>
+				action="formulaireModifJeu.php">
+				<table>
+					<tr>
+						<td colspan="7"></td>
 
-					<tr>
-						<th>n°</th>
-						<th>Nom</th>
-						<th>Prénom</th>
-						<th>Date de Naissance</th>
-						<th>Coordonnées</th>
-						<th>mél</th>
-						<th>Numéro Téléphone</th>
-						<th>Choix</th>
-						<th>Adhérent</th>
-						<th>
-							<button type="submit" name="maj">Mettre à Jour</button></th>
 					</tr>
-			
-					<tr>
-						<td colspan="10"></td>      
+					<tr style="width:100%">
+						<th>Identifiant</th>
+						<th>Titre</th>
+						<th>Auteur</th>
+						<!-- <th>Editeur</th> -->
+						<th>Année de Sortie</th>
+						<th>Catégorie</th>
+						<th>Univers</th>
+						
+						
+						<!-- <th>Rue</th>
+						<th>Code Postal</th>
+						<th>Ville</th> -->
+						
+						<th><input type="submit" name="modifier" value="Modifier Jeu"
+							style="width: 150px; height: 50px" class="gestionBouton2"> <input type="submit"
+							value="Rechercher Jeu" style="width: 150px; height: 50px" class="gestionBouton2"></th>
+
+					</tr>
+				       
             <?php
             // On gère les include dès le début du programme
             // include ("../db/connexion.php");
-            include ("../metier/adherent/adherents.php");
+            include ("../metier/jeux/jeux.php");
             include ("../db/Daos.php");
-
-            $personnes = \DAO\Personne\PersonneDAO::getPersonnes();
-            
-            foreach ($personnes as $personne) {
-                                
-                $rep = "<tr><td>" . $personne->getIdPersonne();
-                $rep .= "</td><td>" . $personne->getNom();
-                $rep .= "</td><td>" . $personne->getPrenom();
-                $rep .= "</td><td>" . $personne->getDateNaissance();
-                $rep .= "</td><td>" . $personne->getCoordonnees();
-                $rep .= "</td><td>" . $personne->getMel();
-                $rep .= "</td><td>" . $personne->getNumeroTelephone();
-                $rep .= "</td><td><input type=\"checkbox\" name=\"adherent\" value=\"" . $personne->getAdherent() . "\" label for=\"adherent\">\"
-                $rep .= "</td><td><input type=\"radio\" name=\"idPersonne\" value=\"" . $personne->getIdPersonne() . "\" label for=\"idPersonne\"></td></tr>";
+            $jeux = \DAO\Jeu\JeuDAO::getJeux();
+            foreach ($jeux as $jeu) {
+                $rep = "<tr><td>" . $jeu->getIdJeu();
+                $rep .= "</td><td>" . $jeu->getTitre();
+                $rep .= "</td><td>" . $jeu->getAuteur();
+                //$rep .= "</td><td>" . $jeu->getIdEditeur();
+                $rep .= "</td><td>" . $jeu->getAnneeSortie();
+                $rep .= "</td><td>" . $jeu->getCategorie();
+                $rep .= "</td><td>" . $jeu->getUnivers();
+               
+                $rep .= "</td><td><input type=\"radio\" name=\"idJeu\" value=\"" . $jeu->getIdJeu() . "\" label for=\"idJeu\"></td></tr>";
 
                 echo $rep;
             }
             ?>
-            <td></td>
-				
+            
 				</table>
 			</form>
 
 		</div>
 	</div>
 
-	<div class="gestionBouton">
-		<form action="formulaireAjoutAdh.php">
-			<input type="submit" value="Ajouter Personne"
+	<div>
+		<form class="gestionBouton" action="formulaireAjoutJeu.php">
+			<input type="submit" value="Ajouter Jeu"
 				style="width: 150px; height: 50px">
 		</form>
 	</div>

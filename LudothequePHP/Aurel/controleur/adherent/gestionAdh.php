@@ -3,6 +3,8 @@ use Adherent\Personne;
 use DAO\Personne\PersonneDAO;
 use Adherent\Coordonnees;
 use DAO\Coordonnees\CoordonneesDAO;
+use DB\Connexion\Connexion;
+use DAO\Adherent\AdherentDAO;
 
 include ("../../db/Daos.php");
 include ("../../metier/adherent/adherents.php");
@@ -29,36 +31,88 @@ if (htmlspecialchars(isset($_POST['ajouter']))) {
     $codePostal = htmlspecialchars($_POST['codePostal']);
     $ville = htmlspecialchars($_POST['ville']);
 
-    
-    $coordonnees = new Coordonnees("", $rue , $codePostal, $ville);
+    $coordonnees = new Coordonnees("", $rue, $codePostal, $ville);
     $daoCoordonnees = new CoordonneesDAO();
     $daoCoordonnees->create($coordonnees);
 
-    if ($nom != "" && $prenom != "" && $dateNaissance != "" && $numeroTelephone != "" && $mel != "" && $rue != "" && $codePostal!= "" && $ville !="") {
+    if ($nom != "" && $prenom != "" && $dateNaissance != "" && $numeroTelephone != "" && $mel != "" && $rue != "" && $codePostal != "" && $ville != "") {
         $personne = new Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees);
         $daoPersonne = new PersonneDAO();
         $daoPersonne->create($personne);
 
-        echo " <p><b>" . $nom ." ". $prenom . " a bien été ajouté!<a href=\"vue\adherent.php\">Retour</a></p>";
+        echo " <p><b>" . $nom . " " . $prenom . " a bien été ajouté!<a href=\"vue\adherent.php\">Retour</a></p>";
     }
 
-    if ($nom = "" || $prenom = "" || $dateNaissance = "" || $numeroTelephone = "" || $mel = "" || $rue = "" || $codePostal= "" || $ville ="") {
+    if ($nom = "" || $prenom = "" || $dateNaissance = "" || $numeroTelephone = "" || $mel = "" || $rue = "" || $codePostal = "" || $ville = "") {
         echo "Champs mal renseigné";
     }
 }
 
-if(htmlspecialchars(isset ($_POST['supprimer'])) && isset ($_POST['personne'])){
-    $idPersonne = htmlspecialchars($_POST['personne']);
-    $personne->read($idPersonne);
+if (htmlspecialchars(isset($_POST['supprimer']))) {
+    
+    $idPersonne = htmlspecialchars($_POST['idPersonne']);
+    $idCoordonnees = htmlspecialchars($_POST['idCoordonnees']);
+    $nom = htmlspecialchars($_POST['nom']);
+    $prenom = htmlspecialchars($_POST['prenom']);
+    $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
+    $mel = htmlspecialchars($_POST['mel']);
+    $numeroTelephone = htmlspecialchars($_POST['numTel']);
+    
+    estAdherent($idPersonne);
+
+    $personne = new Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $idCoordonnees);
+    $personne->setIdPersonne($idPersonne);
+    $daoPersonne = new PersonneDAO();
     $daoPersonne->delete($personne);
-    echo "La personne a bien été supprimée";
+    echo "La personne a bien été supprimée <a href=\"..\\..\\vue\\adherent.php\">Retour</a></p>";
 }
 
-if (htmlspecialchars(isset($_POST['Modifier Peronne'])) && isset ($_POST['personne'])) {
-    $idPersonne = htmlspecialchars($_POST['personne']);
-    $personne->read($idPersonne);
+if (htmlspecialchars(isset($_POST['modifier']))) {
+    // print_r($_POST);
+    $idPersonne = htmlspecialchars($_POST['idPersonne']);
+    $idCoordonnees = htmlspecialchars($_POST['idCoordonnees']);
+    $nom = htmlspecialchars($_POST['nom']);
+    $prenom = htmlspecialchars($_POST['prenom']);
+    $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
+    $rue = htmlspecialchars($_POST['rue']);
+    $codePostal = htmlspecialchars($_POST['codePostal']);
+    $ville = htmlspecialchars($_POST['ville']);
+    $mel = htmlspecialchars($_POST['mel']);
+    $numeroTelephone = htmlspecialchars($_POST['numTel']);
+    // $idPersonne = htmlspecialchars($_POST['personne']);
+    
+    estAdherent($idPersonne);
+
+    $coordonnees = new Coordonnees($idCoordonnees, $rue, $codePostal, $ville);
+    adresseUtilisee($coordonnees);
+    $daoPersonne = new PersonneDAO();
+    $personne = new Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees);
+    $personne->setIdPersonne($idPersonne);
     $daoPersonne->update($personne);
-    echo "La personne a bien été modifiée";
+    echo "La personne a bien été modifiée <a href=\"..\\..\\vue\\adherent.php\">Retour</a></p>";
+}
+
+if (htmlspecialchars(isset($_POST['passerAdh']))){
+    
+}
+
+function adresseUtilisee($coordonnees)
+{
+    $daoCoordonnees = new CoordonneesDAO();
+    if ($daoCoordonnees->nbLignesCoordonnees($coordonnees) > 1) {
+        $daoCoordonnees->create($coordonnees);
+    } else {
+        $daoCoordonnees->update($coordonnees);
+    }
+}
+
+function estAdherent($idPersonne){
+    $daoAdherent = new AdherentDAO();
+    if($daoAdherent->getAdherent($idPersonne)){
+        $daoAdherent->read($idPersonne);
+        afficheFormulaireAdh();
+    }
+  
 }
 
 ?>

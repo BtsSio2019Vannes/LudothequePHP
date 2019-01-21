@@ -5,63 +5,100 @@
 <head>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="style.css">
-<title>Ludothèque</title>
+<title>Ludothèque modif</title>
 <link rel="shortcut icon" type="image/x-icon"
 	href="../images/logo_ludo.jpg" />
 </head>
 
 <body>
-	<?php print $_POST['personne'];?>
+
 	<div class="fenetreFormulaire">
-	
-		<form class="formulaireModif" method="post" action="../controleur/adherent/gestionAdh.php">
-		<?php $personne= $_POST['personne'];?>
+
+		<form class="formulaireModif" method="post"
+			action="../controleur/adherent/gestionAdh.php">
+		<?php
+include ("../db/Daos.php");
+include ("../metier/adherent/adherents.php");
+use DAO\Personne\PersonneDAO;
+
+if (isset($_POST['idPersonne'])) {
+    // echo $_POST['idPersonne'];
+    $daoPersonne = new PersonneDAO();
+    $personne = $daoPersonne->read($_POST['idPersonne']);
+    $coordonnee = $personne->getCoordonnees();
+    // echo $coordonnee;
+    // echo $personne;
+
+    ?>
 			<table>
 				<tr>
 					<td>Nom:</td>
-					<td><input type="text" name="nom" value="<?php echo $personne->getNom()?>"/></td>
+					<td><input type="text" name="nom"
+						value="<?php echo $personne->getNom();?>" /></td>
+					<!-- 					<td>Id :</td> -->
+					<td><input type="hidden" name="idPersonne"
+						value="<?php echo $personne->getIdPersonne();?>" /></td>
+					<!-- 					<td>IdAdresse :</td> -->
+					<td><input type="hidden" name="idCoordonnees"
+						value=" <?php echo $idCoordonnee=$personne->getCoordonnees()?>" />
+					</td>
 				</tr>
-			
+
 				<tr>
 					<td>Prénom:</td>
-					<td><input type="text" name="prenom" value="<?php echo $personne->getPrenom()?>"/></td>
+					<td><input type="text" name="prenom"
+						value="<?php echo $personne->getPrenom();?>" /></td>
 				</tr>
-			
+
 				<tr>
 					<td>Date de Naissance:</td>
-					<td><input type="text" name="dateNaissance" value="<?php echo $personne->getDateNaissance()?>" /></td>
+					<td><input type="date" name="dateNaissance"
+						value="<?php echo $personne->getDateNaissance();?>" /></td>
 				</tr>
-				
+
 				<tr>
 					<td>Rue:</td>
-					<td><input type="text" name="rue" value="<?php $coordonnees->getRue()?>"/></td>
+					<td><input type="text" name="rue"
+						value="<?php echo $coordonnee->getRue();?>" /></td>
 					<td>Code Postal:</td>
-					<td><input type="text" name="codePostal" value="<?php $coordonnees->getCodePostal()?>"/></td>
+					<td><input type="text" name="codePostal"
+						value="<?php echo $coordonnee->getCodePostal();?>" /></td>
 					<td>Ville:</td>
-					<td><input type="text" name="ville" value="<?php $coordonnees->getVille()?>"/></td>
+					<td><input type="text" name="ville"
+						value="<?php echo $coordonnee->getVille();?>" /></td>
 				</tr>
-				
+
 				<tr>
 					<td>Mel:</td>
-					<td><input type="text" name="mel" value="<?php echo $personne->getMel()?>"/></td>
+					<td><input type="text" name="mel"
+						value="<?php echo $personne->getMel()?>" /></td>
 				</tr>
-				
+
 				<tr>
 					<td>Numéro de Téléphone:</td>
-					<td><input type="text" name="numTel" value="<?php echo $personne->getNumeroTelephone()?>"/></td>
+					<td><input type="text" name="numTel"
+						value="<?php echo $personne->getNumeroTelephone()?>" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><button type="submit" name="modifier">Mettre à jour</button></td>
 					<td colspan="2"><button type="submit" name="supprimer">Supprimer</button></td>
-				</tr>				
+					<td colspan="2"><button type="submit" name="passerAdh">Passer
+							Adhérent</button></td>
+				</tr>
 			</table>
+			<?php
+} else {
+    echo "Vous n'avez pas choisi de Personne à modifier";
+}
+?>
 		</form>
 
 	</div>
 
 	<div class="gestionBouton">
 		<form action="adherent.php">
-			<button type="submit" name="Retour" style="width: 150px; height: 50px">Retour</button>
+			<button type="submit" name="Retour"
+				style="width: 150px; height: 50px">Retour</button>
 		</form>
 
 	</div>
