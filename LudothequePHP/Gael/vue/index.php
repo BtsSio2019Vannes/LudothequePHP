@@ -1,9 +1,9 @@
 <?php
-include ("../XFinal/db/Daos.php");
-include ("../XFinal/metier/Emprunt.php");
-include ("../XFinal/metier/Jeu.php");
-include ("../XFinal/metier/Parametre.php");
-include ("../XFinal/metier/Personne.php");
+include ("../../XFinal/db/Daos.php");
+include ("../../XFinal/metier/emprunts.php");
+include ("../../XFinal/metier/jeux.php");
+include ("../../XFinal/metier/parametres.php");
+include ("../../XFinal/metier/adherents.php");
 ?>
 <!DOCTYPE html>
 
