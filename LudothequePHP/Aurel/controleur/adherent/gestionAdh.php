@@ -1,9 +1,9 @@
 <?php
 use Adherent\Personne;
-use DAO\Personne\PersonneDAO;
 use Adherent\Coordonnees;
+
+use DAO\Personne\PersonneDAO;
 use DAO\Coordonnees\CoordonneesDAO;
-use DB\Connexion\Connexion;
 use DAO\Adherent\AdherentDAO;
 
 include ("../../db/Daos.php");
@@ -40,16 +40,15 @@ if (htmlspecialchars(isset($_POST['ajouter']))) {
         $daoPersonne = new PersonneDAO();
         $daoPersonne->create($personne);
 
-        echo " <p><b>" . $nom . " " . $prenom . " a bien été ajouté!<a href=\"vue\adherent.php\">Retour</a></p>";
+        echo " <p><b>" . $nom . " " . $prenom . " a bien été ajouté!<a href=\"..\..\vue\adherent.php\">Retour</a></p>";
     }
 
     if ($nom = "" || $prenom = "" || $dateNaissance = "" || $numeroTelephone = "" || $mel = "" || $rue = "" || $codePostal = "" || $ville = "") {
-        echo "Champs mal renseigné";
+        echo "Veuillez saisir les champs vides";
     }
 }
 
 if (htmlspecialchars(isset($_POST['supprimer']))) {
-    
     $idPersonne = htmlspecialchars($_POST['idPersonne']);
     $idCoordonnees = htmlspecialchars($_POST['idCoordonnees']);
     $nom = htmlspecialchars($_POST['nom']);
@@ -57,8 +56,6 @@ if (htmlspecialchars(isset($_POST['supprimer']))) {
     $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
     $mel = htmlspecialchars($_POST['mel']);
     $numeroTelephone = htmlspecialchars($_POST['numTel']);
-    
-    estAdherent($idPersonne);
 
     $personne = new Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $idCoordonnees);
     $personne->setIdPersonne($idPersonne);
@@ -80,8 +77,6 @@ if (htmlspecialchars(isset($_POST['modifier']))) {
     $mel = htmlspecialchars($_POST['mel']);
     $numeroTelephone = htmlspecialchars($_POST['numTel']);
     // $idPersonne = htmlspecialchars($_POST['personne']);
-    
-    estAdherent($idPersonne);
 
     $coordonnees = new Coordonnees($idCoordonnees, $rue, $codePostal, $ville);
     adresseUtilisee($coordonnees);
@@ -110,9 +105,7 @@ function estAdherent($idPersonne){
     $daoAdherent = new AdherentDAO();
     if($daoAdherent->getAdherent($idPersonne)){
         $daoAdherent->read($idPersonne);
-        afficheFormulaireAdh();
     }
-  
 }
 
 ?>
