@@ -1,3 +1,10 @@
+<?php
+include ("../db/Daos.php");
+include ("../metier/emprunts.php");
+include ("../metier/jeux.php");
+include ("../metier/parametres.php");
+include ("../metier/adherents.php");
+?>
 <!DOCTYPE html>
 
 <html>
@@ -11,39 +18,41 @@
 
 <body>
 <?php
-if (isset($_GET['page'])) {
-    $page = htmlentities($_GET['page']);
-    if ($page == "adherents" || $page == "jeux" || $page == "emprunts" || $page == "parametres") {
-        ?>
-	<nav>
-        <?php
-        include ('menu.php');
-        ?>
-	</nav>
-        <?php
-    }
-    switch ($_GET['page']) {
-        case "adherents":
-            include ('../controleur/adherent/accueilAdherents.php');
-            break;
-        case "jeux":
-            include ('../controleur/jeux/accueilJeux.php');
-            break;
-        case "emprunts":
-            include ('../controleur/emprunt/accueilEmprunts.php');
-            break;
-        case "parametres":
-            include ('../controleur/parametres/accueilParametres.php');
-            break;
-        default:
-            include ('accueil.php');
-            break;
-    }
-} else {
-    include ('accueil.php');
-}
-
+$page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "personnes";
 ?>
+<nav>
+		<ul>
+			<li><a href="index.php?page=adherents"><img alt="Adherents"
+					src="images/beneficiaire.png"><br />Gérer les Adhérents</a></li>
+			<li><a href="index.php?page=jeux"><img alt="Jeux"
+					src="images/jeu.png"><br />Gérer les Jeux</a></li>
+			<li><a href="index.php?page=emprunts"><img alt="Emprunts"
+					src="images/emprunt.png"><br />Gérer les Emprunts</a></li>
+			<li><a href="index.php?page=parametres"><img alt="Ludotheque"
+					src="images/parametre.png"><br />Gérer Ludothèque</a></li>
+		</ul>
+	</nav>
+	<div class="container">
+<?php
+switch ($page) {
+    case "personnes":
+        include ('../controleur/accueilPersonnes.php');
+        break;
+    case "jeux":
+        include ('../controleur/accueilJeux.php');
+        break;
+    case "emprunts":
+        include ('../controleur/accueilEmprunts.php');
+        break;
+    case "parametres":
+        include ('../controleur/accueilParametres.php');
+        break;
+    default:
+        include ('../controleur/accueilPersonnes.php');
+        break;
+}
+?>
+</div>
 
 </body>
 
