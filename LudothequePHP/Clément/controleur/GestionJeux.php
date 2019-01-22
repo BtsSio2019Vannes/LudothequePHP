@@ -89,7 +89,7 @@ elseif (htmlspecialchars(isset($_POST['ajouter un jeu']))) {
     $univers = htmlspecialchars($_POST['univers']);
     $contenu = htmlspecialchars($_POST['contenuInitial']);
     
-    
+    $;
 }
 ?>
 

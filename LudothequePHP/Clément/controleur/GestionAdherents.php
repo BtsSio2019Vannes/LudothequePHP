@@ -103,7 +103,7 @@ elseif (htmlspecialchars(isset($_POST['formulaire ajout']))){
     $mel = isset($mel) && $mel != "" ? $mel : $message;
     $numero = isset($numTelephone) && $numTelephone != "" ? $numTelephone : $message;
     $personne = new Personne("", $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
-    
+    echo "";
     if ($nom != $message && $prenom != $message && $dateNaissance != $message && $mel != $message && $coordonnees != $message && $numero != $message) {
         $personne->ajouterPersonne();
         

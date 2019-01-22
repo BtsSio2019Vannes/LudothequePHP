@@ -51,6 +51,6 @@ include '../../XFinal/db/Daos.php';
 
 
 </body>
-
+<?php ?>
 
 </html>
