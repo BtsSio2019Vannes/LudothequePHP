@@ -1,6 +1,9 @@
 <?php
 
 /* Formulaire d'accueil d'affichage de la liste des bénéficiaires et options possibles */
+use DTO\Adherent\AdherentDAO;
+use DAO\DAO;
+
 function afficherGestionPersonne()
 {
     ?>
@@ -109,7 +112,7 @@ function afficherFormulaireAjout($personne)
 				
 <?php
 
-    $listeAdherents = \DAO\Adherent\AdherentDAO::getAdherents();
+    $listeAdherents = DAO\Adherent\AdherentDAO::getAdherents();
     foreach ($listeAdherents as $adherent) {
         if (in_array($adherent, $listeAdherentsAssocies)) {
             echo "<option value=\"" . $adherent->getIdPersonne() . "\">" . $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . "</option>";

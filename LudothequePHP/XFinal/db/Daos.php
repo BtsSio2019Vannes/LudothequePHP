@@ -1,9 +1,6 @@
 <?php
 namespace DAO
 {
-
-    use Connexion\Connexion;
-
     include ("Connexion.php");
 
     abstract class DAO
@@ -30,7 +27,7 @@ namespace DAO
 
         function getLastKey()
         {
-            return Connexion::getInstance()->lastInsertId();
+            return \DB\Connexion\Connexion::getInstance()->lastInsertId();
         }
     }
 }
@@ -38,12 +35,10 @@ namespace DAO
 namespace DAO\Personne
 {
 
-    use Connexion\Connexion;
-    use DAO\DAO;
     use DAO\Coordonnees\CoordonneesDAO;
-    use Dao\Dao;
+    use DB\Connexion\Connexion;
                 
-    class PersonneDAO extends DAO
+    class PersonneDAO extends \DAO\DAO
     {
 
         function __construct()
