@@ -1,8 +1,10 @@
 <?php
-use Adherent\Adherent\Adherent;
-use Adherent\Personne\Personne;
 
-include ("../dao/Dao.php");
+
+use Adherent\Personne;
+use Adherent\Adherent;
+
+include ("../../XFinal/db/Daos.php");
 
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=ludotheque;charset=utf8', 'root', '');

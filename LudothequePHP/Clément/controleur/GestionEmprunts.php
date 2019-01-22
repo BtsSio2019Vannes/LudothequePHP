@@ -1,5 +1,5 @@
 <?php
-include '../dao/Dao.php';
+include '../../XFinal/db/Daos.php';
 ?>
 <!DOCTYPE html>
 <html>
