@@ -25,21 +25,24 @@
 
 				<tr>
 					<td>Auteur:</td>
-					<td><input type="text" name="Auteur" /></td>
+					<td><input type="text" name="auteur" /></td>
 					<td>Année de Sortie:</td>
 					<td><input type="text" name="anneeSortie" /></td>
 				</tr>
 
 				<tr>
 					<td>Catégorie:</td>
-					<td><input type="text" name="Auteur" /></td>
+					<td><input type="text" name="categorie" /></td>
 					<td>Univers:</td>
-					<td><input type="text" name="anneeSortie" /></td>
+					<td><input type="text" name="univers" /></td>
+					<td>Règle:</td>
+					<td><input type="url" name="regle" /></td>
+					
 				</tr>
 
 				<tr>
 					<td>Editeur:</td>
-					<td><input type="text" name="Editeur" /></td>
+					<td><input type="text" name="nomEditeur" /></td>
 
 				</tr>
 				<tr>

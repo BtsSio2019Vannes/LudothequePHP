@@ -58,7 +58,6 @@ session_start();
 						<th>mél</th>
 						<th>Numéro Téléphone</th>
 						<th>Choix</th>
-						<th>Adhérent</th>
 						<th>
 							<button type="submit" name="maj">Mettre à Jour</button></th>
 					</tr>
@@ -82,7 +81,6 @@ session_start();
                 $rep .= "</td><td>" . $personne->getCoordonnees();
                 $rep .= "</td><td>" . $personne->getMel();
                 $rep .= "</td><td>" . $personne->getNumeroTelephone();
-                $rep .= "</td><td><input type=\"checkbox\" name=\"adherent\" value=\"" . $personne->getAdherent() . "\" label for=\"adherent\">\"
                 $rep .= "</td><td><input type=\"radio\" name=\"idPersonne\" value=\"" . $personne->getIdPersonne() . "\" label for=\"idPersonne\"></td></tr>";
 
                 echo $rep;

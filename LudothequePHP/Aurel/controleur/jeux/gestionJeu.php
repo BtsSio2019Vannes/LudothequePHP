@@ -1,30 +1,26 @@
 <?php
-use Adherent\Personne;
-use DAO\Personne\PersonneDAO;
-use Adherent\Coordonnees;
-use DAO\Coordonnees\CoordonneesDAO;
-use Jeu\Jeu;
-
 include ("../../db/Daos.php");
 include ("../../metier/jeux/jeux.php");
-include ("../../db/Requetes.php");
+include ("../../metier/adherent/adherents.php");
 
-/*
- * TODO
- * Voir les personnes de la ludo ainsi que les adhérents
- * Pouvoir ajouter une nouvelle personne et le passer adhérent
- * Modifier les infos d'une personne
- * Lier des personnes à un adhérent
- * Supprimer une personne
- */
+use Adherent\Coordonnees;
+use Jeu\Jeu;
+use Jeu\Editeur;
+//use Jeu\Regle;
 
-// Condition ajouter personne
+use DAO\Coordonnees\CoordonneesDAO;
+use DAO\Jeu\JeuDAO;
+use DAO\Editeur\EditeurDAO;
+//use DAO\Regle\RegleDAO;
+
+
 if (htmlspecialchars(isset($_POST['ajouter']))) {
-
+    print_r($_POST);
     $titre = htmlspecialchars($_POST['titre']);
     $anneeSortie = htmlspecialchars($_POST['anneeSortie']);
     $auteur = htmlspecialchars($_POST['auteur']);
-    $editeur= htmlspecialchars($_POST['editeur']);
+    $nomEditeur= htmlspecialchars($_POST['nomEditeur']);
+    $regle = htmlspecialchars($_POST['regle']);
     $contenuInitial='Complet';
     
     $rue = htmlspecialchars($_POST['rue']);
@@ -34,23 +30,31 @@ if (htmlspecialchars(isset($_POST['ajouter']))) {
     $categorie = htmlspecialchars($_POST['categorie']);
     $univers = htmlspecialchars($_POST['univers']);
     
-    
+    /*$regleJeu = new Regle("", $regle);
+    $daoRegle = new RegleDAO();
+    $daoRegle->create($regleJeu);*/
 
-    
-    $coordonnees = new Coordonnees("", $rue , $codePostal, $ville);
+    $coordonnees = new Coordonnees("", $rue, $codePostal, $ville);
     $daoCoordonnees = new CoordonneesDAO();
     $daoCoordonnees->create($coordonnees);
+    
+    $editeur = new Editeur("", $nomEditeur, $coordonnees);
+    $daoEditeur = new EditeurDAO();
+    $daoEditeur->create($editeur);
 
-    if ($titre != "" && $anneeSortie != "" && $auteur != "" && $editeur != "" && $categorie != "" && $univers != ""  && $rue != "" && $codePostal!= "" && $ville !="") {
-        $jeu = new Jeu($idRegle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $coordonnees, $contenuInitial);
-        $daoPersonne = new PersonneDAO();
-        $daoPersonne->create($jeu);
+    if ($titre != "" && $anneeSortie != "" && $auteur != "" && $editeur != "" && $categorie != "" && $univers != ""  && $rue != "" 
+        && $codePostal!= "" && $ville !="" && $regle !="") {
+        $jeu = new Jeu($regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, 
+        $coordonnees, $contenuInitial);
+        $daoJeu = new JeuDAO();
+        $daoJeu->create($jeu);
 
-        echo " <p><b> Le jeu " . $titre . " a bien été ajouté!<a href=\"vue\jeux.php\">Retour</a></p>";
+        echo " <p><b> Le jeu " . $titre . " a bien été ajouté!<a href=\"..\..\vue\jeux.php\">Retour</a></p>";
     }
 
-    if ($titre = "" || $anneeSortie = "" || $auteur = "" || $editeur = "" || $categorie =  "" ||  $univers = ""  || $rue = "" || $codePostal!= "" || $ville ="") {
-        echo "Champs mal renseigné";
+    if ($titre = "" || $anneeSortie = "" || $auteur = "" || $editeur = "" || $categorie =  "" ||  $univers = ""  || $rue = "" 
+        || $codePostal = "" || $ville ="" || $regle ="") {
+        echo "Veuillez saisir les champs vides";
     }
 }
 

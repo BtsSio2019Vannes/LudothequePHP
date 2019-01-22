@@ -15,7 +15,7 @@
 	<div class="fenetreFormulaire">
 
 		<form class="formulaireModif" method="post"
-			action="../controleur/adherent/gestionAdh.php">
+			action="../controleur/adherent/gestionJeu.php">
 		<?php
 include ("../db/Daos.php");
 include ("../metier/adherent/adherents.php");
@@ -132,7 +132,11 @@ function afficherFormulaireAdh($personne)
 		value="<?php echo $adherent->getDateFinAdhesion();?>" /></td>
 </tr>
 <tr>
+<td>Caution :</td>
 
+	<td><input type="text" name="valeurCaution"
+		value=" <?php echo $adherent->getValeurCaution()?>" /></td>
+</tr>
 
 
 <?php
