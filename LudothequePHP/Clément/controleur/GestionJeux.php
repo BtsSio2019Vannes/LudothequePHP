@@ -2,7 +2,7 @@
 
 use Jeu\Jeu;
 
-include ("../dao/Dao.php");
+include ("../../XFinal/db/Dao.php");
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=ludotheque;charset=utf8', 'root', '');
 } catch (Exception $e) {
@@ -79,17 +79,25 @@ if (htmlspecialchars(isset($_POST['ajouter un jeu']))) {
 }
 elseif (htmlspecialchars(isset($_POST['ajouter un jeu']))) {
     $messageErreur = "Erreur";
-    $id = htmlspecialchars($_POST['idJeu']);
-    $idR = htmlspecialchars($_POST['idRegle']);
+    $idRegle = htmlspecialchars($_POST['idRegle']);
     $titre = htmlspecialchars($_POST['titre']);
-    $annee = htmlspecialchars($_POST['anneSortie']);
+    $anneeSortie = htmlspecialchars($_POST['anneSortie']);
     $auteur = htmlspecialchars($_POST['auteur']);
-    $idE = htmlspecialchars($_POST['idEditeur']);
+    $idEditeur = htmlspecialchars($_POST['idEditeur']);
     $categorie = htmlspecialchars($_POST['categorie']);
     $univers = htmlspecialchars($_POST['univers']);
-    $contenu = htmlspecialchars($_POST['contenuInitial']);
+    $contenuInitial = htmlspecialchars($_POST['contenuInitial']);
     
     
+    $idRegle = isset($idRegle) && $idRegle != " " ? $idRegle : $messageErreur;
+    $titre = isset($titre) && $titre != "" ? $titre : $messageErreur;
+    $anneeSortie = isset($anneeSortie) && $anneeSortie != "" ? $anneeSortie : $messageErreur;
+    $auteur = isset($auteur) && $auteur != "" ? $auteur : $messageErreur;
+    $idEditeur = isset($idEditeur) && $idEditeur != "" ? $idEditeur : $messageErreur;
+    $categorie = isset($categorie) && $categorie != "" ? $categorie : $messageErreur;
+    $univers = isset($univers) && $univers != "" ? $univers : $messageErreur;
+    $contenuInitial = isset($contenuInitial) && $contenuInitial != "" ? $contenuInitial : $messageErreur;
+    $jeu = new Jeu("", $idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
 }
 ?>
 
