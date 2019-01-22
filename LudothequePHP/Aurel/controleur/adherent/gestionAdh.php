@@ -1,4 +1,5 @@
 <?php
+
 use Adherent\Personne;
 use Adherent\Coordonnees;
 
