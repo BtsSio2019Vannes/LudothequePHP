@@ -1,8 +1,10 @@
 <?php
-use Adherent\Adherent\Adherent;
-use Adherent\Personne\Personne;
 
-include ("../dao/Dao.php");
+
+use Adherent\Personne;
+use Adherent\Adherent;
+
+include ("../../XFinal/db/Daos.php");
 
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=ludotheque;charset=utf8', 'root', '');
@@ -101,7 +103,7 @@ elseif (htmlspecialchars(isset($_POST['formulaire ajout']))){
     $mel = isset($mel) && $mel != "" ? $mel : $message;
     $numero = isset($numTelephone) && $numTelephone != "" ? $numTelephone : $message;
     $personne = new Personne("", $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
-    
+    echo "";
     if ($nom != $message && $prenom != $message && $dateNaissance != $message && $mel != $message && $coordonnees != $message && $numero != $message) {
         $personne->ajouterPersonne();
         

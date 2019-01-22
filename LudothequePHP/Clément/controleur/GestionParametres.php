@@ -1,6 +1,6 @@
 <?php
 
-include '../dao/Dao.php';
+include '../../XFinal/db/Daos.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,6 +51,6 @@ include '../dao/Dao.php';
 
 
 </body>
-
+<?php ?>
 
 </html>

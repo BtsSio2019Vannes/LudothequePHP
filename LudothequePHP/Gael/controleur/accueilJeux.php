@@ -1,8 +1,11 @@
 <section>
-	<h1>Gerer Les Jeux</h1>
+		<h1>Gérer les Jeux</h1>
+
 <?php
-include ("Jeu.php");
-
-
+/*
+ * Traitement des demandes affichage (GET) et des envois de formulaire (POST)
+ * en relation avec le métier
+ */
 ?>
+		
 </section>

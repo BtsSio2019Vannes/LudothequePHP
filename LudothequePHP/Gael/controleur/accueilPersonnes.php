@@ -1,11 +1,14 @@
 <?php
-use Adherent\Personne;
+use Personne\Personne;
+use Personne\Adherent;
+use Personne\Coordonnees;
+use DAO\Personne\PersonneDAO;
+use DAO\Adherent\AdherentDAO;
 ?>
 <section>
 	<h1>Gérer les Personnes</h1>
 <?php
-include ("Personne.php");
-include ("formulaire.php");
+include ("../vue/personne/formulairePersonnes.php");
 
 /*
  * Gérer les personnes :
@@ -18,118 +21,102 @@ include ("formulaire.php");
  * ..................+ BOUTON retour Gérer les Personnes.
  */
 
+$daoAdherent = new AdherentDAO();
+$daoPersonne = new PersonneDAO();
+
 /* Affichage des formulaires en fonction des variables POST reçues */
 
 /* Après clic sur bouton ajouter */
 if (htmlspecialchars(isset($_POST['ajouter']))) {
-    $personne = new Personne("", "", "", "", "", "", "", "");
-    afficherFormulaireAjout($personne);
+    $coordonnees = new Coordonnees("", "", "", "");
+    $personne = new Personne("", "", "", "", $coordonnees, "", "");
+    afficherFormulaire($personne);
 } /* Après clic sur bouton supprimer */
-else if (htmlspecialchars(isset($_POST['supprimer'])) && htmlspecialchars(isset($_POST['personne']))) {
-    $idPersonne = htmlspecialchars($_POST['personne']);
-    $personne = new Personne($idPersonne, "", "", "", "", "", "", "");
-    $personne->supprimerPersonne();
+else if (htmlspecialchars(isset($_POST['supprimer'])) && htmlspecialchars(isset($_POST['idPersonne']))) {
+    $adherent = $daoAdherent->read(htmlspecialchars($_POST['idPersonne']));
+    $daoAdherent->delete($adherent);
+
     echo "<p><b>Personne bien supprimée !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
 } /* Après clic sur bouton maj */
-else if (htmlspecialchars(isset($_POST['maj'])) && htmlspecialchars(isset($_POST['personne']))) {
-    $idPersonne = htmlspecialchars($_POST['personne']);
-    $personne = Personne::identifierPersonne($idPersonne);
-
-    if ($personne->retrouverAdherentAssocie() == "") {
-        $adherent = Personne::identifierAdherent($idPersonne);
-    } else {
-        $listeAdherents = $personne->retrouverAdherentAssocie();
-    }
-
-    afficherFormulaireMaj($personne);
-} /* Après validation du formulaire d'ajout */
-else if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
+else if (htmlspecialchars(isset($_POST['maj'])) && htmlspecialchars(isset($_POST['idPersonne']))) {
+    $personne = $daoPersonne->read(htmlspecialchars($_POST['idPersonne']));
+    afficherFormulaire($personne);
+} /* Après validation du formulaire */
+else if (htmlspecialchars(isset($_POST['formulaireAjout'])) || htmlspecialchars(isset($_POST['formulaireMaj']))) {
     $messageErreur = "ERREUR";
 
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);
     $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
-    $coordonnees = htmlspecialchars($_POST['coordonnees']);
+    $rue = htmlspecialchars($_POST['rue']);
+    $codePostal = htmlspecialchars($_POST['codePostal']);
+    $ville = htmlspecialchars($_POST['ville']);
     $mel = htmlspecialchars($_POST['mel']);
-    $numero = htmlspecialchars($_POST['numero']);
-    $idPersonneAssociee = htmlspecialchars($_POST['adherents']);
+    $numeroTelephone = htmlspecialchars($_POST['numeroTelephone']);
 
+    $idPersonne = htmlspecialchars(isset($_POST['idPersonne'])) ? htmlspecialchars($_POST['idPersonne']) : "";
     $nom = isset($nom) && $nom != "" ? $nom : $messageErreur;
     $prenom = isset($prenom) && $prenom != "" ? $prenom : $messageErreur;
     $dateNaissance = isset($dateNaissance) && $dateNaissance != "" ? $dateNaissance : $messageErreur;
-    $coordonnees = isset($coordonnees) && $coordonnees != "" ? $coordonnees : $messageErreur;
+    $rue = isset($rue) && $rue != "" ? $rue : $messageErreur;
+    $codePostal = isset($codePostal) && $codePostal != "" ? $codePostal : $messageErreur;
+    $ville = isset($ville) && $ville != "" ? $ville : $messageErreur;
+    $coordonnees = new Coordonnees("", $rue, $codePostal, $ville);
     $mel = isset($mel) && $mel != "" ? $mel : $messageErreur;
-    $numero = isset($numero) && $numero != "" ? $numero : $messageErreur;
-    $personne = new Personne("", $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
+    $numeroTelephone = isset($numeroTelephone) && $numeroTelephone != "" ? $numeroTelephone : $messageErreur;
 
-    if ($nom != $messageErreur && $prenom != $messageErreur && $dateNaissance != $messageErreur && $mel != $messageErreur && $coordonnees != $messageErreur && $numero != $messageErreur) {
-        $personne->ajouterPersonne();
+    $idAdherentAssocie = htmlspecialchars(isset($_POST['adherents'])) ? htmlspecialchars($_POST['adherents']) : "";
+    $date = new DateTime();
+    $datePremiereAdhesion = htmlspecialchars(isset($_POST['datePremiereAdhesion'])) ? htmlspecialchars($_POST['datePremiereAdhesion']) : $date->format('Y-m-d');
+    $date->modify('+1 year');
+    $dateFinAdhesion = htmlspecialchars(isset($_POST['dateFinAdhesion'])) ? htmlspecialchars($_POST['dateFinAdhesion']) : $date->format('Y-m-d');
+    $idReglement = htmlspecialchars(isset($_POST['reglement'])) ? htmlspecialchars($_POST['reglement']) : 1;
 
-        if ($idPersonneAssociee == "") {
-            $idReglement = 1;
-            $date = new DateTime();
-            $datePremiereAdhesion = $date->format('Y-m-d');
-            $date->modify('+1 year');
-            $dateFinAdhesion = $date->format('Y-m-d');
-            $valeurCaution = 15;
-            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
-            $adherent->setIdPersonne($personne->getIdPersonne());
-            $adherent->passerAdherent();
-        } else {
-            $idAdherent = htmlspecialchars($_POST['adherents']);
-            $personne->associerAdherent($idAdherent);
+    $adherentAssocie = ($idAdherentAssocie != "") ? $daoAdherent->read($idAdherentAssocie) : null;
+    $adherent = new ArrayObject();
+    $adherent->append($adherentAssocie);
+    $personne = new Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
+
+    if ($nom != $messageErreur && $prenom != $messageErreur && $dateNaissance != $messageErreur && $mel != $messageErreur && $rue != $messageErreur && $codePostal != $messageErreur && $ville != $messageErreur && $numeroTelephone != $messageErreur) {
+
+        if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
+            $daoPersonne->create($personne);
+            echo "<p><b>Personne bien ajoutée !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
+        } else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
+            $daoPersonne->update($personne);
+            echo "<p><b>Personne bien mise à jour !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
         }
-        echo "<p><b>Personne bien ajoutée !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
-    } else {
-        echo $messageErreur;
-        afficherFormulaireAjout($personne);
-    }
-} /* Après validation du formulaire maj */
-else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
-    $messageErreur = "ERREUR";
+        
+        if ($idAdherentAssocie == "passerAdherent") {
 
-    $idPersonne = htmlspecialchars($_POST['idPersonne']);
-    $nom = htmlspecialchars($_POST['nom']);
-    $prenom = htmlspecialchars($_POST['prenom']);
-    $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
-    $coordonnees = htmlspecialchars($_POST['coordonnees']);
-    $mel = htmlspecialchars($_POST['mel']);
-    $numero = htmlspecialchars($_POST['numero']);
-    $idPersonneAssociee = htmlspecialchars($_POST['adherents']);
-
-    $nom = isset($nom) && $nom != "" ? $nom : $messageErreur;
-    $prenom = isset($prenom) && $prenom != "" ? $prenom : $messageErreur;
-    $dateNaissance = isset($dateNaissance) && $dateNaissance != "" ? $dateNaissance : $messageErreur;
-    $coordonnees = isset($coordonnees) && $coordonnees != "" ? $coordonnees : $messageErreur;
-    $mel = isset($mel) && $mel != "" ? $mel : $messageErreur;
-    $numero = isset($numero) && $numero != "" ? $numero : $messageErreur;
-
-    $personne = new Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numero);
-
-    if ($nom != $messageErreur && $prenom != $messageErreur && $dateNaissance != $messageErreur && $mel != $messageErreur && $coordonnees != $messageErreur) {
-        $personne->mettreAJourPersonne();
-        $personne->supprimerBeneficiaire();
-        $personne->associerAdherent($idPersonneAssociee);
-
-        if (htmlspecialchars(isset($_POST['passerAdherent']))) {
-            $idReglement = 1;
-            $date = new DateTime();
-            $datePremiereAdhesion = $date->format('Y-m-d');
-            $date->modify('+1 year');
-            $dateFinAdhesion = $date->format('Y-m-d');
-            $valeurCaution = 15;
-            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            $adherent = new Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion);
             $adherent->setIdPersonne($idPersonne);
-            $adherent->passerAdherent();
-        } else if (htmlspecialchars(isset($_POST['renouvelerAdhesion']))) {
-            $adherent = Personne::identifierAdherent($personne->getIdPersonne());
-            $adherent->renouvelerAdhesion();
+            $adherent->setNom($nom);
+            $adherent->setPrenom($prenom);
+            $adherent->setDateNaissance($dateNaissance);
+            $adherent->setCoordonnees($coordonnees);
+            $adherent->setMel($mel);
+            $adherent->setNumeroTelephone($numeroTelephone);
+            if ($idPersonne == "") {
+                $daoAdherent->create($adherent);
+            }
+            else {
+                $daoAdherent->update($adherent);
+            }
+        } else if ($idAdherentAssocie != "") {
+
+            $daoAdherent->ajouterBeneficiaire($idAdherentAssocie, $idPersonne);
         }
-        echo "<p><b>Personne bien mise à jour !</b><br/><a href=\"index.php?page=personnes\">Retour</a></p>";
+
+        // if (htmlspecialchars(isset($_POST['renouvelerAdhesion']))) {
+        // $adherent = $daoPersonne->read($personne->getIdPersonne());
+        // $dateARenouveler = $adherent->getDateFinAdhesion();
+        // $dateRenouvelee = date('Y-m-d', strtotime('+12 month', strtotime($dateARenouveler)));
+        // $adherent->setDateFinAdhesion($dateRenouvelee);
+        // }
     } else {
         echo $messageErreur;
-
-        afficherFormulaireMaj($personne);
+        afficherFormulaire($personne);
     }
 } /* Sinon afficher liste personnes */
 else {
