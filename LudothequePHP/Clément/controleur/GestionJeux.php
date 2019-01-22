@@ -2,12 +2,8 @@
 
 use Jeu\Jeu;
 
-include ("../../XFinal/db/Dao.php");
-try {
-    $bdd = new PDO('mysql:host=localhost;dbname=ludotheque;charset=utf8', 'root', '');
-} catch (Exception $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+include ("../../XFinal/db/Daos.php");
+
 ?>
 <!DOCTYPE html>
 <html>
