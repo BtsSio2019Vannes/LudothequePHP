@@ -6,15 +6,17 @@ h1 {
 	font-size: 30px;
 
 }
-html{
-	background-image: url("../vue/images/smallworld_745.png");
+body{
+	
+	background-color: lightgrey;
 	background-attachment: fixed;
 }
 img{
-	margin-left: 200px;
 	width:200px;
 	height:200px;
-	background-color: green;
+	align-content:center;
+	background-color:green;
+	margin-left:180px;
 }
 
 
