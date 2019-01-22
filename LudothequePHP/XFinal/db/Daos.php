@@ -1,6 +1,7 @@
 <?php
 namespace DAO
 {
+
     include ("Connexion.php");
 
     abstract class DAO
@@ -37,7 +38,7 @@ namespace DAO\Personne
 
     use DAO\Coordonnees\CoordonneesDAO;
     use DB\Connexion\Connexion;
-                
+
     class PersonneDAO extends \DAO\DAO
     {
 
@@ -61,15 +62,21 @@ namespace DAO\Personne
             $prenom = $row["prenom"];
             $dateNaissance = $row["dateNaissance"];
             $idCoordonnees = $row["idCoordonnees"];
-            
+
             $daoCoordonnees = new CoordonneesDAO();
             $coordonnees = $daoCoordonnees->read($idCoordonnees);
-            
+
             $mel = $row["mel"];
             $numeroTelephone = $row["numeroTelephone"];
 
             $rep = new \Adherent\Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
             return $rep;
+
+            /*
+             * $rep = new \Adherent\Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees);
+             * $rep->setIdPersonne($idPersonne);
+             * return $rep;
+             */
         }
 
         public function update($objet)
@@ -131,7 +138,7 @@ namespace DAO\Personne
             $sql = "SELECT * FROM personne";
             $listePersonnes = new \ArrayObject();
             foreach (Connexion::getInstance()->query($sql) as $row) {
-                $daoPersonne = new DAO\Personne\PersonneDAO();
+                $daoPersonne = new PersonneDAO();
                 $personne = $daoPersonne->read($row["idPersonne"]);
                 $listePersonnes->append($personne);
             }
@@ -166,12 +173,17 @@ namespace DAO\Adherent
             $idReglement = $row["idReglement"];
             $datePremiereAdhesion = $row["datePremiereAdhesion"];
             $dateFinAdhesion = $row["dateFinAdhesion"];
-            $valeurCaution = $row["valeurCaution"];
-
-            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            // $valeurCaution = $row["valeurCaution"];
 
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $personne = $daoPersonne->read($idAdherent);
+
+            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+
+            /*
+             * $adherent = new \Adherent\Adherent($personne->getNom(),$personne->getPrenom(), $personne->getDateNaissance(),
+             * $personne->getNumeroTelephone(), $personne->getMel(), $personne->getCoordonnees(), $idReglement, $datePremiereAdhesion, $dateFinAdhesion);
+             */
 
             $adherent->setIdPersonne($personne->getIdPersonne());
             $adherent->setNom($personne->getNom());
@@ -187,18 +199,18 @@ namespace DAO\Adherent
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
-            $sql = "UPDATE $this->table SET idAdherent = :idAdherent, idReglement = :idReglement, datePremiereAdhesion = :datePremiereAdhesion, dateFinAdhesion = :dateFinAdhesion, valeurCaution = :valeurCaution WHERE $this->key=:idAdherent";
+            $sql = "UPDATE $this->table SET idAdherent = :idAdherent, idReglement = :idReglement, datePremiereAdhesion = :datePremiereAdhesion, dateFinAdhesion = :dateFinAdhesion WHERE $this->key=:idAdherent";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idAdherent = $objet->getIdPersonne();
             $idReglement = $objet->getIdReglement();
             $datePremiereAdhesion = $objet->getDatePremiereAdhesion();
             $dateFinAdhesion = $objet->getDateFinAdhesion();
-            $valeurCaution = $objet->getValeurCaution();
+            // $valeurCaution = $objet->getValeurCaution();
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':idReglement', $idReglement);
             $stmt->bindParam(':datePremiereAdhesion', $datePremiereAdhesion);
             $stmt->bindParam(':dateFinAdhesion', $dateFinAdhesion);
-            $stmt->bindParam(':valeurCaution', $valeurCaution);
+            // $stmt->bindParam(':valeurCaution', $valeurCaution);
             $stmt->execute();
 
             $daoPersonne = new \DAO\Personne\PersonneDAO();
@@ -223,18 +235,18 @@ namespace DAO\Adherent
 
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idAdherent,idReglement,datePremiereAdhesion,dateFinAdhesion,valeurCaution) VALUES (:idAdherent, :idReglement, :datePremiereAdhesion, :dateFinAdhesion, :valeurCaution)";
+            $sql = "INSERT INTO $this->table (idAdherent,idReglement,datePremiereAdhesion,dateFinAdhesion) VALUES (:idAdherent, :idReglement, :datePremiereAdhesion, :dateFinAdhesion)";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idAdherent = $objet->getIdPersonne();
             $idReglement = $objet->getIdReglement();
             $datePremiereAdhesion = $objet->getDatePremiereAdhesion();
             $dateFinAdhesion = $objet->getDateFinAdhesion();
-            $valeurCaution = $objet->getValeurCaution();
+            // $valeurCaution = $objet->getValeurCaution();
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':idReglement', $idReglement);
             $stmt->bindParam(':datePremiereAdhesion', $datePremiereAdhesion);
             $stmt->bindParam(':dateFinAdhesion', $dateFinAdhesion);
-            $stmt->bindParam(':valeurCaution', $valeurCaution);
+            // $stmt->bindParam(':valeurCaution', $valeurCaution);
             $stmt->execute();
         }
 
@@ -243,11 +255,24 @@ namespace DAO\Adherent
             $sql = "SELECT * FROM personne, adherent WHERE idPersonne = idAdherent";
             $listeAdherents = new \ArrayObject();
             foreach (Connexion::getInstance()->query($sql) as $row) {
-                $daoAdherent = new DAO\Adherent\AdherentDAO();
+                $daoAdherent = new AdherentDAO();
                 $adherent = $daoAdherent->read($row["idAdherent"]);
                 $listeAdherents->append($adherent);
             }
             return $listeAdherents;
+        }
+
+        // Methode qui renvoie true si une personne est aussi adhérente
+        static function isAdherent($personne)
+        {
+            // $rep=false;
+            $sql = "SELECT * FROM adherent WHERE idAdherent = :idAdherent";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $id = $personne->getIdPersonne();
+            $stmt->bindParam(':idAdherent', $id);
+            $stmt->execute();
+
+            return $stmt->fetch();
         }
     }
 }
@@ -322,22 +347,36 @@ namespace DAO\Coordonnees
             $stmt->execute();
             $objet->setIdCoordonnees(parent::getLastKey());
         }
+
+        // Méthode qui permet de savoir si 1 adresse est utilisée plusieurs fois
+        public function nbLignesCoordonnees($coordonnees)
+        {
+            $sql = "SELECT COUNT(idCoordonnees) AS nbRep FROM personne where idCoordonnees=:idCoordonnees";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $id = $coordonnees->getIdCoordonnees();
+            $stmt->bindParam(':idCoordonnees', $id);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            $rep = $row['nbRep'];
+
+            return $rep;
+        }
     }
 }
 namespace DAO\Reglement
 {
-    
+
     use DB\Connexion\Connexion;
-    
+
     class ReglementDAO extends \DAO\DAO
     {
-        
+
         function __construct()
         {
             parent::__construct("idReglement", "reglement");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-        
+
         public function read($idReglement)
         {
             // On utilise le prepared statemet qui simplifie les typages
@@ -345,7 +384,7 @@ namespace DAO\Reglement
             $stmt = Connexion::getInstance()->prepare($sql);
             $stmt->bindParam(':idReglement', $idReglement);
             $stmt->execute();
-            
+
             $row = $stmt->fetch();
             $idReglement = $row["idReglement"];
             $nbrJeux = $row["nbrJeux"];
@@ -353,12 +392,12 @@ namespace DAO\Reglement
             $retardTolere = $row["retardTolere"];
             $valeurCaution = $row["valeurCaution"];
             $coutAdhesion = $row["coutAdhesion"];
-            
+
             $reglement = new \Parametre\Reglement($idReglement, $nbrJeux, $duree, $retardTolere, $valeurCaution, $coutAdhesion);
-            
+
             return $reglement;
         }
-        
+
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
@@ -378,7 +417,7 @@ namespace DAO\Reglement
             $stmt->bindParam(':coutAdhesion', $coutAdhesion);
             $stmt->execute();
         }
-        
+
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idReglement";
@@ -387,7 +426,7 @@ namespace DAO\Reglement
             $stmt->bindParam(':idCoordonnees', $idReglement);
             $stmt->execute();
         }
-        
+
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (nbrJeux,duree,retardTolere,valeurCaution,coutAdhesion) VALUES (:nbrJeux, :duree, :retardTolere, :valeurCaution, :coutAdhesion)";
@@ -409,18 +448,18 @@ namespace DAO\Reglement
 }
 namespace DAO\Alerte
 {
-    
+
     use DB\Connexion\Connexion;
-    
+
     class AlerteDAO extends \DAO\DAO
     {
-        
+
         function __construct()
         {
             parent::__construct("idAlerte", "alerte");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-        
+
         public function read($idAlerte)
         {
             // On utilise le prepared statemet qui simplifie les typages
@@ -428,19 +467,19 @@ namespace DAO\Alerte
             $stmt = Connexion::getInstance()->prepare($sql);
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
-            
+
             $row = $stmt->fetch();
             $idAlerte = $row["idAlerte"];
             $nom = $row["nom"];
             $dateRetour = $row["dateRetour"];
             $typeAlerte = $row["typeAlerte"];
             $commentaire = $row["commentaire"];
-            
+
             $alerte = new \Jeu\Alerte($idAlerte, $nom, $dateRetour, $typeAlerte, $commentaire);
-            
+
             return $alerte;
         }
-        
+
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
@@ -458,7 +497,7 @@ namespace DAO\Alerte
             $stmt->bindParam(':commentaire', $commentaire);
             $stmt->execute();
         }
-        
+
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idAlerte";
@@ -467,7 +506,7 @@ namespace DAO\Alerte
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
-        
+
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (nom,dateRetour,typeAlerte,commentaire) VALUES (:nom, :dateRetour, :typeAlerte, :commentaire)";
@@ -485,45 +524,44 @@ namespace DAO\Alerte
         }
     }
 }
-
 namespace DAO\Editeur
 {
-    
+
     use DB\Connexion\Connexion;
     use Jeu\Editeur;
-    
+
     class EditeurDAO extends \DAO\DAO
     {
-        
+
         function __construct()
         {
             parent::__construct("idEditeur", "editeur");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-        
+
         public function read($idEditeur)
         {
             // On utilise le prepared statemet qui simplifie les typages
-            $sql = "SELECT * FROM $this->table WHERE $this->key=:id";
+            $sql = "SELECT * FROM $this->table WHERE $this->key=:idEditeur";
             $stmt = Connexion::getInstance()->prepare($sql);
             $stmt->bindParam(':idEditeur', $idEditeur);
             $stmt->execute();
-            
+
             $row = $stmt->fetch();
             $idEditeur = $row["idEditeur"];
             $nom = $row["nom"];
             $idCoordonnees = $row["idCoordonnees"];
-            
+
             // echo "contenu de la base $num $nom $adr $sal ";
             $rep = new Editeur($idEditeur, $nom, $idCoordonnees);
             return $rep;
         }
-        
+
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
             $sql = "UPDATE $this->table SET idEditeur = :idEditeur, nom = :nom, idCoordonnees = :idCoordonnees WHERE $this->key=:idEditeur";
-            
+
             $stmt = Connexion::getInstance()->prepare($sql);
             $idEditeur = $objet->getIdEditeur();
             $nom = $objet->getNom();
@@ -533,7 +571,7 @@ namespace DAO\Editeur
             $stmt->bindParam(':idCoordonnees', $idCoordonnees);
             $stmt->execute();
         }
-        
+
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idEditeur";
@@ -542,7 +580,7 @@ namespace DAO\Editeur
             $stmt->bindParam(':idEditeur', $idEditeur);
             $stmt->execute();
         }
-        
+
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (nom,idCoordonnees) VALUES (:nom, idCoordonnees)";
@@ -558,18 +596,19 @@ namespace DAO\Editeur
 }
 namespace DAO\Emprunt
 {
-    
+
     use DB\Connexion\Connexion;
     use Emprunt\Emprunt;
-    
+
     class EmpruntDAO extends \DAO\DAO
     {
+
         function __construct()
         {
             parent::__construct("idJeuPhysique", "emprunt");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-        
+
         public function read($objet)
         {
             $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
@@ -577,29 +616,29 @@ namespace DAO\Emprunt
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
-            
+
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':dateEmprunt', $dateEmprunt);
             $stmt->execute();
-            
+
             $row = $stmt->fetch();
 
             $dateRetourEffetif = $row["dateRetourEffectif"];
             $idAlerte = $row["idAlerte"];
-            
+
             // echo "contenu de la base $num $nom $adr $sal ";
             $rep = new Emprunt($idAdherent, $dateEmprunt, $dateRetourEffetif, $idAlerte);
 
             return $rep;
         }
-        
+
         public function update($objet)
         {
             $sql = "UPDATE $this->table SET idJeuPhysique = :idJeuPhysique, idAdherent = :idAdherent, dateEmprunt = :dateEmprunt,
             dateRetourEffectif = :dateRetourEffectif, idAlerte = :idAlerte
             WHERE $this->key=:idJeuPhysique";
-            
+
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
@@ -613,7 +652,7 @@ namespace DAO\Emprunt
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
-        
+
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (idJeuPhysique, idAdherent, dateEmprunt, dateRetourEffectif, idAlerte)
@@ -631,7 +670,7 @@ namespace DAO\Emprunt
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
-        
+
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
@@ -639,52 +678,53 @@ namespace DAO\Emprunt
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
-            
+
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':dateEmprunt', $dateEmprunt);
             $stmt->execute();
-        } 
+        }
     }
 }
+namespace DAO\JeuPhysique
+{
 
-namespace DAO\JeuPhysique{
-    
     use DB\Connexion\Connexion;
     use Jeu\JeuPhysique;
-    
-    class JeuPhysiqueDAO extends  \DAO\DAO{
-        
+
+    class JeuPhysiqueDAO extends \DAO\DAO
+    {
+
         function __construct()
         {
             parent::__construct("idJeuPhysique", "jeuphysique");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-        
+
         public function read($idJeuPhysique)
         {
             $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeuPhysique";
             $stmt = Connexion::getInstance()->prepare($sql);
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->execute();
-            
+
             $row = $stmt->fetch();
             $idJeuPhysique = $row["idJeuPhysique"];
             $idJeu = $row["idJeu"];
             $contenuActuel = $row["contenuActuel"];
-            
+
             // echo "contenu de la base $num $nom $adr $sal ";
             $rep = new JeuPhysique($idJeuPhysique, $idJeu, $contenuActuel);
 
             return $rep;
         }
-        
+
         public function update($objet)
         {
             $sql = "UPDATE $this->table SET idJeuPhysique = :idJeuPhysique, idJeu = :idJeu,
             contenuActuel = :contenuActuel
             WHERE $this->key=:idJeuPhysique";
-            
+
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idJeu = $objet->getIdJeu();
@@ -692,10 +732,10 @@ namespace DAO\JeuPhysique{
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->bindParam(':idJeu', $idJeu);
             $stmt->bindParam(':contenuActuel', $contenuActuel);
-            
+
             $stmt->execute();
         }
-        
+
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (idJeu,contenuActuel)
@@ -708,7 +748,7 @@ namespace DAO\JeuPhysique{
             $stmt->execute();
             $objet->setIdJeuPhysique(parent::getLastKey());
         }
-        
+
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique";
@@ -719,56 +759,58 @@ namespace DAO\JeuPhysique{
         }
     }
 }
+namespace DAO\Jeu
+{
 
-namespace DAO\Jeu {
-    
     use DB\Connexion\Connexion;
     use Jeu\Jeu;
-    
-    class JeuDAO extends \DAO\DAO{
-        
+    use DAO\Editeur\EditeurDAO;
+
+    class JeuDAO extends \DAO\DAO
+    {
+
         function __construct()
         {
             parent::__construct("idJeu", "jeu");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-        
-        
+
         public function read($idJeu)
         {
-            
             $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeu";
             $stmt = Connexion::getInstance()->prepare($sql);
             $stmt->bindParam(':idJeu', $idJeu);
             $stmt->execute();
-            
+
             $row = $stmt->fetch();
             $idJeu = $row["idJeu"];
-            $idRegle = $row["idRegle"];
+            $regle = $row["regle"];
             $titre = $row["titre"];
-            $anneeSortie =$row["anneeSortie"];
+            $anneeSortie = $row["anneeSortie"];
             $auteur = $row["auteur"];
             $idEditeur = $row["editeur"];
             $categorie = $row["categorie"];
             $univers = $row["univers"];
             $contenuInitial = $row["contenuInitial"];
-            
-            // echo "contenu de la base $num $nom $adr $sal ";
-            $rep = new Jeu($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
+
+            $doaEditeur = new EditeurDAO();
+            $editeur = $doaEditeur->read($idEditeur);
+
+            $rep = new Jeu($idJeu, $regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial);
 
             return $rep;
         }
-        
+
         public function update($objet)
         {
-            $sql = "UPDATE $this->table SET idJeu = :idJeu, idRegle = :idRegle, titre= :titre,
+            $sql = "UPDATE $this->table SET idJeu = :idJeu, regle = :regle, titre= :titre,
             anneeSortie = :anneeSortie, auteur = :auteur, idEditeur = :idEditeur, categorie = :categorie
             univers = :univers, contenuInitial = :contenuInitial
             WHERE $this->key=:idJeu";
-            
+
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeu = $objet->getIdJeu();
-            $idRegle = $objet->getIdRegle();
+            $regle = $objet->getRegle();
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
@@ -777,7 +819,7 @@ namespace DAO\Jeu {
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();
             $stmt->bindParam(':idJeu', $idJeu);
-            $stmt->bindParam(':idRegle', $idRegle);
+            $stmt->bindParam(':regle', $regle);
             $stmt->bindParam(':titre', $titre);
             $stmt->bindParam(':anneeSortie', $anneeSortie);
             $stmt->bindParam(':auteur', $auteur);
@@ -785,18 +827,18 @@ namespace DAO\Jeu {
             $stmt->bindParam(':categorie', $categorie);
             $stmt->bindParam(':univers', $univers);
             $stmt->bindParam(':contenuInitial', $contenuInitial);
-            
+
             $stmt->execute();
         }
-        
+
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idRegle,titre, anneeSortie, auteur, idEditeur,
+            $sql = "INSERT INTO $this->table (regle,titre, anneeSortie, auteur, idEditeur,
             categorie, univers, contenuInitial)
-            VALUES (:idRegle, :titre, :anneeSortie, :auteur, :idEditeur,:categorie, :univers,
+            VALUES (:regle, :titre, :anneeSortie, :auteur, :idEditeur,:categorie, :univers,
             :contenuInitial)";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idRegle = $objet->getIdRegle();
+            $regle = $objet->getRegle();
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
@@ -804,7 +846,7 @@ namespace DAO\Jeu {
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();
-            $stmt->bindParam(':idRegle', $idRegle);
+            $stmt->bindParam(':regle', $regle);
             $stmt->bindParam(':titre', $titre);
             $stmt->bindParam(':anneeSortie', $anneeSortie);
             $stmt->bindParam(':auteur', $auteur);
@@ -813,10 +855,10 @@ namespace DAO\Jeu {
             $stmt->bindParam(':univers', $univers);
             $stmt->bindParam(':contenuInitial', $contenuInitial);
             $stmt->execute();
-            
+
             $objet->setIdJeu(parent::getLastKey());
         }
-        
+
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeu";
@@ -826,6 +868,5 @@ namespace DAO\Jeu {
             $stmt->execute();
         }
     }
-    
 }
 ?>
