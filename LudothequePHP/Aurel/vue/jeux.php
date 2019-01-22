@@ -43,7 +43,7 @@
 				action="formulaireModifJeu.php">
 				<table>
 					<tr>
-						<td colspan="7"></td>
+						<td colspan="6"></td>
 
 					</tr>
 					<tr style="width:100%">
@@ -56,13 +56,10 @@
 						<th>Univers</th>
 						
 						
-						<!-- <th>Rue</th>
-						<th>Code Postal</th>
-						<th>Ville</th> -->
+						
 						
 						<th><input type="submit" name="modifier" value="Modifier Jeu"
-							style="width: 150px; height: 50px" class="gestionBouton2"> <input type="submit"
-							value="Rechercher Jeu" style="width: 150px; height: 50px" class="gestionBouton2"></th>
+							style="width: 150px; height: 50px" class="gestionBouton2"> </th>
 
 					</tr>
 				       
