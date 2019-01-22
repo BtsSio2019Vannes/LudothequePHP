@@ -179,7 +179,7 @@ namespace DAO\Adherent
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $personne = $daoPersonne->read($idAdherent);
 
-            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion, $valeurCaution);
+            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion);
 
             /*
              * $adherent = new \Adherent\Adherent($personne->getNom(),$personne->getPrenom(), $personne->getDateNaissance(),
