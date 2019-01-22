@@ -138,9 +138,9 @@ namespace Adherent
             return $this->dateFinAdhesion;
         }
     
-        public function getBeneficiaireAassocie()
+        public function getBeneficiaireAssocie()
         {
-            return $this->beneficiaireAassocie;
+            return $this->beneficiaireAssocie;
         }
     
         public function setIdReglement($idReglement)
@@ -158,9 +158,9 @@ namespace Adherent
             $this->dateFinAdhesion = $dateFinAdhesion;
         }
     
-        public function setBeneficiaireAassocie($beneficiaireAassocie)
+        public function setBeneficiaireAssocie($beneficiaireAssocie)
         {
-            $this->beneficiaireAassocie = $beneficiaireAassocie;
+            $this->beneficiaireAssocie = $beneficiaireAssocie;
         }
     
     }

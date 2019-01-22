@@ -39,6 +39,7 @@ namespace DAO\Personne
 
     use DAO\Coordonnees\CoordonneesDAO;
     use DB\Connexion\Connexion;
+    use DAO\Adherent\AdherentDAO;
 
     class PersonneDAO extends \DAO\DAO
     {
@@ -70,14 +71,9 @@ namespace DAO\Personne
             $mel = $row["mel"];
             $numeroTelephone = $row["numeroTelephone"];
 
-            $rep = new \Adherent\Personne($idPersonne, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
+            $rep = new \Adherent\Personne($nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
+            $rep->setIdPersonne($idPersonne);
             return $rep;
-
-            /*
-             * $rep = new \Adherent\Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees);
-             * $rep->setIdPersonne($idPersonne);
-             * return $rep;
-             */
         }
 
         public function update($objet)
@@ -121,6 +117,8 @@ namespace DAO\Personne
             $nom = $objet->getNom();
             $prenom = $objet->getPrenom();
             $dateNaissance = $objet->getDateNaissance();
+            $daoCoordonnees = new CoordonneesDAO();
+            $daoCoordonnees->create($objet->getCoordonnees());
             $idCoordonnees = $objet->getCoordonnees()->getIdCoordonnees();
             $mel = $objet->getMel();
             $numeroTelephone = $objet->getNumeroTelephone();
@@ -145,12 +143,35 @@ namespace DAO\Personne
             }
             return $listePersonnes;
         }
+        
+        public function retrouverAdherentAssocie($idPersonne)
+        {
+            $sql = "SELECT idAdherent FROM beneficiaire WHERE idPersonne = " . $idPersonne;
+            $listeAdherents = new \ArrayObject();
+            if (Connexion::getInstance()->query($sql)) {
+                foreach (Connexion::getInstance()->query($sql) as $row) {
+                    $daoAdherent = new AdherentDAO();
+                    $adherent = $daoAdherent->read($row["idAdherent"]);
+                    $listeAdherents->append($adherent);
+                }
+            }
+            return $listeAdherents;
+        }
+        
+        public function supprimerBeneficiaire($idPersonne)
+        {
+            $sql = "DELETE FROM beneficiaire WHERE idPersonne = :idPersonne";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idPersonne', $idPersonne);
+            $stmt->execute();
+        }
     }
 }
 namespace DAO\Adherent
 {
 
     use DB\Connexion\Connexion;
+    use DAO\Personne\PersonneDAO;
 
     class AdherentDAO extends \DAO\DAO
     {
@@ -236,6 +257,8 @@ namespace DAO\Adherent
 
         public function create($objet)
         {
+            $daoPersonne = new PersonneDAO();
+            $daoPersonne->create($objet);
             $sql = "INSERT INTO $this->table (idAdherent,idReglement,datePremiereAdhesion,dateFinAdhesion) VALUES (:idAdherent, :idReglement, :datePremiereAdhesion, :dateFinAdhesion)";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idAdherent = $objet->getIdPersonne();
@@ -274,6 +297,37 @@ namespace DAO\Adherent
             $stmt->execute();
 
             return $stmt->fetch();
+        }
+        
+        public function retrouverBeneficiaireAssocie($idAdherent)
+        {
+            $sql = "SELECT idPersonne FROM beneficiaire WHERE idAdherent = " . $idAdherent;
+            $listeBeneficiaires = new \ArrayObject();
+            if (Connexion::getInstance()->query($sql)) {
+                foreach (Connexion::getInstance()->query($sql) as $row) {
+                    $daoPersonne = new PersonneDAO();
+                    $personne = $daoPersonne->read($row["idPersonne"]);
+                    $listeBeneficiaires->append($personne);
+                }
+            }
+            return $listeBeneficiaires;
+        }
+        
+        public function supprimerAdherentEtBeneficiaire($idAdherent)
+        {
+            $sql = "DELETE FROM beneficiaire WHERE idAdherent = :idAdherent";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->execute();
+        }
+        
+        public function ajouterBeneficiaire($idAdherent, $idPersonne)
+        {
+            $sql = "INSERT INTO beneficiaire (idAdherent,idPersonne) VALUES (:idAdherent, :idPersonne)";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->bindParam(':idPersonne', $idPersonne);
+            $stmt->execute();
         }
     }
 }
