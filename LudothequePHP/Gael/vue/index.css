@@ -1,0 +1,37 @@
+@charset "ISO-8859-1";
+
+body {
+
+}
+
+/* CSS de Texte */
+
+h1, h3 {
+	text-align: center;
+	text-decoration: underline;
+}
+
+h1 {
+	font-size: xx-large;
+}
+
+h3 {
+	font-size: large;
+}
+
+#beneficiaire {
+	display: inline;
+}
+
+/* CSS du menu */
+
+
+/* CSS des Pages */
+
+
+/* CSS de Formulaires */
+
+/* CSS de tableaux */
+thead {
+	text-align: center;
+}
