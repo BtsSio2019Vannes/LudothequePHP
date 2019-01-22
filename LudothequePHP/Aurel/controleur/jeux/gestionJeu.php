@@ -1,5 +1,4 @@
 <?php
-
 include ("../../db/Daos.php");
 include ("../../metier/jeux/jeux.php");
 include ("../../metier/adherent/adherents.php");
