@@ -1,8 +1,10 @@
 <!-- Contenu HTML affichage des formulaires -->
 <?php
 use DAO\Adherent\AdherentDAO;
+use DAO\Alerte\AlerteDAO;
 use DAO\Emprunt\EmpruntDAO;
-use DAO\Reglement\ReglementDAO;
+use DAO\Jeu\JeuDAO;
+use DAO\JeuPhysique\JeuPhysiqueDAO;
 
 function afficherGestionEmprunt($listeEmprunts)
 {
@@ -20,8 +22,10 @@ function afficherGestionEmprunt($listeEmprunts)
 				<th>Adhérent</th>
 				<th>Jeu</th>
 				<th>Alerte</th>
-				<th><button type="submit" class="btn btn-danger" name="supprimer">Supprimer</button>
-					<button type="submit" class="btn btn-primary" name="maj">Mettre à Jour</button></th>
+				<th><button type="submit" class="btn btn-danger"
+						name="supprimerEmprunt">Supprimer</button>
+					<button type="submit" class="btn btn-primary"
+						name="modifierEmprunt">Mettre à Jour</button></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,16 +39,16 @@ function afficherGestionEmprunt($listeEmprunts)
             $jeuPhysique = $emprunt['jeuPhysique'];
             $alerte = $emprunt['alerte'];
             $alerte = ($alerte != "Aucune") ? $alerte->getNom() : "Aucune";
-            
-            
+
             ?>
 			<tr>
 				<td><?php echo $emprunt['dateEmprunt']; ?></td>
 				<td><?php echo $emprunt['dateRetourEffectif']; ?></td>
 				<td><?php echo strtoupper($adherent->getPrenom()) . " " . $adherent->getNom(); ?></td>
 				<td><?php echo $jeu->getTitre(); ?></td>
-				<td><?php echo $alerte; ?></td>				
-				<td><input type="radio" name="idEmprunt" value="<?php echo $jeuPhysique->getIdJeuPhysique()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
+				<td><?php echo $alerte; ?></td>
+				<td><input type="radio" name="idEmprunt"
+					value="<?php echo $jeuPhysique->getIdJeuPhysique()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
 			</tr>
 <?php
         }
@@ -64,157 +68,68 @@ function afficherGestionEmprunt($listeEmprunts)
 
 function afficherFormulaire($emprunt)
 {
-    $intituleFormulaire = ($emprunt->getIdEmprunt() == "") ? "Ajout d'une nouvelle emprunt" : "Mise à jour d'un profil";
-    $daoEmprunt = new EmpruntDAO();
+    $isNouvelEmprunt = ($emprunt->getIdJeuPhysique() == "" && $emprunt->getIdAdherent() == "" && $emprunt->getDateEmprunt() == new DateTime());
+    $intituleFormulaire = $isNouvelEmprunt ? "Ajout d'un nouvel emprunt" : "Modification d'un emprunt";
     $daoAdherent = new AdherentDAO();
-    $adherent = $daoAdherent->read($emprunt->getIdEmprunt());
-    $isAdherent = ($adherent->getIdEmprunt() != "");
-    $emprunt = $isAdherent ? $adherent : $emprunt;
+    $daoEmprunt = new EmpruntDAO();
+    $daoAlerte = new AlerteDAO();
+    $daoJeu = new JeuDAO();
+    $daoJeuPhysique = new JeuPhysiqueDAO();
+
     ?>
 <h3><?php echo $intituleFormulaire; ?></h3>
 <div class="col-lg-offset-4 col-lg-4">
 	<form method="post" action="index.php?page=emprunts">
 		<div class="form-group">
-			<label for="nom">Nom :</label> <input type="text"
-				class="form-control" name="nom" id="nom"
-				value="<?php echo $emprunt->getNom(); ?>">
+			<label for="dateEmprunt">Date d'emprunt :</label> <input type="date"
+				class="form-control" name="dateEmprunt" id="dateEmprunt"
+				value="<?php echo $emprunt->getDateEmprunt(); ?>">
 		</div>
 		<div class="form-group">
-			<label for="prenom">Prénom :</label> <input type="text"
-				class="form-control" name="prenom" id="prenom"
-				value="<?php echo $emprunt->getPrenom(); ?>">
+			<label for="dateRetourEffectif">Date de Retour :</label> <input
+				type="date" class="form-control" name="dateRetourEffectif"
+				id="dateRetourEffectif"
+				value="<?php echo $emprunt->getDateRetourEffectif(); ?>">
 		</div>
 		<div class="form-group">
-			<label for="dateNaissance">Date de Naissance :</label> <input
-				type="date" class="form-control" name="dateNaissance"
-				id="dateNaissance"
-				value="<?php echo $emprunt->getDateNaissance(); ?>">
-		</div>
-		<div class="form-group">
-			<label for="mel">Adresse email :</label> <input type="text"
-				class="form-control" name="mel" id="mel"
-				value="<?php echo $emprunt->getMel(); ?>">
-		</div>
-		<div class="form-group">
-			<label for="numeroTelephone">Numero Telephone :</label> <input
-				type="text" class="form-control" name="numeroTelephone"
-				id="numeroTelephone"
-				value="<?php echo $emprunt->getNumeroTelephone(); ?>">
-		</div>
-		<fieldset>
-			<legend>Coordonnées Postales</legend>
-			<div class="form-group">
-				<label for="rue">Adresse Postale:</label> <input type="text"
-					class="form-control" name="rue" id="rue"
-					value="<?php echo $emprunt->getCoordonnees()->getRue(); ?>">
-			</div>
-			<div class="form-group">
-				<label for="codePostal">Code Postal :</label> <input type="text"
-					class="form-control" name="codePostal" id="codePostal"
-					value="<?php echo $emprunt->getCoordonnees()->getCodePostal(); ?>">
-			</div>
-			<div class="form-group">
-				<label for="ville">Ville :</label> <input type="text"
-					class="form-control" name="ville" id="ville"
-					value="<?php echo $emprunt->getCoordonnees()->getVille(); ?>">
-			</div>
-		</fieldset>
-		<fieldset>
-			<legend>Informations Adhérent</legend>
-	
+			<label for="adherent">Adhérent :</label> <select class="form-control"
+				name="adherent" id="adherent">
+				<option value="" selected>Aucun</option>				
 <?php
-
-    if ($isAdherent) {
-        ?>
-        
-			<div class="form-group">
-				<label for="datePremiereAdhesion">Date 1ère Adhésion :</label> <input
-					type="date" class="form-control" name="datePremiereAdhesion"
-					id="datePremiereAdhesion"
-					value="<?php echo $emprunt->getDatePremiereAdhesion(); ?>">
-			</div>
-			<div class="form-group">
-				<label for="dateFinAdhesion">Date Fin d'Adhésion :</label> <input
-					type="date" class="form-control" name="dateFinAdhesion"
-					id="dateFinAdhesion"
-					value="<?php echo $emprunt->getDateFinAdhesion(); ?>">
-			</div>
-			<div class="form-group">
-				<label for="reglement">Est soumis au règlement :</label> <select
-					class="form-control" name="reglement" id="reglement">
+    $listeAdherents = AdherentDAO::getAdherents();
+    if (array_key_exists(0, $listeAdherents)) {
+        foreach ($listeAdherents as $adherent) {
+            $selected = ($adherent->getIdPersonne() == $emprunt->getIdAdherent()) ? "selected" : "";
+            ?>
+                <option value="<?php echo $adherent->getIdPersonne(); ?>" <?php echo $selected; ?>><?php echo $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance(); ?></option>
 <?php
-        $listeReglement = ReglementDAO::getReglements();
-        if (array_key_exists(0, $listeReglement)) {
-            foreach ($listeReglement as $reglementBDD) {
-                $selected = ($reglementBDD->getIdReglement() == $emprunt->getIdReglement()) ? "selected" : "";
-                ?>
-                <option
-						value="<?php echo $reglementBDD->getIdReglement(); ?>"
-						<?php echo $selected; ?>>n°<?php echo $reglementBDD->getIdReglement(); ?></option>
-<?php
-            }
         }
-        ?>
-
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="beneficiaire">Bénéficiaire(s) de l'adhésion :</label>
-<?php
-        $listeBeneficaire = $daoAdherent->retrouverBeneficiaireAssocie($emprunt->getIdEmprunt());
-        if (array_key_exists(0, $listeBeneficaire)) {
-            foreach ($listeBeneficaire as $beneficiaire) {
-                ?>
-                <input type="checkbox" class="form-control"
-					id="beneficiaire" name="beneficiaire[]"
-					value="<?php echo $beneficiaire->getIdEmprunt(); ?>"> <?php echo $beneficiaire->getNom() . " " . $beneficiaire->getPrenom(); ?>
-<?php
-            }
-        }
-        ?>
-			</div>
-<?php
-    } else {
-        ?>
-			<div class="form-group">
-				<label for="adherents">Associer à l'adhérent :</label> <select
-					class="form-control" name="adherents" id="adherents">
-					<option value="" selected>Aucun</option>
-					<option value="passerAdherent">Enregistrer comme adhérent</option>
-				
-<?php
-        $listeAdherents = AdherentDAO::getAdherents();
-        if (array_key_exists(0, $listeAdherents)) {
-            foreach ($listeAdherents as $adherentBDD) {
-                if ($adherentBDD->getIdEmprunt() != $emprunt->getIdEmprunt()) {
-                    $adherentAssocie = $daoEmprunt->retrouverAdherentAssocie($emprunt->getIdEmprunt());
-                    if (array_key_exists(0, $adherentAssocie)) {
-                        foreach ($adherentAssocie as $adherent) {
-                            if ($adherentBDD->getIdEmprunt() != $adherent->getIdEmprunt()) {
-                                ?>
-                <option
-						value="<?php echo $adherentBDD->getIdEmprunt(); ?>"><?php echo $adherentBDD->getNom() . " " . $adherentBDD->getPrenom() . " ne(e) le " . $adherentBDD->getDateNaissance(); ?></option>
-<?php
-                            }
-                        }
-                    } else {
-                        ?>
-				<option value="<?php echo $adherentBDD->getIdEmprunt(); ?>"><?php echo $adherentBDD->getNom() . " " . $adherentBDD->getPrenom() . " ne(e) le " . $adherentBDD->getDateNaissance(); ?></option>
-<?php
-                    }
-                }
-            }
-        }
-        ?>
-
-				</select>
-			</div>
-<?php
     }
     ?>
-		</fieldset>
+
+				</select>
+		</div>
+		<div class="form-group">
+			<label for="jeuPhysique">Jeu à Emprunter :</label> <select class="form-control"
+				name="jeuPhysique" id="jeuPhysique">
+<?php
+    $listeJeuxPhysiques = JeuPhysiqueDAO::getJeuxPhysiquesTries();
+    if (array_key_exists(0, $listeJeuxPhysiques)) {
+        foreach ($listeJeuxPhysiques as $jeuxPhysique) {
+            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? "selected" : "";
+            ?>
+                <option value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>" <?php echo $selected; ?>><?php echo $jeuxPhysique['titre'] . " n°" . $jeuxPhysique['idJeuPhysique']; ?></option>
+<?php
+        }
+    }
+    ?>
+				</select>
+		</div>
 		
-<?php if ($emprunt->getIdEmprunt() == "") {?>
+
+
+		
+<?php if ($isNouvelEmprunt) {?>
 	<div class="form-group">
 			<input type="submit" class="form-control" name="formulaireAjout"
 				value="Créer Nouvelle Emprunt">

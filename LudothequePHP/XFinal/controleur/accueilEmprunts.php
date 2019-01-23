@@ -3,7 +3,6 @@ use Adherent\Adherent;
 use Adherent\Coordonnees;
 use DAO\Adherent\AdherentDAO;
 use DAO\Alerte\AlerteDAO;
-use DAO\Editeur\EditeurDAO;
 use DAO\Emprunt\EmpruntDAO;
 use DAO\Jeu\JeuDAO;
 use DAO\JeuPhysique\JeuPhysiqueDAO;
@@ -19,7 +18,6 @@ $daoEmprunt = new EmpruntDAO();
 $daoAlerte = new AlerteDAO();
 $daoJeu = new JeuDAO();
 $daoJeuPhysique = new JeuPhysiqueDAO();
-$daoEditeur = new EditeurDAO();
 
 /* Création de la liste des emprunts */
 $listeEmprunts = array();
@@ -48,25 +46,19 @@ foreach (EmpruntDAO::getEmprunts() as $emprunt) {
 
 /* Après clic sur bouton ajouter */
 if (htmlspecialchars(isset($_POST['nouvelEmprunt']))) {
-    $coordonnees = new Coordonnees("", "", "", "");
-    $emprunt = new Emprunt("", "", "", "", $coordonnees, "", "");
+    $emprunt = new Emprunt("", "", new DateTime(), "", "");
     afficherFormulaire($emprunt);
-} /*
-   * Après clic sur
-   * bouton supprimer
-   */
-else if (htmlspecialchars(isset($_POST['supprimer'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
-    $adherent = $daoAdherent->read(htmlspecialchars($_POST['idEmprunt']));
-    $daoAdherent->delete($adherent);
-    echo "
-<p>
-	<b>Emprunt bien supprimée !</b><br />
-	<a href=\"index.php?page=emprunts\">Retour</a>
-</p>
-";
+} /* Après clic sur bouton supprimer */
+else if (htmlspecialchars(isset($_POST['supprimerEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
+    list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
+    $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
+    $daoEmprunt->delete($emprunt);
+    echo "<p><b>Emprunt bien supprimé !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
 } /* Après clic sur bouton maj */
-else if (htmlspecialchars(isset($_POST['maj'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
-    $emprunt = $daoEmprunt->read(htmlspecialchars($_POST['idEmprunt']));
+else if (htmlspecialchars(isset($_POST['modifierEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
+    list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
+    $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
+    $emprunt = $daoEmprunt->read($emprunt);
     afficherFormulaire($emprunt);
 } /* Après validation du formulaire */
 else if (htmlspecialchars(isset($_POST['formulaireAjout'])) || htmlspecialchars(isset($_POST['formulaireMaj']))) {

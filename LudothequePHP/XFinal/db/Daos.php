@@ -820,6 +820,18 @@ namespace DAO\JeuPhysique
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->execute();
         }
+        
+        static function getJeuxPhysiquesTries()
+        {
+            $sql = "SELECT * FROM jeu INNER JOIN jeuphysique ON jeu.idJeu = jeuphysique.idJeu ORDER BY jeu.idJeu, jeuphysique.idJeuPhysique;";
+            $listeJeuxPhysiques = array();
+            $index = 0;
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $listeJeuxPhysiques[$index] = $row;
+                $index++;
+            }
+            return $listeJeuxPhysiques;
+        }
     }
 }
 namespace DAO\Jeu
