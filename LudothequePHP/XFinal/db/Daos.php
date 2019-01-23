@@ -499,6 +499,18 @@ namespace DAO\Reglement
             $stmt->execute();
             $objet->setIdReglement(parent::getLastKey());
         }
+        
+        static function getReglements()
+        {
+            $sql = "SELECT * FROM reglement";
+            $listeReglements = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $daoReglement = new ReglementDAO();
+                $reglement = $daoReglement->read($row["idReglement"]);
+                $listeReglements->append($reglement);
+            }
+            return $listeReglements;
+        }
     }
 }
 namespace DAO\Alerte
