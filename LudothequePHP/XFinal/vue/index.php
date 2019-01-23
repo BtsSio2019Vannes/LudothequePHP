@@ -40,7 +40,7 @@ $page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "adherents";
 				</div>
 			</nav>
 		</div>
-		<div class="col-lg-1- offsetcol-lg-9">
+		<div class="col-lg-1-offset col-lg-9">
 <?php
 switch ($page) {
     case "adherents":
