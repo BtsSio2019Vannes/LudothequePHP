@@ -110,17 +110,13 @@ namespace Adherent
         // private $date_creation_groupe;
         private $dateFinAdhesion;
 
-        private $beneficiaireAssocie;
 
-       
-
-        function __contruct($idReglement, $dateAdhesion, $dateFinAdhesion, $beneficiaireAssocie)
+        function __construct($idReglement, $dateAdhesion, $dateFinAdhesion)
         {
             $this->idReglement = $idReglement;
             $this->dateAdhesion = $dateAdhesion;
             $this->dateFinAdhesion = $dateFinAdhesion;
-            $this->beneficiaireAssocie = $beneficiaireAssocie;
-            
+           
         }
         
         public function getIdReglement()
@@ -138,11 +134,6 @@ namespace Adherent
             return $this->dateFinAdhesion;
         }
     
-        public function getBeneficiaireAassocie()
-        {
-            return $this->beneficiaireAassocie;
-        }
-    
         public function setIdReglement($idReglement)
         {
             $this->idReglement = $idReglement;
@@ -156,11 +147,6 @@ namespace Adherent
         public function setDateFinAdhesion($dateFinAdhesion)
         {
             $this->dateFinAdhesion = $dateFinAdhesion;
-        }
-    
-        public function setBeneficiaireAassocie($beneficiaireAassocie)
-        {
-            $this->beneficiaireAassocie = $beneficiaireAassocie;
         }
     
     }

@@ -122,7 +122,7 @@ function afficherFormulaire($personne)
 				<label for="datePremiereAdhesion">Date 1ère Adhésion :</label> <input
 					type="date" class="form-control" name="datePremiereAdhesion"
 					id="datePremiereAdhesion"
-					value="<?php echo $personne->getDatePremiereAdhesion(); ?>">
+					value="<?php echo $personne->getDateAdhesion(); ?>">
 			</div>
 			<div class="form-group">
 				<label for="dateFinAdhesion">Date Fin d'Adhésion :</label> <input
