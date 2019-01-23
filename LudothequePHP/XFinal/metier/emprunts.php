@@ -19,7 +19,7 @@ namespace Emprunt{
         }
         
         public function getIdJeuPhysique(){
-            return $this->idJeu;
+            return $this->idJeuPhysique;
         }
     
         public function getIdAdherent(){

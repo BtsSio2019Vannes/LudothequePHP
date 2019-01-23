@@ -1,11 +1,11 @@
 <?php
-use Personne\Personne;
-use Personne\Adherent;
-use Personne\Coordonnees;
+use Adherent\Personne;
+use Adherent\Adherent;
+use Adherent\Coordonnees;
 use DAO\Personne\PersonneDAO;
 use DAO\Adherent\AdherentDAO;
 ?>
-<section>
+
 	<h1>Gérer les Personnes</h1>
 <?php
 include ("../vue/personne/formulairePersonnes.php");
@@ -124,4 +124,3 @@ else {
 }
 
 ?>
-</section>
