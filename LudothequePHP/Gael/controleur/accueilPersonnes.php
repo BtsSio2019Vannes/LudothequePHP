@@ -1,7 +1,7 @@
 <?php
-use Adherent\Personne;
-use Adherent\Adherent;
-use Adherent\Coordonnees;
+use Personne\Personne;
+use Personne\Adherent;
+use Personne\Coordonnees;
 use DAO\Personne\PersonneDAO;
 use DAO\Adherent\AdherentDAO;
 ?>
