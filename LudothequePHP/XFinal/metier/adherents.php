@@ -111,7 +111,7 @@ namespace Adherent
         private $dateFinAdhesion;
 
 
-        function __contruct($idReglement, $dateAdhesion, $dateFinAdhesion)
+        function __construct($idReglement, $dateAdhesion, $dateFinAdhesion)
         {
             $this->idReglement = $idReglement;
             $this->dateAdhesion = $dateAdhesion;
