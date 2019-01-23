@@ -46,7 +46,8 @@ foreach (EmpruntDAO::getEmprunts() as $emprunt) {
 
 /* Après clic sur bouton ajouter */
 if (htmlspecialchars(isset($_POST['nouvelEmprunt']))) {
-    $emprunt = new Emprunt("", "", new DateTime(), "", "");
+    $date = new DateTime();
+    $emprunt = new Emprunt("", "", $date->format('Y-m-d'), "", "");
     afficherFormulaire($emprunt);
 } /* Après clic sur bouton supprimer */
 else if (htmlspecialchars(isset($_POST['supprimerEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {

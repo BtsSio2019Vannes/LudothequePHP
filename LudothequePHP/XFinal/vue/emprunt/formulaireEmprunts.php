@@ -13,7 +13,7 @@ function afficherGestionEmprunt($listeEmprunts)
 	<table class="table">
 		<thead>
 			<tr>
-				<td colspan="4"><button type="submit" class="btn btn-success"
+				<td colspan="6"><button type="submit" class="btn btn-success"
 						name="nouvelEmprunt">Nouvel Emprunt</button></td>
 			</tr>
 			<tr>
@@ -68,8 +68,9 @@ function afficherGestionEmprunt($listeEmprunts)
 
 function afficherFormulaire($emprunt)
 {
-    $isNouvelEmprunt = ($emprunt->getIdJeuPhysique() == "" && $emprunt->getIdAdherent() == "" && $emprunt->getDateEmprunt() == new DateTime());
+    $isNouvelEmprunt = ($emprunt->getIdJeuPhysique() == "" && $emprunt->getIdAdherent() == "");
     $intituleFormulaire = $isNouvelEmprunt ? "Ajout d'un nouvel emprunt" : "Modification d'un emprunt";
+    $idEmprunt = $isNouvelEmprunt ? "" : $emprunt->getIdJeuPhysique()."/".$emprunt->getIdAdherent()."/".$emprunt->getDateEmprunt();
     $daoAdherent = new AdherentDAO();
     $daoEmprunt = new EmpruntDAO();
     $daoAlerte = new AlerteDAO();
@@ -125,10 +126,7 @@ function afficherFormulaire($emprunt)
     ?>
 				</select>
 		</div>
-		
-
-
-		
+	
 <?php if ($isNouvelEmprunt) {?>
 	<div class="form-group">
 			<input type="submit" class="form-control" name="formulaireAjout"
@@ -137,9 +135,9 @@ function afficherFormulaire($emprunt)
 <?php
     } else {
         ?>
-        <input type="hidden" name="idEmprunt"
-			value="<?php echo $emprunt->getIdEmprunt(); ?>">
 		<div class="form-group">
+        <input type="hidden" name="idEmprunt"
+			value="<?php echo $idEmprunt; ?>">
 			<input type="submit" class="form-control" name="formulaireMaj"
 				value="Mettre à Jour">
 		</div>
