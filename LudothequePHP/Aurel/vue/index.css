@@ -99,6 +99,7 @@ th {
 	padding: 10px;
 	padding-top: 2px;
 	padding-bottom : 2px;
+<<<<<<< HEAD
 }
 
 td {
@@ -113,4 +114,26 @@ td p, input[type=text] {
 
 input[type=text] {
 	width: 100%;
+=======
+	
+}
+
+td {
+	text-align: center;
+	padding: 5px;
+}
+
+td p, input[type=text] {
+	text-align: left;
+}
+
+
+input[type=text] {
+	width: 100%;
+}
+
+button {
+	width : auto;
+	lenght : auto;
+>>>>>>> branch 'master' of https://github.com/BtsSio2019Vannes/LudothequePHP.git
 }

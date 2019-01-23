@@ -13,15 +13,15 @@
     <body>
     	<h1>Ludothèque</h1><br>
     	
-    	<a href="../metier/GestionAdherents.php"> 
+    	<a href="../controleur/GestionAdherents.php"> 
     	<img alt="adhérents" src="../vue/images/iconfinder_173_95790.png" title="Gestion des Personnes"></a>
     	
     	
-    	<a href="../metier/jeux.php"> 
+    	<a href="../controleur/GestionJeux.php"> 
     	<img alt="jeux" src="../vue/images/iconfinder_chess_19227.png" title="Gestion des Jeux"></a>
     	<br />
     	
-    	<a href="emprunts.php"> 
+    	<a href="../controleur/Gestionemprunts.php"> 
     	<img alt="emprunts" src="../vue/images/iconfinder_social__media__social_media__share__3259412.png" title="Gestion des Emprunts"></a>
     	
     	<a href="parametres.php"> <img alt="paramètres" src="../vue/images/iconfinder_120_95711.png" title="Gestion Ludothèque"></a>

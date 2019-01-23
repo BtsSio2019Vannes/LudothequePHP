@@ -1,5 +1,4 @@
 <?php
-
 use Adherent\Personne;
 use Adherent\Coordonnees;
 
@@ -7,22 +6,10 @@ use DAO\Personne\PersonneDAO;
 use DAO\Coordonnees\CoordonneesDAO;
 use DAO\Adherent\AdherentDAO;
 
-include ("../../db/Daos.php");
-include ("../../metier/adherent/adherents.php");
-include ("../../db/Requetes.php");
-
-/*
- * TODO
- * Voir les personnes de la ludo ainsi que les adhérents
- * Pouvoir ajouter une nouvelle personne et le passer adhérent
- * Modifier les infos d'une personne
- * Lier des personnes à un adhérent
- * Supprimer une personne
- */
 
 // Condition ajouter personne
 if (htmlspecialchars(isset($_POST['ajouter']))) {
-
+    print_r($_POST);
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);
     $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
@@ -49,6 +36,7 @@ if (htmlspecialchars(isset($_POST['ajouter']))) {
     }
 }
 
+//Condition pour supprimer une personne
 if (htmlspecialchars(isset($_POST['supprimer']))) {
     $idPersonne = htmlspecialchars($_POST['idPersonne']);
     $idCoordonnees = htmlspecialchars($_POST['idCoordonnees']);
@@ -65,8 +53,10 @@ if (htmlspecialchars(isset($_POST['supprimer']))) {
     echo "La personne a bien été supprimée <a href=\"..\\..\\vue\\adherent.php\">Retour</a></p>";
 }
 
-if (htmlspecialchars(isset($_POST['modifier']))) {
-    // print_r($_POST);
+//Condition pour modifier une personne
+if (htmlspecialchars(isset($_POST['maj']))) {
+    print_r($_POST);
+    formulaireModifPersonnes();
     $idPersonne = htmlspecialchars($_POST['idPersonne']);
     $idCoordonnees = htmlspecialchars($_POST['idCoordonnees']);
     $nom = htmlspecialchars($_POST['nom']);
@@ -77,7 +67,6 @@ if (htmlspecialchars(isset($_POST['modifier']))) {
     $ville = htmlspecialchars($_POST['ville']);
     $mel = htmlspecialchars($_POST['mel']);
     $numeroTelephone = htmlspecialchars($_POST['numTel']);
-    // $idPersonne = htmlspecialchars($_POST['personne']);
 
     $coordonnees = new Coordonnees($idCoordonnees, $rue, $codePostal, $ville);
     adresseUtilisee($coordonnees);
@@ -90,6 +79,10 @@ if (htmlspecialchars(isset($_POST['modifier']))) {
 
 if (htmlspecialchars(isset($_POST['passerAdh']))){
     
+}
+
+else {
+    afficherPersonnes();
 }
 
 function adresseUtilisee($coordonnees)

@@ -35,8 +35,8 @@ $page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "personnes";
 	<div class="container">
 <?php
 switch ($page) {
-    case "personnes":
-        include ('../controleur/accueilPersonnes.php');
+    case "adherents":
+        include ('../controleur/accueilAdherents.php');
         break;
     case "jeux":
         include ('../controleur/accueilJeux.php');
@@ -48,7 +48,7 @@ switch ($page) {
         include ('../controleur/accueilParametres.php');
         break;
     default:
-        include ('../controleur/accueilPersonnes.php');
+        include ('../controleur/accueilAdherents.php');
         break;
 }
 ?>
