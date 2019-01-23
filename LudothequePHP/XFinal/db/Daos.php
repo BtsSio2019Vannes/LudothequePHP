@@ -71,7 +71,7 @@ namespace DAO\Personne
             $mel = $row["mel"];
             $numeroTelephone = $row["numeroTelephone"];
 
-            $rep = new \Adherent\Personne($nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
+            $rep = new \Adherent\Personne($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees);
             $rep->setIdPersonne($idPersonne);
             return $rep;
         }
