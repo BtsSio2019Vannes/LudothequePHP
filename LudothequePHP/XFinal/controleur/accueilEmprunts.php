@@ -1,6 +1,6 @@
-<section>
-		<h1>Gérer les Emprunts</h1>
-	
+
+<h1>Gérer les Emprunts</h1>
+
 <?php
 /*
  * Traitement des demandes affichage (GET) et des envois de formulaire (POST)
@@ -8,4 +8,3 @@
  */
 ?>
 		
-</section>
