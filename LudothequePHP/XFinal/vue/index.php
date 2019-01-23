@@ -1,9 +1,11 @@
 <?php
-include ("../db/Daos.php");
-include ("../metier/emprunts.php");
-include ("../metier/jeux.php");
-include ("../metier/parametres.php");
-include ("../metier/adherents.php");
+include_once ("../db/Daos.php");
+include_once ("../metier/emprunts.php");
+include_once ("../metier/jeux.php");
+include_once ("../metier/parametres.php");
+include_once ("../metier/adherents.php");
+include_once ("../vue/formulaireAdherent.php");
+
 ?>
 <!DOCTYPE html>
 
@@ -18,18 +20,18 @@ include ("../metier/adherents.php");
 
 <body>
 <?php
-$page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "personnes";
+$page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "adherents";
 ?>
 <nav>
 		<ul>
 			<li><a href="index.php?page=adherents"><img alt="Adherents"
-					src="images/beneficiaire.png"><br />Gérer les Adhérents</a></li>
+					src="../images/beneficiaire.png"><br />Gérer les Adhérents</a></li>
 			<li><a href="index.php?page=jeux"><img alt="Jeux"
-					src="images/jeu.png"><br />Gérer les Jeux</a></li>
+					src="../images/jeu.png"><br />Gérer les Jeux</a></li>
 			<li><a href="index.php?page=emprunts"><img alt="Emprunts"
-					src="images/emprunt.png"><br />Gérer les Emprunts</a></li>
+					src="../images/emprunt.png"><br />Gérer les Emprunts</a></li>
 			<li><a href="index.php?page=parametres"><img alt="Ludotheque"
-					src="images/parametre.png"><br />Gérer Ludothèque</a></li>
+					src="../images/parametre.png"><br />Gérer Ludothèque</a></li>
 		</ul>
 	</nav>
 	<div class="container">
