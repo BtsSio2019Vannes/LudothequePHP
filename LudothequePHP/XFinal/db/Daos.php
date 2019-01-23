@@ -1,5 +1,4 @@
 <?php
-
 namespace DAO
 {
 
@@ -143,7 +142,7 @@ namespace DAO\Personne
             }
             return $listePersonnes;
         }
-        
+
         public function retrouverAdherentAssocie($idPersonne)
         {
             $sql = "SELECT idAdherent FROM beneficiaire WHERE idPersonne = " . $idPersonne;
@@ -157,7 +156,7 @@ namespace DAO\Personne
             }
             return $listeAdherents;
         }
-        
+
         public function supprimerBeneficiaire($idPersonne)
         {
             $sql = "DELETE FROM beneficiaire WHERE idPersonne = :idPersonne";
@@ -200,20 +199,7 @@ namespace DAO\Adherent
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $personne = $daoPersonne->read($idAdherent);
 
-            $adherent = new \Adherent\Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion);
-
-            /*
-             * $adherent = new \Adherent\Adherent($personne->getNom(),$personne->getPrenom(), $personne->getDateNaissance(),
-             * $personne->getNumeroTelephone(), $personne->getMel(), $personne->getCoordonnees(), $idReglement, $datePremiereAdhesion, $dateFinAdhesion);
-             */
-
-            $adherent->setIdPersonne($personne->getIdPersonne());
-            $adherent->setNom($personne->getNom());
-            $adherent->setPrenom($personne->getPrenom());
-            $adherent->setDateNaissance($personne->getDateNaissance());
-            $adherent->setCoordonnees($personne->getCoordonnees());
-            $adherent->setMel($personne->getMel());
-            $adherent->setNumeroTelephone($personne->getNumeroTelephone());
+            $adherent = new \Adherent\Adherent($personne->getNom(), $personne->getPrenom(), $personne->getDateNaissance(), $personne->getNumeroTelephone(), $personne->getMel(), $personne->getCoordonnees(), $idReglement, $datePremiereAdhesion, $dateFinAdhesion);
 
             return $adherent;
         }
@@ -298,7 +284,7 @@ namespace DAO\Adherent
 
             return $stmt->fetch();
         }
-        
+
         public function retrouverBeneficiaireAssocie($idAdherent)
         {
             $sql = "SELECT idPersonne FROM beneficiaire WHERE idAdherent = " . $idAdherent;
@@ -312,7 +298,7 @@ namespace DAO\Adherent
             }
             return $listeBeneficiaires;
         }
-        
+
         public function supprimerAdherentEtBeneficiaire($idAdherent)
         {
             $sql = "DELETE FROM beneficiaire WHERE idAdherent = :idAdherent";
@@ -320,7 +306,7 @@ namespace DAO\Adherent
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->execute();
         }
-        
+
         public function ajouterBeneficiaire($idAdherent, $idPersonne)
         {
             $sql = "INSERT INTO beneficiaire (idAdherent,idPersonne) VALUES (:idAdherent, :idPersonne)";
@@ -499,7 +485,7 @@ namespace DAO\Reglement
             $stmt->execute();
             $objet->setIdReglement(parent::getLastKey());
         }
-        
+
         static function getReglements()
         {
             $sql = "SELECT * FROM reglement";
