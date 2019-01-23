@@ -200,7 +200,7 @@ namespace DAO\Adherent
             $personne = $daoPersonne->read($idAdherent);
 
             $adherent = new \Adherent\Adherent($personne->getNom(), $personne->getPrenom(), $personne->getDateNaissance(), $personne->getNumeroTelephone(), $personne->getMel(), $personne->getCoordonnees(), $idReglement, $datePremiereAdhesion, $dateFinAdhesion);
-
+            $adherent->setIdPersonne($idAdherent);
             return $adherent;
         }
 
@@ -669,7 +669,6 @@ namespace DAO\Emprunt
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
-
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':dateEmprunt', $dateEmprunt);
@@ -677,11 +676,11 @@ namespace DAO\Emprunt
 
             $row = $stmt->fetch();
 
-            $dateRetourEffetif = $row["dateRetourEffectif"];
+            $dateRetourEffectif = $row["dateRetourEffectif"];
             $idAlerte = $row["idAlerte"];
 
             // echo "contenu de la base $num $nom $adr $sal ";
-            $rep = new Emprunt($idAdherent, $dateEmprunt, $dateRetourEffetif, $idAlerte);
+            $rep = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, $dateRetourEffectif, $idAlerte);
 
             return $rep;
         }
@@ -736,6 +735,17 @@ namespace DAO\Emprunt
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':dateEmprunt', $dateEmprunt);
             $stmt->execute();
+        }
+        
+        static function getEmprunts()
+        {
+            $sql = "SELECT * FROM emprunt";
+            $listeEmprunts = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $emprunt = new Emprunt($row["idJeuPhysique"], $row["idAdherent"], $row["dateEmprunt"], $row["dateRetourEffectif"], $row["idAlerte"]);
+                $listeEmprunts->append($emprunt);
+            }
+            return $listeEmprunts;
         }
     }
 }
