@@ -1,4 +1,5 @@
 <?php
+
 include ("../../db/Daos.php");
 include ("../../metier/jeux/jeux.php");
 include ("../../metier/adherent/adherents.php");
@@ -70,6 +71,10 @@ if (htmlspecialchars(isset($_POST['Modifier Peronne'])) && isset ($_POST['person
     $personne->read($idPersonne);
     $daoPersonne->update($personne);
     echo "La personne a bien été modifiée";
+}
+
+else{
+    afficherPersonne();
 }
 
 ?>
