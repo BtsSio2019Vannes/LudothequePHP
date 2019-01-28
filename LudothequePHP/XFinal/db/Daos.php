@@ -888,7 +888,7 @@ namespace DAO\Jeu
             $titre = $row["titre"];
             $anneeSortie = $row["anneeSortie"];
             $auteur = $row["auteur"];
-            $idEditeur = $row["editeur"];
+            $idEditeur = $row["idEditeur"];
             $categorie = $row["categorie"];
             $univers = $row["univers"];
             $contenuInitial = $row["contenuInitial"];
@@ -914,7 +914,7 @@ namespace DAO\Jeu
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
-            $idEditeur = $objet->getIdEditeur();
+            $idEditeur = $objet->getEditeur()->getIdEditeur();
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();
@@ -942,7 +942,7 @@ namespace DAO\Jeu
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
-            $idEditeur = $objet->getIdEditeur();
+            $idEditeur = $objet->getEditeur()->getIdEditeur();
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();

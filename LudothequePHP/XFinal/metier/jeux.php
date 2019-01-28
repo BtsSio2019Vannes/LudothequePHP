@@ -10,18 +10,18 @@ namespace Jeu
         private $titre;
         private $anneeSortie;
         private $auteur;
-        private $idEditeur;
+        private $editeur;
         private $categorie;
         private $univers;
         private $contenuInitial;
         
-        function __construct($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial){
+        function __construct($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){
             $this->idJeu = $idJeu;
             $this->idRegle = $idRegle;
             $this->titre = $titre;
             $this->anneeSortie = $anneeSortie;
             $this->auteur = $auteur;
-            $this->idEditeur =$idEditeur;
+            $this->editeur = $editeur;
             $this->categorie =$categorie;
             $this->univers =$univers;
             $this->contenuInitial = $contenuInitial;
@@ -52,9 +52,9 @@ namespace Jeu
             return $this->auteur;
         }
     
-        public function getIdEditeur()
+        public function getEditeur()
         {
-            return $this->idEditeur;
+            return $this->editeur;
         }
         
         public function getCategorie()
@@ -97,9 +97,9 @@ namespace Jeu
             $this->auteur = $auteur;
         }
     
-        public function setIdEditeur($idEditeur)
+        public function setEditeur($editeur)
         {
-            $this->idEditeur = $idEditeur;
+            $this->editeur = $editeur;
         }
      
         public function setCategorie($categorie)
