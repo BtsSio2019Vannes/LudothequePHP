@@ -98,8 +98,7 @@ function afficherFormulaireAlerte($alerte)
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="commentaire">Commentaire :</label> <textarea class="form-control" name="commentaire" id="commentaire">
-				<?php echo $alerte->getCommentaire(); ?></textarea>
+				<label for="commentaire">Commentaire :</label> <textarea class="form-control" name="commentaire" id="commentaire"><?php echo $alerte->getCommentaire(); ?></textarea>
 			</div>
 <?php if ($isNouvelleAlerte) {?>
 	<div class="form-group">
