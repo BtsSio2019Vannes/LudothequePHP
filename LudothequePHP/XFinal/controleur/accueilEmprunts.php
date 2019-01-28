@@ -1,23 +1,24 @@
 <?php
-use Adherent\Adherent;
-use Adherent\Coordonnees;
 use DAO\Adherent\AdherentDAO;
 use DAO\Alerte\AlerteDAO;
 use DAO\Emprunt\EmpruntDAO;
 use DAO\Jeu\JeuDAO;
 use DAO\JeuPhysique\JeuPhysiqueDAO;
 use Emprunt\Emprunt;
+use Jeu\Alerte;
 ?>
 
 <h1>Gérer les Emprunts</h1>
 <?php
 include ("../vue/emprunt/formulaireEmprunts.php");
+include ("../vue/emprunt/formulaireAlertes.php");
 
 $daoAdherent = new AdherentDAO();
 $daoEmprunt = new EmpruntDAO();
 $daoAlerte = new AlerteDAO();
 $daoJeu = new JeuDAO();
 $daoJeuPhysique = new JeuPhysiqueDAO();
+$messageErreur = "<button class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-remove-sign\"></span> Erreur de saisie !</button>";
 
 /* Création de la liste des emprunts */
 $listeEmprunts = array();
@@ -38,109 +39,103 @@ foreach (EmpruntDAO::getEmprunts() as $emprunt) {
         'jeuPhysique' => $jeuPhysique,
         'alerte' => $alerte
     );
-
     $index ++;
 }
 
 /* Affichage des formulaires en fonction des variables POST reçues */
 
-/* Après clic sur bouton ajouter */
+/* Après clic sur bouton ajouter emprunt */
 if (htmlspecialchars(isset($_POST['nouvelEmprunt']))) {
     $date = new DateTime();
     $emprunt = new Emprunt("", "", $date->format('Y-m-d'), "", "");
-    afficherFormulaire($emprunt);
-} /* Après clic sur bouton supprimer */
+    afficherFormulaireEmprunt($emprunt);
+} /* Après clic sur bouton supprimer emprunt */
 else if (htmlspecialchars(isset($_POST['supprimerEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
     list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
     $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
     $daoEmprunt->delete($emprunt);
     echo "<p><b>Emprunt bien supprimé !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
-} /* Après clic sur bouton maj */
+} /* Après clic sur bouton maj emprunt */
 else if (htmlspecialchars(isset($_POST['modifierEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
     list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
     $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
     $emprunt = $daoEmprunt->read($emprunt);
-    afficherFormulaire($emprunt);
-} /* Après validation du formulaire */
-else if (htmlspecialchars(isset($_POST['formulaireAjout'])) || htmlspecialchars(isset($_POST['formulaireMaj']))) {
-    $messageErreur = "ERREUR";
-    $nom = htmlspecialchars($_POST['nom']);
-    $prenom = htmlspecialchars($_POST['prenom']);
-    $dateNaissance = htmlspecialchars($_POST['dateNaissance']);
-    $rue = htmlspecialchars($_POST['rue']);
-    $codePostal = htmlspecialchars($_POST['codePostal']);
-    $ville = htmlspecialchars($_POST['ville']);
-    $mel = htmlspecialchars($_POST['mel']);
-    $numeroTelephone = htmlspecialchars($_POST['numeroTelephone']);
-    $idEmprunt = htmlspecialchars(isset($_POST['idEmprunt'])) ? htmlspecialchars($_POST['idEmprunt']) : "";
-    $nom = isset($nom) && $nom != "" ? $nom : $messageErreur;
-    $prenom = isset($prenom) && $prenom != "" ? $prenom : $messageErreur;
-    $dateNaissance = isset($dateNaissance) && $dateNaissance != "" ? $dateNaissance : $messageErreur;
-    $rue = isset($rue) && $rue != "" ? $rue : $messageErreur;
-    $codePostal = isset($codePostal) && $codePostal != "" ? $codePostal : $messageErreur;
-    $ville = isset($ville) && $ville != "" ? $ville : $messageErreur;
-    $coordonnees = new Coordonnees("", $rue, $codePostal, $ville);
-    $mel = isset($mel) && $mel != "" ? $mel : $messageErreur;
-    $numeroTelephone = isset($numeroTelephone) && $numeroTelephone != "" ? $numeroTelephone : $messageErreur;
-    $idAdherentAssocie = htmlspecialchars(isset($_POST['adherents'])) ? htmlspecialchars($_POST['adherents']) : "";
-    $date = new DateTime();
-    $datePremiereAdhesion = htmlspecialchars(isset($_POST['datePremiereAdhesion'])) ? htmlspecialchars($_POST['datePremiereAdhesion']) : $date->format('Y-m-d');
-    $date->modify('+1 year');
-    $dateFinAdhesion = htmlspecialchars(isset($_POST['dateFinAdhesion'])) ? htmlspecialchars($_POST['dateFinAdhesion']) : $date->format('Y-m-d');
-    $idReglement = htmlspecialchars(isset($_POST['reglement'])) ? htmlspecialchars($_POST['reglement']) : 1;
-    $adherentAssocie = ($idAdherentAssocie != "") ? $daoAdherent->read($idAdherentAssocie) : null;
-    $adherent = new ArrayObject();
-    $adherent->append($adherentAssocie);
-    $emprunt = new Emprunt($idEmprunt, $nom, $prenom, $dateNaissance, $coordonnees, $mel, $numeroTelephone);
-    if ($nom != $messageErreur && $prenom != $messageErreur && $dateNaissance != $messageErreur && $mel != $messageErreur && $rue != $messageErreur && $codePostal != $messageErreur && $ville != $messageErreur && $numeroTelephone != $messageErreur) {
-        if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
-            $daoEmprunt->create($emprunt);
-            echo "
-<p>
-	<b>Emprunt bien ajoutée !</b><br />
-	<a href=\"index.php?page=emprunts\">Retour</a>
-</p>
-";
-        } else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
-            $daoEmprunt->update($emprunt);
-            echo "
-<p>
-	<b>Emprunt bien mise à jour !</b><br />
-	<a href=\"index.php?page=emprunts\">Retour</a>
-</p>
-";
-        }
-        if ($idAdherentAssocie == "passerAdherent") {
-            $adherent = new Adherent($idReglement, $datePremiereAdhesion, $dateFinAdhesion);
-            $adherent->setIdEmprunt($idEmprunt);
-            $adherent->setNom($nom);
-            $adherent->setPrenom($prenom);
-            $adherent->setDateNaissance($dateNaissance);
-            $adherent->setCoordonnees($coordonnees);
-            $adherent->setMel($mel);
-            $adherent->setNumeroTelephone($numeroTelephone);
-            if ($idEmprunt == "") {
-                $daoAdherent->create($adherent);
-            } else {
-                $daoAdherent->update($adherent);
-            }
-        } else if ($idAdherentAssocie != "") {
-            $daoAdherent->ajouterBeneficiaire($idAdherentAssocie, $idEmprunt);
-        }
+    afficherFormulaireEmprunt($emprunt);
+} /* Après validation du formulaire emprunt */
+else if (htmlspecialchars(isset($_POST['formulaireAjoutEmprunt'])) || htmlspecialchars(isset($_POST['formulaireMajEmprunt']))) {
 
-        // if (htmlspecialchars(isset($_POST['renouvelerAdhesion']))) { //
-        $adherent = $daoEmprunt->read($emprunt->getIdEmprunt()); //
-        $dateARenouveler = $adherent->getDateFinAdhesion(); // $dateRenouvelee =
-        date('Y-m-d', strtotime('+12 month', strtotime($dateARenouveler))); //
-        $adherent->setDateFinAdhesion($dateRenouvelee); // } } else { echo
-        $messageErreur;
-        afficherFormulaire($emprunt);
+    $dateEmprunt = htmlspecialchars($_POST['dateEmprunt']);
+    $dateRetourEffectif = htmlspecialchars($_POST['dateRetourEffectif']);
+    $idAdherent = htmlspecialchars($_POST['adherent']);
+    $idJeuPhysique = htmlspecialchars($_POST['jeuPhysique']);
+    $idAlerte = htmlspecialchars($_POST['alerte']);
+
+    $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, $dateRetourEffectif, $idAlerte);
+
+    if ($dateEmprunt != "" && $dateRetourEffectif != "" && $idAdherent != "" && $idJeuPhysique != "") {
+        if (htmlspecialchars(isset($_POST['formulaireAjoutEmprunt']))) {
+            $daoEmprunt->create($emprunt);
+            echo "<p><b>Emprunt bien ajouté !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
+        } else if (htmlspecialchars(isset($_POST['formulaireMajEmprunt']))) {
+            $daoEmprunt->update($emprunt);
+            echo "<p><b>Emprunt bien mis à jour !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
+        }
+    } else {
+        echo $messageErreur;
+        afficherFormulaireEmprunt($emprunt);
+    }
+} /* Après clic sur bouton ajouter alerte */
+else if (htmlspecialchars(isset($_POST['nouvelleAlerte']))) {
+    $alerte = new Alerte("", "", "", "", "");
+    afficherFormulaireAlerte($alerte);
+} /* Après clic sur bouton supprimer alerte */
+else if (htmlspecialchars(isset($_POST['supprimerAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
+    $idAlerte = htmlspecialchars($_POST['idAlerte']);
+    $alerte = new Alerte($idAlerte, "", "", "", "");
+    $daoAlerte->delete($alerte);
+    echo "<p><b>Alerte bien supprimée !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
+} /* Après clic sur bouton maj alerte */
+else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
+    $idAlerte = htmlspecialchars($_POST['idAlerte']);
+    $alerte = $daoAlerte->read($idAlerte);
+    afficherFormulaireAlerte($alerte);
+} /* Après validation du formulaire alerte */
+else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
+    
+    $idAlerte = htmlspecialchars(isset($_POST['idAlerte'])) ? htmlspecialchars($_POST['idAlerte']) : "";
+    $nom = htmlspecialchars($_POST['nom']);
+    $dateRetour = htmlspecialchars($_POST['dateRetour']);
+    $typeAlerte = htmlspecialchars($_POST['typeAlerte']);
+    $commentaire =  htmlspecialchars($_POST['commentaire']);
+    
+    $alerte= new Alerte($idAlerte, $nom, $dateRetour, $typeAlerte, $commentaire);
+    
+    if ($nom != "" && $dateRetour != "" && $typeAlerte != "") {
+        if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte']))) {
+            $daoAlerte->create($alerte);
+            echo "<p><b>Alerte bien ajoutée !</b><br /><a href=\"index.php?page=emprunts&action=gererAlerte\">Retour</a></p>";
+        } else if (htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
+            $daoAlerte->update($alerte);
+            echo "<p><b>Alerte bien mise à jour !</b><br /><a href=\"index.php?page=emprunts&action=gererAlerte\">Retour</a></p>";
+        }
+    } else {
+        echo $messageErreur;
+        afficherFormulaireAlerte($alerte);
+    }
+} /* Accès liste alertes */
+else if (htmlspecialchars(isset($_GET['action']))) {
+    $action = htmlspecialchars($_GET['action']);
+    if ($action == "gererAlerte") {
+        $listeAlertes = AlerteDAO::getAlertes();
+        afficherGestionAlerte($listeAlertes);
+    } else {
+        afficherGestionEmprunt($listeEmprunts);
     }
 } /*
    * Sinon afficher
    * liste emprunts
    */
 else {
-    echo afficherGestionEmprunt($listeEmprunts);
+    afficherGestionEmprunt($listeEmprunts);
 }
 ?>

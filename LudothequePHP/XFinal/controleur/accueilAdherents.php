@@ -8,7 +8,7 @@ use DAO\Adherent\AdherentDAO;
 
 
 // Condition ajouter personne
-if (htmlspecialchars(isset($_POST['ajouter']))) {
+if (htmlspecialchars(isset($_POST['ajouter']))) { 
     print_r($_POST);
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);

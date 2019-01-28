@@ -587,6 +587,19 @@ namespace DAO\Alerte
             }
             return $listeAlertes;
         }
+        
+        static function getTypesAlerte()
+        {
+            $sql = "SELECT * FROM typealerte";
+            $listeTypeAlerte = array();
+            $index = 0;
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $typeAlerte = $row["designation"];
+                $listeTypeAlerte[$index] = $typeAlerte;
+                $index++;
+            }
+            return $listeTypeAlerte;
+        }
     }
 }
 namespace DAO\Editeur
@@ -759,6 +772,33 @@ namespace DAO\Emprunt
             }
             return $listeEmprunts;
         }
+        
+        public function retrouverNbEmpruntEnCours($idAdherent) {
+            
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idAdherent = :idAdherent AND dateRetourEffectif > :dateActuelle";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $dateActuelle = date('Y-m-d');
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->bindParam(':dateActuelle', $dateActuelle);
+            $stmt->execute();
+            $rep = $stmt->fetch();
+
+            return $rep[0];
+        }
+        
+        public function isEmprunte($idJeuPhysique) {
+            
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idJeuPhysique = :idJeuPhysique AND dateRetourEffectif > :dateActuelle";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $dateActuelle = date('Y-m-d');
+            $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
+            $stmt->bindParam(':dateActuelle', $dateActuelle);
+            $stmt->execute();
+            $rep = $stmt->fetch();
+            $rep = ($rep[0] != 0) ? true : false;
+            
+            return $rep;
+        }
     }
 }
 namespace DAO\JeuPhysique
@@ -801,7 +841,7 @@ namespace DAO\JeuPhysique
             WHERE $this->key=:idJeuPhysique";
 
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $idJeu = $objet->getIdJeu();
             $contenuActuel = $objet->getContenuActuel();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
@@ -828,7 +868,7 @@ namespace DAO\JeuPhysique
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->execute();
         }
@@ -837,9 +877,13 @@ namespace DAO\JeuPhysique
         {
             $sql = "SELECT * FROM jeu INNER JOIN jeuphysique ON jeu.idJeu = jeuphysique.idJeu ORDER BY jeu.idJeu, jeuphysique.idJeuPhysique;";
             $listeJeuxPhysiques = array();
-            $index = 0;
+            $titreJeu = "";
             foreach (Connexion::getInstance()->query($sql) as $row) {
-                $listeJeuxPhysiques[$index] = $row;
+                if ($titreJeu != $row['titre']) {
+                    $titreJeu = $row['titre'];
+                    $index = 0;
+                }
+                $listeJeuxPhysiques[$titreJeu][$index] = $row;
                 $index++;
             }
             return $listeJeuxPhysiques;
@@ -875,7 +919,7 @@ namespace DAO\Jeu
             $titre = $row["titre"];
             $anneeSortie = $row["anneeSortie"];
             $auteur = $row["auteur"];
-            $idEditeur = $row["editeur"];
+            $idEditeur = $row["idEditeur"];
             $categorie = $row["categorie"];
             $univers = $row["univers"];
             $contenuInitial = $row["contenuInitial"];
@@ -901,7 +945,7 @@ namespace DAO\Jeu
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
-            $idEditeur = $objet->getIdEditeur();
+            $idEditeur = $objet->getEditeur()->getIdEditeur();
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();
@@ -929,7 +973,7 @@ namespace DAO\Jeu
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
-            $idEditeur = $objet->getIdEditeur();
+            $idEditeur = $objet->getEditeur()->getIdEditeur();
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();
@@ -958,7 +1002,7 @@ namespace DAO\Jeu
         static function getJeu() {
             $sql = "SELECT * FROM jeu";
             $listeJeux = new \ArrayObject();
-            foreach (Connexion::get_instance()->query($sql) as $row) {
+            foreach (Connexion::getinstance()->query($sql) as $row) {
                 $daoJeu = new JeuDAO();
                 $jeu = $daoJeu->read($row['idJeu']);
                 $listeJeux->append($jeu);

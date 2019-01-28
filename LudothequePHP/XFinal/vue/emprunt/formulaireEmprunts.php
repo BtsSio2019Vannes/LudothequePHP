@@ -1,12 +1,12 @@
 <!-- Contenu HTML affichage des formulaires -->
 <?php
 use DAO\Adherent\AdherentDAO;
-use DAO\Alerte\AlerteDAO;
-use DAO\Emprunt\EmpruntDAO;
-use DAO\Jeu\JeuDAO;
 use DAO\JeuPhysique\JeuPhysiqueDAO;
+use DAO\Alerte\AlerteDAO;
+use DAO\Reglement\ReglementDAO;
+use DAO\Emprunt\EmpruntDAO;
 
-function afficherGestionEmprunt($listeEmprunts)
+function afficherGestionEmprunt($listeEmprunts) 
 {
     ?>
 <form method="post" action="index.php?page=emprunts">
@@ -14,7 +14,12 @@ function afficherGestionEmprunt($listeEmprunts)
 		<thead>
 			<tr>
 				<td colspan="6"><button type="submit" class="btn btn-success"
-						name="nouvelEmprunt">Nouvel Emprunt</button></td>
+						name="nouvelEmprunt">
+						<span class="glyphicon glyphicon-plus"></span> Nouvel Emprunt
+					</button> <a href="index.php?page=emprunts&action=gererAlerte"
+					class="btn btn-info"><span
+						class="glyphicon glyphicon-exclamation-sign"></span> Gérer les
+						Alertes</a></td>
 			</tr>
 			<tr>
 				<th>Date d'emprunt</th>
@@ -23,9 +28,13 @@ function afficherGestionEmprunt($listeEmprunts)
 				<th>Jeu</th>
 				<th>Alerte</th>
 				<th><button type="submit" class="btn btn-danger"
-						name="supprimerEmprunt">Supprimer</button>
+						name="supprimerEmprunt">
+						<span class="glyphicon glyphicon-remove"></span> Supprimer
+					</button>
 					<button type="submit" class="btn btn-primary"
-						name="modifierEmprunt">Mettre à Jour</button></th>
+						name="modifierEmprunt">
+						<span class="glyphicon glyphicon-edit"></span> Mettre à Jour
+					</button></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -66,79 +75,128 @@ function afficherGestionEmprunt($listeEmprunts)
 <?php
 }
 
-function afficherFormulaire($emprunt)
+function afficherFormulaireEmprunt($emprunt)
 {
-    $isNouvelEmprunt = ($emprunt->getIdJeuPhysique() == "" && $emprunt->getIdAdherent() == "");
+    $isNouvelEmprunt = ($emprunt->getIdAlerte() == "" && $emprunt->getIdAdherent() == "");
     $intituleFormulaire = $isNouvelEmprunt ? "Ajout d'un nouvel emprunt" : "Modification d'un emprunt";
-    $idEmprunt = $isNouvelEmprunt ? "" : $emprunt->getIdJeuPhysique()."/".$emprunt->getIdAdherent()."/".$emprunt->getDateEmprunt();
-    $daoAdherent = new AdherentDAO();
+    $idEmprunt = $isNouvelEmprunt ? "" : $emprunt->getIdAlerte() . "/" . $emprunt->getIdAdherent() . "/" . $emprunt->getDateEmprunt();
+    $daoReglement = new ReglementDAO();
+    // $daoAdherent = new AdherentDAO();
     $daoEmprunt = new EmpruntDAO();
-    $daoAlerte = new AlerteDAO();
-    $daoJeu = new JeuDAO();
-    $daoJeuPhysique = new JeuPhysiqueDAO();
+    // $daoAlerte = new AlerteDAO();
+    // $daoJeu = new JeuDAO();
+    // $daoJeuPhysique = new JeuPhysiqueDAO();
 
     ?>
 <h3><?php echo $intituleFormulaire; ?></h3>
 <div class="col-lg-offset-4 col-lg-4">
 	<form method="post" action="index.php?page=emprunts">
-		<div class="form-group">
-			<label for="dateEmprunt">Date d'emprunt :</label> <input type="date"
-				class="form-control" name="dateEmprunt" id="dateEmprunt"
-				value="<?php echo $emprunt->getDateEmprunt(); ?>">
-		</div>
-		<div class="form-group">
-			<label for="dateRetourEffectif">Date de Retour :</label> <input
-				type="date" class="form-control" name="dateRetourEffectif"
-				id="dateRetourEffectif"
-				value="<?php echo $emprunt->getDateRetourEffectif(); ?>">
-		</div>
-		<div class="form-group">
-			<label for="adherent">Adhérent :</label> <select class="form-control"
-				name="adherent" id="adherent">
-				<option value="" selected>Aucun</option>				
+		<fieldset>
+			<legend>Détails de l'emprunt</legend>
+			<div class="form-group">
+				<label for="dateEmprunt">Date d'emprunt :</label> <input type="date"
+					class="form-control" name="dateEmprunt" id="dateEmprunt"
+					value="<?php echo $emprunt->getDateEmprunt(); ?>">
+			</div>
+			<div class="form-group">
+				<label for="dateRetourEffectif">Date de Retour :</label> <input
+					type="date" class="form-control" name="dateRetourEffectif"
+					id="dateRetourEffectif"
+					value="<?php echo $emprunt->getDateRetourEffectif(); ?>">
+			</div>
+			<div class="form-group">
+				<label for="adherent">Adhérent :</label> <select
+					class="form-control" name="adherent" id="adherent">
+					<option value="" selected>Aucun</option>				
 <?php
     $listeAdherents = AdherentDAO::getAdherents();
     if (array_key_exists(0, $listeAdherents)) {
         foreach ($listeAdherents as $adherent) {
-            $selected = ($adherent->getIdPersonne() == $emprunt->getIdAdherent()) ? "selected" : "";
+            $nbEmpruntEnCours = $daoEmprunt->retrouverNbEmpruntEnCours($adherent->getIdPersonne());
+            $reglement = $daoReglement->read($adherent->getIdReglement());
+            $selected = ($adherent->getIdPersonne() == $emprunt->getIdAdherent()) ? " selected" : "";
+            $disabled = ($nbEmpruntEnCours == $reglement->getNbrJeux() && $selected == "") ? " disabled" : "";
             ?>
-                <option value="<?php echo $adherent->getIdPersonne(); ?>" <?php echo $selected; ?>><?php echo $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance(); ?></option>
-<?php
+                <option
+						value="<?php echo $adherent->getIdPersonne(); ?>"
+						<?php echo $selected . $disabled; ?>><?php echo $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance() . " " . $nbEmpruntEnCours . "/" . $reglement->getNbrJeux(); ?></option><?php
         }
     }
     ?>
 
 				</select>
-		</div>
-		<div class="form-group">
-			<label for="jeuPhysique">Jeu à Emprunter :</label> <select class="form-control"
-				name="jeuPhysique" id="jeuPhysique">
+			</div>
+			<div class="form-group">
+				<label for="jeuPhysique">Jeu à Emprunter :</label> <select
+					class="form-control" name="jeuPhysique" id="jeuPhysique">
+					<option value="" selected>Aucun</option>	
 <?php
-    $listeJeuxPhysiques = JeuPhysiqueDAO::getJeuxPhysiquesTries();
-    if (array_key_exists(0, $listeJeuxPhysiques)) {
-        foreach ($listeJeuxPhysiques as $jeuxPhysique) {
-            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? "selected" : "";
+    $titreJeu = "";
+    $listeJeuxPhysiquesTriee = JeuPhysiqueDAO::getJeuxPhysiquesTries();
+    if (sizeof($listeJeuxPhysiquesTriee)) {
+        foreach ($listeJeuxPhysiquesTriee as $cle => $listejeuxPhysique) {
+            if ($titreJeu != $cle) {
+                $titreJeu = $cle;
+                ?>
+            	<optgroup label="<?php echo $titreJeu; ?>">
+            	<?php
+            }
+            foreach ($listejeuxPhysique as $jeuxPhysique) {
+                $isEmprunte = $daoEmprunt->isEmprunte($jeuxPhysique['idJeuPhysique']);
+                $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? " selected" : "";
+                $disabled = ($isEmprunte == 1 && $selected == "") ? " disabled" : "";
+                $estEmprunte = $isEmprunte ? " indisponible" : "";
             ?>
-                <option value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>" <?php echo $selected; ?>><?php echo $jeuxPhysique['titre'] . " n°" . $jeuxPhysique['idJeuPhysique']; ?></option>
+                <option value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"
+                <?php echo $selected . $disabled; ?>>n°<?php echo $jeuxPhysique['idJeuPhysique'] . "" . $estEmprunte; ?></option>
 <?php
-        }
+            }
+?>
+				</optgroup>
+<?php
+            }
     }
     ?>
+				
+				
 				</select>
-		</div>
-	
+			</div>
+		</fieldset>
 <?php if ($isNouvelEmprunt) {?>
 	<div class="form-group">
-			<input type="submit" class="form-control" name="formulaireAjout"
-				value="Créer Nouvelle Emprunt">
+			<input type="submit" class="form-control"
+				name="formulaireAjoutEmprunt" value="Créer Nouvel Emprunt">
 		</div>
 <?php
     } else {
         ?>
+        <fieldset>
+			<legend>Alerte</legend>
+			<div class="form-group">
+				<label for="alerte">Alerte :</label> <select class="form-control"
+					name="alerte" id="alerte">
+					<option value="" selected>Aucun</option>				
+<?php
+        $listeAlertes = AlerteDAO::getAlertes();
+        if (array_key_exists(0, $listeAlertes)) {
+            foreach ($listeAlertes as $alerte) {
+                $selected = ($alerte->getIdAlerte() == $emprunt->getIdAlerte()) ? "selected" : "";
+                ?>
+                <option value="<?php echo $alerte->getIdAlerte(); ?>"
+						<?php echo $selected; ?>><?php echo $alerte->getNom(); ?></option>
+<?php
+            }
+        }
+        ?>
+				</select>
+				<button type="submit" class="btn btn-success" name="nouvelleAlerte">Créer
+					une nouvelle alerte</button>
+			</div>
+		</fieldset>
 		<div class="form-group">
-        <input type="hidden" name="idEmprunt"
-			value="<?php echo $idEmprunt; ?>">
-			<input type="submit" class="form-control" name="formulaireMaj"
+			<input type="hidden" name="idEmprunt"
+				value="<?php echo $idEmprunt; ?>"> <input type="submit"
+				class="form-control" name="formulaireMajEmprunt"
 				value="Mettre à Jour">
 		</div>
 <?php

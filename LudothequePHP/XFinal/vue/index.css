@@ -3,9 +3,12 @@
 
 /* CSS de Texte */
 
-h1 {
+h1, h3 {
 	text-align: center;
 	text-decoration: underline;
+}
+
+h1 {
 	font-size: xx-large;
 }
 
