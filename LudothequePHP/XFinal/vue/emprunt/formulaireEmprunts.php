@@ -22,9 +22,9 @@ function afficherGestionEmprunt($listeEmprunts)
 				<th>Jeu</th>
 				<th>Alerte</th>
 				<th><button type="submit" class="btn btn-danger"
-						name="supprimerEmprunt">Supprimer</button>
+						name="supprimerEmprunt"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
 					<button type="submit" class="btn btn-primary"
-						name="modifierEmprunt">Mettre à Jour</button></th>
+						name="modifierEmprunt"><span class="glyphicon glyphicon-edit"></span> Mettre à Jour</button></th>
 			</tr>
 		</thead>
 		<tbody>

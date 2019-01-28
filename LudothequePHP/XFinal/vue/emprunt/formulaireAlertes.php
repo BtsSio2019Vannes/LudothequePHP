@@ -18,9 +18,9 @@ function afficherGestionAlerte($listeAlertes)
 				<th>Type d'alerte</th>
 				<th>Commentaire</th>
 				<th><button type="submit" class="btn btn-danger"
-						name="supprimerAlerte">Supprimer</button>
+						name="supprimerAlerte"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
 					<button type="submit" class="btn btn-primary"
-						name="modifierAlerte">Mettre à Jour</button></th>
+						name="modifierAlerte"><span class="glyphicon glyphicon-edit"></span> Mettre à Jour</button></th>
 			</tr>
 		</thead>
 		<tbody>
