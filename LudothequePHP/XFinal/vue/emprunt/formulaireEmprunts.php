@@ -4,7 +4,7 @@ use DAO\Adherent\AdherentDAO;
 use DAO\JeuPhysique\JeuPhysiqueDAO;
 use DAO\Alerte\AlerteDAO;
 
-function afficherGestionEmprunt($listeEmprunts)
+function afficherGestionEmprunt($listeEmprunts) 
 {
     ?>
 <form method="post" action="index.php?page=emprunts">

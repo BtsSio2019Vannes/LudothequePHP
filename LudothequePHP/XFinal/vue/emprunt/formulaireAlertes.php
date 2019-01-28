@@ -2,7 +2,7 @@
 <?php
 use DAO\Alerte\AlerteDAO;
 
-function afficherGestionAlerte($listeAlertes)
+function afficherGestionAlerte($listeAlertes) 
 {
     ?>
 <form method="post" action="index.php?page=emprunts">
