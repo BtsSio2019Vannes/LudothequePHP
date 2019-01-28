@@ -7,7 +7,7 @@ function afficherJeu()
 <h1>Gérér les Jeux</h1>
 <form action="../../controleur/accueilJeux.php" method="post"
 	class="AfficheJeu">
-	<table>
+	<table style=" width : 60%">
 		<thead>
 			<tr>
 				<th>Id</th>
