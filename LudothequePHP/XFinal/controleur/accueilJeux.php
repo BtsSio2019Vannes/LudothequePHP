@@ -4,7 +4,7 @@ use DAO\Jeu\JeuDAO;
 include '../vue/jeux/formulaireJeux.php';
 
 if (htmlspecialchars(isset($_POST['ajouterJeu']))) {
-    
+    afficherFomulaireAjout();
     $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
     $anneeSortie = htmlspecialchars($_POST['anneSortie']);
