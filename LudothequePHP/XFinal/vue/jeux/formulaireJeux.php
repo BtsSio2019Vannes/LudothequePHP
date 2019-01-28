@@ -7,7 +7,11 @@ function afficherJeu()
 <h1>Gérér les Jeux</h1>
 <form action="index.php?page=jeux" method="post" class="AfficheJeu">
 	<table style="width: 90%">
-		
+		<tr>
+			<th><input type="submit" name="mise a jour" value="Mettre à jour"/></th>
+			<th><input type="submit" name="supprimer" value="Supprimer Jeu"/></th>
+			<th><input type="submit" name="ajouter" value="Ajouter Jeu"/></th>
+		</tr>
 
 		<tr>
 			<th>Id</th>
@@ -53,7 +57,7 @@ function formulaireMaj($jeu)
 {
     ?>
 
-<form class="formulaireMaj" method="post" action="../../controleur/accueilJeux.php">
+<form class="formulaireMaj" method="post" action="index.php?page=jeux">
     <?php
 
     ?>
