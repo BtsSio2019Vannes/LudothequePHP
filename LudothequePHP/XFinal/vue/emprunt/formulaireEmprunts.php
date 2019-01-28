@@ -46,7 +46,7 @@ function afficherGestionEmprunt($listeEmprunts)
 				<td><?php echo $jeu->getTitre(); ?></td>
 				<td><?php echo $alerte; ?></td>
 				<td><input type="radio" name="idEmprunt"
-					value="<?php echo $jeuPhysique->getIdAlerte()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
+					value="<?php echo $jeuPhysique->getIdJeuPhysique()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
 			</tr>
 <?php
         }
