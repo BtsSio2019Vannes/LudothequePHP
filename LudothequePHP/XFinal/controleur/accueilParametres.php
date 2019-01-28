@@ -5,7 +5,7 @@ use Parametre\Reglement;
 
 ?>
 
-<section>
+<section> 
 		<h1>Gérer les Paramètres</h1>
 		
 </section>
