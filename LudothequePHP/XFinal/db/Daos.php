@@ -587,6 +587,17 @@ namespace DAO\Alerte
             }
             return $listeAlertes;
         }
+        
+        static function getTypesAlerte()
+        {
+            $sql = "SELECT * FROM typealerte";
+            $listeTypeAlerte = array();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $typeAlerte = $row["designation"];
+                $listeTypeAlerte->append($typeAlerte);
+            }
+            return $listeTypeAlerte;
+        }
     }
 }
 namespace DAO\Editeur
@@ -678,7 +689,7 @@ namespace DAO\Emprunt
         {
             $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
@@ -704,7 +715,7 @@ namespace DAO\Emprunt
             WHERE $this->key=:idJeuPhysique";
 
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
             $dateRetourEffectif = $objet->getDateRetourEffectif();
@@ -722,7 +733,7 @@ namespace DAO\Emprunt
             $sql = "INSERT INTO $this->table (idJeuPhysique, idAdherent, dateEmprunt, dateRetourEffectif, idAlerte)
              VALUES (:idJeuPhysique, :idAdherent, :dateEmprunt, :dateRetourEffectif, :idAlerte)";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
             $dateRetourEffectif = $objet->getDateRetourEffectif();
@@ -739,7 +750,7 @@ namespace DAO\Emprunt
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
 
@@ -801,7 +812,7 @@ namespace DAO\JeuPhysique
             WHERE $this->key=:idJeuPhysique";
 
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $idJeu = $objet->getIdJeu();
             $contenuActuel = $objet->getContenuActuel();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
@@ -828,7 +839,7 @@ namespace DAO\JeuPhysique
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdJeuPhysique();
+            $idJeuPhysique = $objet->getIdAlerte();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->execute();
         }
