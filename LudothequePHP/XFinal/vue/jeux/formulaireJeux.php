@@ -5,12 +5,13 @@ function afficherJeu()
 {
     ?>
 <h1>Gérér les Jeux</h1>
-<form action="../../controleur/accueilJeux.php" method="post"
+<form action="../../controleur/accueilJeux.php?action=mettreàjourunjeu" method="post"
 	class="AfficheJeu">
 	<table style="width: 60%">
 		<tr>
 			<th><input type="submit" name="mise a jour" value="Mettre à jour"></th>
 			<th><input type="submit" name="supprimer" value="Supprimer Jeu"></th>
+			<th><input type="submit" name="ajouter" value="Ajouter Jeu"></th>
 		</tr>
 
 		<tr>
