@@ -3,7 +3,7 @@ use Jeu\Jeu;
 use DAO\Jeu\JeuDAO;
 include_once '../vue/jeux/formulaireJeux.php';
 
-if (htmlspecialchars(isset($_POST['']))) {
+if (htmlspecialchars(isset($_POST['Ajouter Jeu']))) {
     print_r($_POST);
     $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
