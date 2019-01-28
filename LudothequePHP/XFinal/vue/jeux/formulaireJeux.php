@@ -1,6 +1,6 @@
 <?php
 use DAO\Jeu\JeuDAO;
-include '../controleur/accueilJeux.php';
+
 function afficherJeu()
 {
     ?>
