@@ -3,7 +3,7 @@ use Jeu\Jeu;
 use DAO\Jeu\JeuDAO;
 include_once '../vue/jeux/formulaireJeux.php';
 
-if (htmlspecialchars(isset($_POST['ajouterJeu']))) {
+if (htmlspecialchars(isset($_POST['submit = Ajouter Jeu']))) {
     print_r($_POST);
     $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
@@ -30,7 +30,7 @@ if (htmlspecialchars(isset($_POST['ajouterJeu']))) {
     
     echo "Le Jeu" . $titre . " " . "à bien été ajouté <a href =\"../vue/index.php?page=jeux\">Retour</a> ";
 }
-elseif (htmlspecialchars(isset($_POST['majJeu'])))
+elseif (htmlspecialchars(isset($_POST['Mettre à Jour'])))
 {
     formulaireMaj();
     print_r($_POST);
@@ -49,7 +49,7 @@ elseif (htmlspecialchars(isset($_POST['majJeu'])))
     $dao->update($jeu);
     echo "Le jeu à bien été mis à jour <a href=\"../vue/index.php?page=jeux\">Retour</a></p>";
 }
-elseif (htmlspecialchars(isset($_POST['supprimerJeu'])))
+elseif (htmlspecialchars(isset($_POST['Supprimer Jeu'])))
 {
     $idJeu = htmlspecialchars($_POST['idJeu']);
     $Regle = htmlspecialchars($_POST['Regle']);
