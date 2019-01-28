@@ -6,7 +6,7 @@ namespace Jeu
     class Jeu
     {
         private $idJeu;
-        private $idRegle;
+        private $regle;
         private $titre;
         private $anneeSortie;
         private $auteur;
@@ -15,9 +15,9 @@ namespace Jeu
         private $univers;
         private $contenuInitial;
         
-        function __construct($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){
+        function __construct($idJeu, $regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){
             $this->idJeu = $idJeu;
-            $this->idRegle = $idRegle;
+            $this->regle = $regle;
             $this->titre = $titre;
             $this->anneeSortie = $anneeSortie;
             $this->auteur = $auteur;
@@ -32,9 +32,9 @@ namespace Jeu
             return $this->idJeu;
         }
         
-        public function getIdRegle()
+        public function getRegle()
         {
-            return $this->idRegle;
+            return $this->regle;
         }
         
         public function getTitre()
@@ -77,9 +77,10 @@ namespace Jeu
             $this->idJeu = $idJeu;
         }
         
-        public function setIdRegle($idRegle)
+               
+        public function setRegle($regle)
         {
-            $this->idRegle = $idRegle;
+            $this->regle = $regle;
         }
     
         public function setTitre($titre)
