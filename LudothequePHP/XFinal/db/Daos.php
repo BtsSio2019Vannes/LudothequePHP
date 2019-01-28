@@ -975,7 +975,7 @@ namespace DAO\Jeu
             $auteur = $objet->getAuteur();
             $idEditeur = $objet->getEditeur()->getIdEditeur();
             $categorie = $objet->getCategorie();
-            $univers = $objet->getunivers();
+            $univers = $objet->getUnivers();
             $contenuInitial = $objet->getContenuInitial();
             $stmt->bindParam(':regle', $regle);
             $stmt->bindParam(':titre', $titre);
