@@ -8,7 +8,7 @@ function afficherJeu()
 <form action="index.php?page=jeux" method="post" class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
-			<th><input type="submit" name="mise a jour" value="Mettre à jour"/></th>
+			<th><input type="submit" name="miseaJjour" value="Mettre à jour"/></th>
 			<th><input type="submit" name="supprimer" value="Supprimer Jeu"/></th>
 			<th><input type="submit" name="ajouter" value="Ajouter Jeu"/></th>
 		</tr>
@@ -57,7 +57,7 @@ function formulaireMaj($jeu)
 {
     ?>
 
-<form class="formulaireMaj" method="post" action="index.php?page=jeux">
+<form class="formulaireMaj" method="post" action="index.php?page=jeux" >
     <?php
 
     ?>
@@ -120,7 +120,7 @@ function formulaireMaj($jeu)
 		</tr>
 		<?php
 
-    afficherFormualireAjout($jeu)?>
+    afficherFormulaireAjout($jeu)?>
     </table>
     <?php
 
@@ -131,10 +131,10 @@ function formulaireMaj($jeu)
 <?php }?>
 <?php
 
-function afficherFomulaireAjout($jeu)
+function afficherFormulaireAjout($jeu)
 {
     ?>
-<form method="post" action="index.php?page=jeux" class="majJeu">
+<form method="post" action="index.php?page=jeux" class="ajoutJeu">
 	<table>
 		<tr>
 
