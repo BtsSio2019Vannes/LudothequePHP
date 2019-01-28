@@ -772,6 +772,33 @@ namespace DAO\Emprunt
             }
             return $listeEmprunts;
         }
+        
+        public function retrouverNbEmpruntEnCours($idAdherent) {
+            
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idAdherent = :idAdherent AND dateRetourEffectif > :dateActuelle";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $dateActuelle = date('Y-m-d');
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->bindParam(':dateActuelle', $dateActuelle);
+            $stmt->execute();
+            $rep = $stmt->fetch();
+
+            return $rep[0];
+        }
+        
+        public function isEmprunte($idJeuPhysique) {
+            
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idJeuPhysique = :idJeuPhysique AND dateRetourEffectif > :dateActuelle";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $dateActuelle = date('Y-m-d');
+            $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
+            $stmt->bindParam(':dateActuelle', $dateActuelle);
+            $stmt->execute();
+            $rep = $stmt->fetch();
+            $rep = ($rep[0] != 0) ? true : false;
+            
+            return $rep;
+        }
     }
 }
 namespace DAO\JeuPhysique
@@ -850,9 +877,13 @@ namespace DAO\JeuPhysique
         {
             $sql = "SELECT * FROM jeu INNER JOIN jeuphysique ON jeu.idJeu = jeuphysique.idJeu ORDER BY jeu.idJeu, jeuphysique.idJeuPhysique;";
             $listeJeuxPhysiques = array();
-            $index = 0;
+            $titreJeu = "";
             foreach (Connexion::getInstance()->query($sql) as $row) {
-                $listeJeuxPhysiques[$index] = $row;
+                if ($titreJeu != $row['titre']) {
+                    $titreJeu = $row['titre'];
+                    $index = 0;
+                }
+                $listeJeuxPhysiques[$titreJeu][$index] = $row;
                 $index++;
             }
             return $listeJeuxPhysiques;
