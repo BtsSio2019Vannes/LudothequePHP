@@ -575,6 +575,18 @@ namespace DAO\Alerte
             $stmt->execute();
             $objet->setIdAlerte(parent::getLastKey());
         }
+        
+        static function getAlertes()
+        {
+            $sql = "SELECT * FROM alerte";
+            $listeAlertes = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $daoAlerte = new AlerteDAO();
+                $alerte = $daoAlerte->read($row["idAlerte"]);
+                $listeAlertes->append($alerte);
+            }
+            return $listeAlertes;
+        }
     }
 }
 namespace DAO\Editeur
