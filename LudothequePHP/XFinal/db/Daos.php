@@ -971,7 +971,7 @@ namespace DAO\Jeu
         static function getJeu() {
             $sql = "SELECT * FROM jeu";
             $listeJeux = new \ArrayObject();
-            foreach (Connexion::get_instance()->query($sql) as $row) {
+            foreach (Connexion::getinstance()->query($sql) as $row) {
                 $daoJeu = new JeuDAO();
                 $jeu = $daoJeu->read($row['idJeu']);
                 $listeJeux->append($jeu);

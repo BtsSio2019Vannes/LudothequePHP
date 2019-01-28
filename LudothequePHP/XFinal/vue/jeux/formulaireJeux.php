@@ -4,7 +4,9 @@ use DAO\Jeu\JeuDAO;
 function afficherJeu()
 {
     ?>
-<form action="../../controleur/accueilJeux.php" method="post" class="AfficheJeu">
+<h1>Gérér les Jeux</h1>
+<form action="../../controleur/accueilJeux.php" method="post"
+	class="AfficheJeu">
 	<table>
 		<tr>
 			<td>Id</td>
@@ -18,7 +20,7 @@ function afficherJeu()
 			<td>Contenu Initial</td>
 			<td><input type="submit" name="mise a jour">Mettre à jour</td>
 			<td><input type="submit" name="supprimer">Supprimer Jeu</td>
-			
+
 		</tr>
 
 	</table>
