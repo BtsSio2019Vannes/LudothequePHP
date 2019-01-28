@@ -19,7 +19,7 @@ function afficherPersonnes()
 						<th><button type="submit" name="ajouter">Ajouter</button></th>
 						
 					
-					<td colspan="9"></td>
+					<td colspan="8"></td>
 					<td>
 					</td>
 				</tr>
@@ -37,7 +37,7 @@ function afficherPersonnes()
 				</tr>
 
 				<tr>
-					<td colspan="9"></td>      
+					<td colspan="8"></td>      
             <?php
     
 
