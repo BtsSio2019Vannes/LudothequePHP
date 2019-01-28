@@ -28,10 +28,7 @@ function afficherJeu()
 		<tr>
 			<th colspan="8"></th>
 		</tr>
-		
-
-	</table>
-	<?php
+		<?php
 
     $jeux = JeuDAO::getJeu();
     foreach ($jeux as $jeu) {
@@ -49,6 +46,9 @@ function afficherJeu()
     echo $rep;
 }
 ?>
+
+	</table>
+
 </form>
 
 <?php
