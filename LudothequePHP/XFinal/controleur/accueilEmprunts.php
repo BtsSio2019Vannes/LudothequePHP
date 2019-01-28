@@ -105,7 +105,7 @@ else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(i
     $nom = htmlspecialchars($_POST['nom']);
     $dateRetour = htmlspecialchars($_POST['dateRetour']);
     $typeAlerte = htmlspecialchars($_POST['typeAlerte']);
-    $commentaire =  htmlspecialchars($_POST['typeAlerte']);
+    $commentaire =  htmlspecialchars($_POST['commentaire']);
     
     $alerte= new Alerte("", $nom, $dateRetour, $typeAlerte, $commentaire);
     
