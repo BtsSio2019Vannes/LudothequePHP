@@ -5,7 +5,7 @@ function afficherJeu()
 {
     ?>
 <h1>Gérér les Jeux</h1>
-<form action="../index.php?page=jeux" method="post"
+<form action="index.php?page=jeux" method="post"
 	class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
@@ -58,7 +58,7 @@ function formulaireMaj($jeu)
 {
     ?>
 
-<form class="formulaireMaj" method="post" action="../controleur/accueilJeux.php&action=majJeu">
+<form class="formulaireMaj" method="post" action="index.php?page=jeux">
     <?php
 
     ?>
@@ -66,7 +66,7 @@ function formulaireMaj($jeu)
 
 		<tr>
 			<td>Id Règle :</td>
-			<td><input type="text" name="idRegle"
+			<td><input type="url" name="idRegle"
 				value="<?php echo $jeu->getIdRegle();?>"></td>
 		</tr>
 
@@ -135,7 +135,7 @@ function formulaireMaj($jeu)
 function afficherFomulaireAjout($jeu)
 {
     ?>
-<form method="post" action="../controleur/accueilJeux.php" class="majJeu">
+<form method="post" action="index.php?page=jeux" class="majJeu">
 	<table>
 		<tr>
 
