@@ -10,7 +10,7 @@ function afficherGestionAlerte($listeAlertes)
 		<thead>
 			<tr>
 				<td colspan="5"><button type="submit" class="btn btn-success"
-						name="nouvelleAlerte">Nouvelle Alerte</button></td>
+						name="nouvelleAlerte"><span class="glyphicon glyphicon-plus"></span> Nouvelle Alerte</button></td>
 			</tr>
 			<tr>
 				<th>Nom de l'alerte</th>
