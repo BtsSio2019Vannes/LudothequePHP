@@ -63,7 +63,7 @@ else if (htmlspecialchars(isset($_POST['modifierEmprunt'])) && htmlspecialchars(
     $emprunt = $daoEmprunt->read($emprunt);
     afficherFormulaireEmprunt($emprunt);
 } /* Après validation du formulaire */
-else if (htmlspecialchars(isset($_POST['formulaireAjout'])) || htmlspecialchars(isset($_POST['formulaireMaj']))) {
+else if (htmlspecialchars(isset($_POST['formulaireAjoutEmprunt'])) || htmlspecialchars(isset($_POST['formulaireMajEmprunt']))) {
 
     $dateEmprunt = htmlspecialchars($_POST['dateEmprunt']);
     $dateRetourEffectif = htmlspecialchars($_POST['dateRetourEffectif']);
@@ -74,31 +74,67 @@ else if (htmlspecialchars(isset($_POST['formulaireAjout'])) || htmlspecialchars(
     $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, $dateRetourEffectif, $idAlerte);
 
     if ($dateEmprunt != "" && $dateRetourEffectif != "" && $idAdherent != "" && $idJeuPhysique != "") {
-        if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
+        if (htmlspecialchars(isset($_POST['formulaireAjoutEmprunt']))) {
             $daoEmprunt->create($emprunt);
-            echo "<p><b>Emprunt bien ajoutée !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
-        } else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
+            echo "<p><b>Emprunt bien ajouté !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
+        } else if (htmlspecialchars(isset($_POST['formulaireMajEmprunt']))) {
             $daoEmprunt->update($emprunt);
-            echo "<p><b>Emprunt bien mise à jour !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
+            echo "<p><b>Emprunt bien mis à jour !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
         }
     } else {
         echo $messageErreur;
         afficherFormulaireEmprunt($emprunt);
     }
+} /* Après clic sur bouton ajouter alerte */
+else if (htmlspecialchars(isset($_POST['nouvelleAlerte']))) {
+    $alerte = new Alerte("", "", "", "", "");
+    afficherFormulaireAlerte($alerte);
+} /* Après clic sur bouton supprimer alerte */
+else if (htmlspecialchars(isset($_POST['supprimerAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
+    $idAlerte = htmlspecialchars($_POST['idAlerte']);
+    $alerte = new Alerte($idAlerte, "", "", "", "");
+    $daoAlerte->delete($alerte);
+    echo "<p><b>Alerte bien supprimée !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
+} /* Après clic sur bouton maj alerte */
+else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
+    list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
+    $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
+    $emprunt = $daoEmprunt->read($emprunt);
+    afficherFormulaireEmprunt($emprunt);
+} else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
+    
+    $nom = htmlspecialchars($_POST['nom']);
+    $dateRetour = htmlspecialchars($_POST['dateRetour']);
+    $typeAlerte = htmlspecialchars($_POST['typeAlerte']);
+    $commentaire =  htmlspecialchars($_POST['typeAlerte']);
+    
+    $alerte= new Alerte("", $nom, $dateRetour, $typeAlerte, $commentaire);
+    
+    if ($nom != "" && $dateRetour != "" && $typeAlerte != "") {
+        if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte']))) {
+            $daoAlerte->create($alerte);
+            echo "<p><b>Alerte bien ajoutée !</b><br /><a href=\"index.php?page=emprunts&action=gererAlerte\">Retour</a></p>";
+        } else if (htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
+            $daoAlerte->update($alerte);
+            echo "<p><b>Alerte bien mise à jour !</b><br /><a href=\"index.php?page=emprunts&action=gererAlerte\">Retour</a></p>";
+        }
+    } else {
+        echo $messageErreur;
+        afficherFormulaireAlerte($alerte);
+    }
 } else if (htmlspecialchars(isset($_GET['action']))) {
     $action = htmlspecialchars($_GET['action']);
-    if ($action == "ajouterAlerte") {
-        $alerte = new Alerte("", "", "", "", "");
-        afficherFormulaireAlerte($alerte);
-    } else {
+    if ($action == "gererAlerte") {
         $listeAlertes = AlerteDAO::getAlertes();
         afficherGestionAlerte($listeAlertes);
+    } else {
+        afficherGestionEmprunt($listeEmprunts);
     }
 } /*
- * Sinon afficher
- * liste emprunts
- */
+   * Sinon afficher
+   * liste emprunts
+   */
 else {
-    echo afficherGestionEmprunt($listeEmprunts);
+    afficherGestionEmprunt($listeEmprunts);
 }
 ?>

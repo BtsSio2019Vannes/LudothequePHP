@@ -134,7 +134,7 @@ function afficherFormulaireEmprunt($emprunt)
 		</fieldset>
 <?php if ($isNouvelEmprunt) {?>
 	<div class="form-group">
-			<input type="submit" class="form-control" name="formulaireAjout"
+			<input type="submit" class="form-control" name="formulaireAjoutEmprunt"
 				value="Créer Nouvel Emprunt">
 		</div>
 <?php
@@ -159,13 +159,13 @@ function afficherFormulaireEmprunt($emprunt)
         }
         ?>
 				</select>
-				<a href="index.php?page=emprunts&action=ajouterAlerte">Créer une nouvelle alerte</a>
+				<button type="submit" class="btn btn-success" name="nouvelleAlerte">Créer une nouvelle alerte</button>
 			</div>
 		</fieldset>
 		<div class="form-group">
 			<input type="hidden" name="idEmprunt"
 				value="<?php echo $idEmprunt; ?>"> <input type="submit"
-				class="form-control" name="formulaireMaj" value="Mettre à Jour">
+				class="form-control" name="formulaireMajEmprunt" value="Mettre à Jour">
 		</div>
 <?php
     }

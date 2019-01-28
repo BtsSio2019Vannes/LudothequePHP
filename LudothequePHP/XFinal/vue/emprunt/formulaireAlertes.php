@@ -1,13 +1,11 @@
 <!-- Contenu HTML affichage des formulaires -->
 <?php
-use DAO\Adherent\AdherentDAO;
-use DAO\JeuPhysique\JeuPhysiqueDAO;
 use DAO\Alerte\AlerteDAO;
 
 function afficherGestionAlerte($listeAlertes)
 {
     ?>
-<form method="post" action="index.php?page=emprunts&action=gererAlerte">
+<form method="post" action="index.php?page=emprunts">
 	<table class="table">
 		<thead>
 			<tr>
@@ -67,7 +65,7 @@ function afficherFormulaireAlerte($alerte)
     ?>
 <h3><?php echo $intituleFormulaire; ?></h3>
 <div class="col-lg-offset-4 col-lg-4">
-	<form method="post" action="index.php?page=emprunts&action=gererAlerte">
+	<form method="post" action="index.php?page=emprunts">
 			<div class="form-group">
 				<label for="nom">Nom :</label> <input type="text"
 					class="form-control" name="nom" id="nom"
@@ -82,16 +80,16 @@ function afficherFormulaireAlerte($alerte)
 			<div class="form-group">
 				<label for="typeAlerte">Type d'Alerte :</label> <select
 					class="form-control" name="typeAlerte" id="typeAlerte">
-					<option value="" selected>Aucun</option>				
+					<option value="" selected>Aucune</option>				
 <?php
-    $listeAdherents = AdherentDAO::getAdherents();
-    if (array_key_exists(0, $listeAdherents)) {
-        foreach ($listeAdherents as $adherent) {
-            $selected = ($adherent->getIdPersonne() == $alerte->getIdAdherent()) ? "selected" : "";
+    $listeTypesAlerte = AlerteDAO::getTypesAlerte();
+    if (array_key_exists(0, $listeTypesAlerte)) {
+        foreach ($listeTypesAlerte as $typeAlerte) {
+            $selected = ($alerte->getTypeAlerte() == $typeAlerte) ? "selected" : "";
             ?>
                 <option
-						value="<?php echo $adherent->getIdPersonne(); ?>"
-						<?php echo $selected; ?>><?php echo $adherent->getNom() . " " . $adherent->getPrenom() . " ne(e) le " . $adherent->getDateNaissance(); ?></option>
+						value="<?php echo $typeAlerte; ?>"
+						<?php echo $selected; ?>><?php echo $typeAlerte; ?></option>
 <?php
         }
     }
@@ -100,59 +98,21 @@ function afficherFormulaireAlerte($alerte)
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="jeuPhysique">Jeu à Emprunter :</label> <select
-					class="form-control" name="jeuPhysique" id="jeuPhysique">
-					<option value="" selected>Aucun</option>	
-<?php
-    $listeJeuxPhysiques = JeuPhysiqueDAO::getJeuxPhysiquesTries();
-    if (array_key_exists(0, $listeJeuxPhysiques)) {
-        foreach ($listeJeuxPhysiques as $jeuxPhysique) {
-            $selected = ($jeuxPhysique['idJeuPhysique'] == $alerte->getIdAlerte()) ? "selected" : "";
-            ?>
-                <option
-						value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"
-						<?php echo $selected; ?>><?php echo $jeuxPhysique['titre'] . " n°" . $jeuxPhysique['idJeuPhysique']; ?></option>
-<?php
-        }
-    }
-    ?>
-				</select>
+				<label for="commentaire">Commentaire :</label> <textarea class="form-control" name="commentaire" id="commentaire">
+				<?php echo $alerte->getCommentaire(); ?></textarea>
 			</div>
-		</fieldset>
 <?php if ($isNouvelleAlerte) {?>
 	<div class="form-group">
-			<input type="submit" class="form-control" name="formulaireAjout"
-				value="Créer Nouvel Emprunt">
+			<input type="submit" class="form-control" name="formulaireAjoutAlerte"
+				value="Créer Nouvelle Alerte">
 		</div>
 <?php
     } else {
         ?>
-        <fieldset>
-			<legend>Alerte</legend>
-			<div class="form-group">
-				<label for="alerte">Alerte :</label> <select class="form-control"
-					name="alerte" id="alerte">
-					<option value="" selected>Aucun</option>				
-<?php
-        $listeAlertes = AlerteDAO::getAlertes();
-        if (array_key_exists(0, $listeAlertes)) {
-            foreach ($listeAlertes as $alerte) {
-                $selected = ($alerte->getIdAlerte() == $alerte->getIdAlerte()) ? "selected" : "";
-                ?>
-                <option value="<?php echo $alerte->getIdAlerte(); ?>"
-						<?php echo $selected; ?>><?php echo $alerte->getNom(); ?></option>
-<?php
-            }
-        }
-        ?>
-				</select>
-				<a href="index.php?page=emprunts&action=ajouterAlerte">Créer une nouvelle alerte</a>
-			</div>
-		</fieldset>
 		<div class="form-group">
-			<input type="hidden" name="idEmprunt"
+			<input type="hidden" name="idAlerte"
 				value="<?php echo $idAlerte; ?>"> <input type="submit"
-				class="form-control" name="formulaireMaj" value="Mettre à Jour">
+				class="form-control" name="formulaireMajAlerte" value="Mettre à Jour">
 		</div>
 <?php
     }
