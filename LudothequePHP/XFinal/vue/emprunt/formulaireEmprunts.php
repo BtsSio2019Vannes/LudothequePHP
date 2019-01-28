@@ -113,7 +113,7 @@ function afficherFormulaireEmprunt($emprunt)
     if (array_key_exists(0, $listeAdherents)) {
         foreach ($listeAdherents as $adherent) {
             $nbEmpruntEnCours = $daoEmprunt->retrouverNbEmpruntEnCours($adherent->getIdPersonne());
-            $reglement = $daoReglement->read($adherent->getIdReglement());
+            $reglement = $daoReglement->read($adherent->getReglement());
             $selected = ($adherent->getIdPersonne() == $emprunt->getIdAdherent()) ? " selected" : "";
             $disabled = ($nbEmpruntEnCours == $reglement->getNbrJeux() && $selected == "") ? " disabled" : "";
             ?>
