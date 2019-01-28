@@ -111,28 +111,28 @@ namespace Adherent
     class Adherent extends Personne
     {
         
-        private $idReglement;
+        private $reglement;
         
-        private $dateAdhesion;
+        private $datePremiereAdhesion;
         
         private $dateFinAdhesion;
         
-        function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees, $idReglement, $dateAdhesion, $dateFinAdhesion)
+        function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees, $reglement, $datePremiereAdhesion, $dateFinAdhesion)
         {
             parent::__construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees);
-            $this->idReglement = $idReglement;
-            $this->dateAdhesion = $dateAdhesion;
+            $this->reglement = $reglement;
+            $this->datePremiereAdhesion = $datePremiereAdhesion;
             $this->dateFinAdhesion = $dateFinAdhesion;
         }
         
-        public function getIdReglement()
+        public function getReglement()
         {
-            return $this->idReglement;
+            return $this->reglement;
         }
         
-        public function getDateAdhesion()
+        public function getDatePremiereAdhesion()
         {
-            return $this->dateAdhesion;
+            return $this->datePremiereAdhesion;
         }
         
         public function getDateFinAdhesion()
@@ -140,14 +140,14 @@ namespace Adherent
             return $this->dateFinAdhesion;
         }
         
-        public function setIdReglement($idReglement)
+        public function setReglement($reglement)
         {
-            $this->idReglement = $idReglement;
+            $this->reglement = $reglement;
         }
         
-        public function setDateAdhesion($dateAdhesion)
+        public function setDatePremiereAdhesion($datePremiereAdhesion)
         {
-            $this->dateAdhesion = $dateAdhesion;
+            $this->datePremiereAdhesion = $datePremiereAdhesion;
         }
         
         public function setDateFinAdhesion($dateFinAdhesion)
@@ -157,7 +157,7 @@ namespace Adherent
         
         function __toString()
         {
-            $rep = parent::__toString() . $this->dateAdhesion . "</td><td>" . $this->dateFinAdhesion . "</td></tr></table>";
+            $rep = parent::__toString() . $this->reglement .$this->datePremiereAdhesion . "</td><td>" . $this->dateFinAdhesion . "</td></tr></table>";
             return $rep;
         }
     }

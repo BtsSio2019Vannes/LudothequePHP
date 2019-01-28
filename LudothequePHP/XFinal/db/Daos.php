@@ -108,6 +108,14 @@ namespace DAO\Personne
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $daoPersonne->supprimerBeneficiaire($idPersonne);
         }
+        
+        public function deleteFromKey($idPersonne){
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idPersonne";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            //$idPersonne = $objet->getIdPersonne();
+            $stmt->bindParam(':idPersonne', $idPersonne);
+            $stmt->execute();
+        }
 
         public function create($objet)
         {
@@ -239,6 +247,14 @@ namespace DAO\Adherent
 
             $daoPersonne = new \DAO\Personne\PersonneDAO();
             $daoPersonne->delete($objet);
+        }
+        
+        public function deleteFromKey($idPersonne){
+            $sql = "DELETE FROM $this->table WHERE $this->key=:idPersonne";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            //$idPersonne = $objet->getIdPersonne();
+            $stmt->bindParam(':idPersonne', $idPersonne);
+            $stmt->execute();
         }
 
         public function create($objet)
