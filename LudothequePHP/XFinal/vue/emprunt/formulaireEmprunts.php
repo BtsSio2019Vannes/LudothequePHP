@@ -12,7 +12,8 @@ function afficherGestionEmprunt($listeEmprunts)
 		<thead>
 			<tr>
 				<td colspan="6"><button type="submit" class="btn btn-success"
-						name="nouvelEmprunt">Nouvel Emprunt</button></td>
+						name="nouvelEmprunt">Nouvel Emprunt</button>
+						<a href="index.php?page=emprunts&action=gererAlerte" class="btn btn-info"><span class="glyphicon glyphicon-exclamation-sign"></span> Gérer les Alertes</a></td>
 			</tr>
 			<tr>
 				<th>Date d'emprunt</th>
@@ -46,7 +47,7 @@ function afficherGestionEmprunt($listeEmprunts)
 				<td><?php echo $jeu->getTitre(); ?></td>
 				<td><?php echo $alerte; ?></td>
 				<td><input type="radio" name="idEmprunt"
-					value="<?php echo $jeuPhysique->getIdAlerte()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
+					value="<?php echo $jeuPhysique->getIdJeuPhysique()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
 			</tr>
 <?php
         }

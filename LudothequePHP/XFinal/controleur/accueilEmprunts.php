@@ -97,10 +97,10 @@ else if (htmlspecialchars(isset($_POST['supprimerAlerte'])) && htmlspecialchars(
     echo "<p><b>Alerte bien supprimée !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
 } /* Après clic sur bouton maj alerte */
 else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
-    list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
-    $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
-    $emprunt = $daoEmprunt->read($emprunt);
-    afficherFormulaireEmprunt($emprunt);
+    $idAlerte = htmlspecialchars($_POST['idAlerte']);
+    $alerte = new Alerte($idAlerte, "", "", "", "");
+    $alerte = $daoAlerte->read($alerte);
+    afficherFormulaireAlerte($alerte);
 } else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
     
     $nom = htmlspecialchars($_POST['nom']);
