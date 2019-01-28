@@ -4,7 +4,7 @@ use DAO\Jeu\JeuDAO;
 function afficherJeu()
 {
     ?>
-<form action="accueilJeux.php" method="post" class="AfficheJeu">
+<form action="../controleur/accueilJeux.php" method="post" class="AfficheJeu">
 	<table>
 		<tr>
 			<td>Id</td>
@@ -49,7 +49,7 @@ function formulaireMaj($jeu)
     ?>
 
 <form class="formulaireMaj" method="post"
-	action="../controleur/accueilJeux">
+	action="../controleur/accueilJeux.php">
     <?php
 
     ?>
@@ -126,7 +126,7 @@ function formulaireMaj($jeu)
 function afficherFomulaireAjout($jeu)
 {
     ?>
-<form>
+<form method="post" action="../controleur/accueilJeux.php">
 	<table>
 		<tr>
 
