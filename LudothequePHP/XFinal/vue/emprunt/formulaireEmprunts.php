@@ -121,7 +121,8 @@ function afficherFormulaireEmprunt($emprunt)
     $listeJeuxPhysiques = JeuPhysiqueDAO::getJeuxPhysiquesTries();
     if (array_key_exists(0, $listeJeuxPhysiques)) {
         foreach ($listeJeuxPhysiques as $jeuxPhysique) {
-            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdAlerte()) ? "selected" : "";
+            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? "selected" : "";
+            echo $jeuxPhysique['idJeuPhysique'] . " " . $emprunt->getIdJeuPhysique();
             ?>
                 <option
 						value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"

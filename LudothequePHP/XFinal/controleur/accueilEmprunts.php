@@ -102,6 +102,7 @@ else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(i
     afficherFormulaireAlerte($alerte);
 } else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
     
+    $idAlerte = htmlspecialchars($_POST['idAlerte']);
     $nom = htmlspecialchars($_POST['nom']);
     $dateRetour = htmlspecialchars($_POST['dateRetour']);
     $typeAlerte = htmlspecialchars($_POST['typeAlerte']);

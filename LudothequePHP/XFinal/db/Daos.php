@@ -691,7 +691,7 @@ namespace DAO\Emprunt
         {
             $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdAlerte();
+            $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
@@ -717,7 +717,7 @@ namespace DAO\Emprunt
             WHERE $this->key=:idJeuPhysique";
 
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdAlerte();
+            $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
             $dateRetourEffectif = $objet->getDateRetourEffectif();
@@ -752,7 +752,7 @@ namespace DAO\Emprunt
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdAlerte();
+            $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
 
