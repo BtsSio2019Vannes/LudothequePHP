@@ -914,7 +914,7 @@ namespace DAO\Jeu
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
-            $idEditeur = $objet->getEditeur()->getIdEditeur();
+            $idEditeur = $objet->getEditeur()->getIdEditeur(); 
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();

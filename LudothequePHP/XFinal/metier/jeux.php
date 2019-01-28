@@ -15,7 +15,7 @@ namespace Jeu
         private $univers;
         private $contenuInitial;
         
-        function __construct($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){
+        function __construct($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){ 
             $this->idJeu = $idJeu;
             $this->idRegle = $idRegle;
             $this->titre = $titre;
