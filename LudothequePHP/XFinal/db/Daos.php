@@ -592,9 +592,11 @@ namespace DAO\Alerte
         {
             $sql = "SELECT * FROM typealerte";
             $listeTypeAlerte = array();
+            $index = 0;
             foreach (Connexion::getInstance()->query($sql) as $row) {
                 $typeAlerte = $row["designation"];
-                $listeTypeAlerte->append($typeAlerte);
+                $listeTypeAlerte[$index] = $typeAlerte;
+                $index++;
             }
             return $listeTypeAlerte;
         }
