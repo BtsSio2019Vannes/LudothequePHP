@@ -1,7 +1,7 @@
 <?php
 use Jeu\Jeu;
 use DAO\Jeu\JeuDAO;
-
+include_once '../vue/jeux/formulaireJeux.php';
 
 if (htmlspecialchars(isset($_POST['ajouterJeu']))) {
     afficherFomulaireAjout();
