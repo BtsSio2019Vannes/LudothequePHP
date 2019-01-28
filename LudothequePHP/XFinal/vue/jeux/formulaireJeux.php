@@ -5,18 +5,17 @@ function afficherJeu()
 {
     ?>
 <h1>Gérér les Jeux</h1>
-<form action="../index.php?page=jeux" method="post"
-	class="AfficheJeu">
+<form action="index.php?page=jeux" method="post" class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
-			<th><input type="submit" name="mise a jour" value="Mettre à jour"></th>
-			<th><input type="submit" name="supprimer" value="Supprimer Jeu"></th>
-			<th><input type="submit" name="ajouter" value="Ajouter Jeu"></th>
+			<th><input type="submit" name="mise a jour" value="Mettre à jour"/></th>
+			<th><input type="submit" name="supprimer" value="Supprimer Jeu"/></th>
+			<th><input type="submit" name="ajouter" value="Ajouter Jeu"/></th>
 		</tr>
 
 		<tr>
 			<th>Id</th>
-			<th>Id Règle</th>
+			<th>Règle</th>
 			<th>Titre</th>
 			<th>Année de sortie</th>
 			<th>Auteur</th>
@@ -24,17 +23,17 @@ function afficherJeu()
 			<th>Catégorie</th>
 			<th>Univers</th>
 			<th>Contenu Initial</th>
-			
+
 		</tr>
 		<tr>
-		<th colspan="8"></th>
+			<th colspan="8"></th>
 		</tr>
 		<?php
 
     $jeux = JeuDAO::getJeu();
     foreach ($jeux as $jeu) {
         $rep .= "<tr><td>" . $jeu->getIdJeu();
-        $rep .= "</td><td>" . $jeu->getIdRegle();
+        $rep .= "</td><td><a href=\"" . $jeu->getIdRegle() . "\">Règle du jeu</a>";
         $rep .= "</td><td>" . $jeu->getTitre();
         $rep .= "</td><td>" . $jeu->getAnneeSortie();
         $rep .= "</td><td>" . $jeu->getAuteur();
@@ -58,15 +57,15 @@ function formulaireMaj($jeu)
 {
     ?>
 
-<form class="formulaireMaj" method="post" action="../index.php?page=jeu">
+<form class="formulaireMaj" method="post" action="index.php?page=jeux">
     <?php
 
     ?>
     <table>
 
 		<tr>
-			<td>Id Règle :</td>
-			<td><input type="text" name="idRegle"
+			<td>Règle :</td>
+			<td><input type="url" name="idRegle"
 				value="<?php echo $jeu->getIdRegle();?>"></td>
 		</tr>
 
@@ -135,12 +134,12 @@ function formulaireMaj($jeu)
 function afficherFomulaireAjout($jeu)
 {
     ?>
-<form method="post" action="../index.php?page=jeux">
+<form method="post" action="index.php?page=jeux" class="majJeu">
 	<table>
 		<tr>
 
 			<td>Id Règle :</td>
-			<td><input type="text" name="idRegle" value=" "></td>
+			<td><input type="url" name="idRegle" value=" "></td>
 
 		</tr>
 		<tr>
