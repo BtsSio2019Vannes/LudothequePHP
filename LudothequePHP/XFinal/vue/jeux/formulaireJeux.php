@@ -35,14 +35,14 @@ function afficherJeu()
     $jeux = JeuDAO::getJeu();
     foreach ($jeux as $jeu) {
         $rep .= "<tr><td>" . $jeu->getIdJeu();
-        $rep .= "<tr><td>" . $jeu->getIdRegle();
-        $rep .= "<tr><td>" . $jeu->getTitre();
-        $rep .= "<tr><td>" . $jeu->getAnneeSortie();
-        $rep .= "<tr><td>" . $jeu->getAuteur();
-        $rep .= "<tr><td>" . $jeu->getEditeur()->getIdEditeur();
-        $rep .= "<tr><td>" . $jeu->getCategorie();
-        $rep .= "<tr><td>" . $jeu->getUnivers();
-        $rep .= "<tr><td>" . $jeu->getContenuInitial();
+        $rep .= "</td><td>" . $jeu->getIdRegle();
+        $rep .= "</td><td>" . $jeu->getTitre();
+        $rep .= "</td><td>" . $jeu->getAnneeSortie();
+        $rep .= "</td><td>" . $jeu->getAuteur();
+        $rep .= "</td><td>" . $jeu->getEditeur()->getIdEditeur();
+        $rep .= "</td><td>" . $jeu->getCategorie();
+        $rep .= "</td><td>" . $jeu->getUnivers();
+        $rep .= "</td><td>" . $jeu->getContenuInitial();
         $rep .= "</td><td><input type=\"radio\" name=\"idJeu\ value=\"" . $jeu->getIdJeu() . "\" label for =\"idJeu\"></tr></td>";
     }
     echo $rep;
