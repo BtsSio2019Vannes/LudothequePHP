@@ -9,8 +9,8 @@ function afficherJeu()
 	class="AfficheJeu">
 	<table style="width: 60%">
 		<tr>
-			<th><input type="submit" name="mise a jour">Mettre à jour</th>
-			<th><input type="submit" name="supprimer">Supprimer Jeu</th>
+			<th><input type="submit" name="mise a jour" value="Mettre à jour"></th>
+			<th><input type="submit" name="supprimer" value="Supprimer Jeu"></th>
 		</tr>
 
 		<tr>
