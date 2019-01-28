@@ -33,7 +33,7 @@ function afficherJeu()
     $jeux = JeuDAO::getJeu();
     foreach ($jeux as $jeu) {
         $rep .= "<tr><td>" . $jeu->getIdJeu();
-        $rep .= "</td><td><a href=\"" . $jeu->getIdRegle() . "\">Règle du jeu</a>";
+        $rep .= "</td><td><a href=\"" . $jeu->getRegle() . "\">Règle du jeu</a>";
         $rep .= "</td><td>" . $jeu->getTitre();
         $rep .= "</td><td>" . $jeu->getAnneeSortie();
         $rep .= "</td><td>" . $jeu->getAuteur();
