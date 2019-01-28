@@ -145,7 +145,7 @@ function afficherFormulaireEmprunt($emprunt)
                 $isEmprunte = $daoEmprunt->isEmprunte($jeuxPhysique['idJeuPhysique']);
                 $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? " selected" : "";
                 $disabled = ($isEmprunte == 1 && $selected == "") ? " disabled" : "";
-                $estEmprunte = ($isEmprunte == 1 && $selected == "") ? " indisponible" : "";
+                $estEmprunte = ($isEmprunte == 1 && $selected == "") ? " indisponible" : ""; 
             ?>
                 <option value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"
                 <?php echo $selected . $disabled; ?>>n°<?php echo $jeuxPhysique['idJeuPhysique'] . "" . $estEmprunte; ?></option>
