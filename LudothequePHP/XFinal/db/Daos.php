@@ -735,7 +735,7 @@ namespace DAO\Emprunt
             $sql = "INSERT INTO $this->table (idJeuPhysique, idAdherent, dateEmprunt, dateRetourEffectif, idAlerte)
              VALUES (:idJeuPhysique, :idAdherent, :dateEmprunt, :dateRetourEffectif, :idAlerte)";
             $stmt = Connexion::getInstance()->prepare($sql);
-            $idJeuPhysique = $objet->getIdAlerte();
+            $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
             $dateRetourEffectif = $objet->getDateRetourEffectif();
