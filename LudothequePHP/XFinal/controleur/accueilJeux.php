@@ -28,7 +28,7 @@ if (htmlspecialchars(isset($_POST['ajouter un jeu']))) {
     $univers = isset($univers) && $univers != "" ? $univers : $messageErreur;
     $contenuInitial = isset($contenuInitial) && $contenuInitial != "" ? $contenuInitial : $messageErreur;
     
-    echo "Le Jeu" . $titre . " " . "à bien été ajouté <a href =\"../vue/index.php?page=jeux&action=ajouterJeu\">Retour</a> ";
+    echo "Le Jeu" . $titre . " " . "à bien été ajouté <a href =\"../vue/index.php?page=jeux\">Retour</a> ";
 }
 elseif (htmlspecialchars(isset($_POST['mettre à jour un jeu'])))
 {
