@@ -52,7 +52,7 @@ function formulaireMaj($jeu)
     ?>
 
 <form class="formulaireMaj" method="post"
-	action="../controleur/accueilJeux.php">
+	action="accueilJeux.php">
     <?php
 
     ?>
