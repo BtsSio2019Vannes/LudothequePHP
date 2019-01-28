@@ -90,7 +90,7 @@ else if (htmlspecialchars(isset($_POST['nouvelleAlerte']))) {
     $alerte = new Alerte("", "", "", "", "");
     afficherFormulaireAlerte($alerte);
 } /* Après clic sur bouton supprimer alerte */
-else if (htmlspecialchars(isset($_POST['supprimerAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) { 
+else if (htmlspecialchars(isset($_POST['supprimerAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
     $idAlerte = htmlspecialchars($_POST['idAlerte']);
     $alerte = new Alerte($idAlerte, "", "", "", "");
     $daoAlerte->delete($alerte);
