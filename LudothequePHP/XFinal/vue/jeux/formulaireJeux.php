@@ -8,20 +8,21 @@ function afficherJeu()
 <form action="../../controleur/accueilJeux.php" method="post"
 	class="AfficheJeu">
 	<table>
-		<tr>
-			<td>Id</td>
-			<td>Id Règle</td>
-			<td>Titre</td>
-			<td>Année de sorite</td>
-			<td>Auteur</td>
-			<td>Id Editeur</td>
-			<td>Catégorie</td>
-			<td>Univers</td>
-			<td>Contenu Initial</td>
-			<td><input type="submit" name="mise a jour">Mettre à jour</td>
-			<td><input type="submit" name="supprimer">Supprimer Jeu</td>
-
-		</tr>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Id Règle</th>
+				<th>Titre</th>
+				<th>Année de sortie</th>
+				<th>Auteur</th>
+				<th>Id Editeur</th>
+				<th>Catégorie</th>
+				<th>Univers</th>
+				<th>Contenu Initial</th>
+				<th><input type="submit" name="mise a jour">Mettre à jour</th>
+				<th><input type="submit" name="supprimer">Supprimer Jeu</th>
+			</tr>
+		</thead>
 
 	</table>
 
@@ -35,7 +36,7 @@ function afficherJeu()
         $rep .= "<tr><td>" . $jeu->getTitre();
         $rep .= "<tr><td>" . $jeu->getAnneeSortie();
         $rep .= "<tr><td>" . $jeu->getAuteur();
-        $rep .= "<tr><td>" . $jeu->getIdEditeur();
+        $rep .= "<tr><td>" . $jeu->getEditeur()->getIdEditeur();
         $rep .= "<tr><td>" . $jeu->getCategorie();
         $rep .= "<tr><td>" . $jeu->getUnivers();
         $rep .= "<tr><td>" . $jeu->getContenuInitial();
