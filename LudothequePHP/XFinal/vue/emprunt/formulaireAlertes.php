@@ -30,7 +30,7 @@ function afficherGestionAlerte($listeAlertes)
     if (array_key_exists(0, $listeAlertes)) {
         foreach ($listeAlertes as $alerte) {
             $commentaire = $alerte->getCommentaire();
-            $commentaire = ($commentaire != "") ? substr($commentaire, 0, 20) . "..." : "";
+            $commentaire = ($commentaire != "") ? substr($commentaire, 0, 30) . "..." : "";
             ?>
 			<tr>
 				<td><?php echo $alerte->getNom(); ?></td>

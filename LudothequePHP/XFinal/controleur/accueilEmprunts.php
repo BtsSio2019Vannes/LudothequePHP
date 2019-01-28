@@ -69,7 +69,7 @@ else if (htmlspecialchars(isset($_POST['formulaireAjoutEmprunt'])) || htmlspecia
     $dateRetourEffectif = htmlspecialchars($_POST['dateRetourEffectif']);
     $idAdherent = htmlspecialchars($_POST['adherent']);
     $idJeuPhysique = htmlspecialchars($_POST['jeuPhysique']);
-    $idAlerte = "";
+    $idAlerte = htmlspecialchars($_POST['alerte']);
 
     $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, $dateRetourEffectif, $idAlerte);
 
@@ -102,13 +102,13 @@ else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(i
     afficherFormulaireAlerte($alerte);
 } else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
     
-    $idAlerte = htmlspecialchars($_POST['idAlerte']);
+    $idAlerte = htmlspecialchars(isset($_POST['idAlerte'])) ? htmlspecialchars($_POST['idAlerte']) : "";
     $nom = htmlspecialchars($_POST['nom']);
     $dateRetour = htmlspecialchars($_POST['dateRetour']);
     $typeAlerte = htmlspecialchars($_POST['typeAlerte']);
     $commentaire =  htmlspecialchars($_POST['commentaire']);
     
-    $alerte= new Alerte("", $nom, $dateRetour, $typeAlerte, $commentaire);
+    $alerte= new Alerte($idAlerte, $nom, $dateRetour, $typeAlerte, $commentaire);
     
     if ($nom != "" && $dateRetour != "" && $typeAlerte != "") {
         if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte']))) {
