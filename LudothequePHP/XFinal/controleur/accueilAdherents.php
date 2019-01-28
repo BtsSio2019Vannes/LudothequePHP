@@ -4,6 +4,7 @@ include_once ("../metier/parametres.php");
 include_once ("../db/Daos.php");
 include_once ('../vue/formulaireAdherent.php');
 
+
 use Adherent\Personne;
 use Adherent\Coordonnees;
 

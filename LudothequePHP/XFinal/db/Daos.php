@@ -116,6 +116,7 @@ namespace DAO\Personne
             $stmt->bindParam(':idPersonne', $idPersonne);
             $stmt->execute();
         }
+        
 
         public function create($objet)
         {

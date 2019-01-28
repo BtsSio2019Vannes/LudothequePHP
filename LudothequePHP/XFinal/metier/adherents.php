@@ -113,8 +113,7 @@ namespace Adherent
         
         private $reglement;
         
-        private $datePremiereAdhesion;
-        
+        private $datePremiereAdhesion;        
         private $dateFinAdhesion;
         
         function __construct($nom, $prenom, $dateNaissance, $numeroTelephone, $mel, $coordonnees, $reglement, $datePremiereAdhesion, $dateFinAdhesion)
