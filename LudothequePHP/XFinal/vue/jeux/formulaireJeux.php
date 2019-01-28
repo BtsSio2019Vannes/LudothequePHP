@@ -23,9 +23,9 @@ function afficherJeu()
 			<th>Catégorie</th>
 			<th>Univers</th>
 			<th>Contenu Initial</th>
-
+			<th colspan="8"></th>
 		</tr>
-
+		
 
 	</table>
 
