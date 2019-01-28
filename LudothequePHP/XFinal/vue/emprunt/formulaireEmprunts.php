@@ -30,7 +30,7 @@ function afficherGestionEmprunt($listeEmprunts)
 
 <?php
 
-    if (array_key_exists(0, $listeEmprunts)) {
+    if (array_key_exists(0, $listeEmprunts)) { 
         foreach ($listeEmprunts as $emprunt) {
             $adherent = $emprunt['adherent'];
             $jeu = $emprunt['jeu'];
