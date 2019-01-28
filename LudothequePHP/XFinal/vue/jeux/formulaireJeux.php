@@ -9,7 +9,7 @@ function afficherJeu()
 	class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
-			<th><input type="submit" name="mise a jour" value="Mettre à jour"></th>
+			<th><input type="submit" name="mise a jour" value="Mettre à jour"><a href="../controleur/accueiljeux.php"></a></th>
 			<th><input type="submit" name="supprimer" value="Supprimer Jeu"></th>
 			<th><input type="submit" name="ajouter" value="Ajouter Jeu"></th>
 		</tr>
