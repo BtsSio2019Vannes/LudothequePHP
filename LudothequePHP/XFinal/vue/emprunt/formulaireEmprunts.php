@@ -148,7 +148,7 @@ function afficherFormulaireEmprunt($emprunt)
                 $estEmprunte = $isEmprunte ? " indisponible" : "";
             ?>
                 <option value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"
-                <?php echo $selected . $disabled; ?>>n°<?php echo $jeuxPhysique['idJeuPhysique'] . "" . $estEmprunte; ?></option>
+                <?php echo $selected . $disabled; ?>>n°<?php echo $jeuxPhysique['idJeuPhysique'] . "" . $estEmprunte; ?></option> 
 <?php
             }
 ?>

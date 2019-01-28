@@ -788,7 +788,7 @@ namespace DAO\Emprunt
         
         public function isEmprunte($idJeuPhysique) {
             
-            $sql = "SELECT COUNT(*) FROM $this->table WHERE idJeuPhysique = :idJeuPhysique AND dateRetourEffectif > :dateActuelle";
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idJeuPhysique = :idJeuPhysique AND dateRetourEffectif > :dateActuelle"; 
             $stmt = Connexion::getInstance()->prepare($sql);
             $dateActuelle = date('Y-m-d');
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
