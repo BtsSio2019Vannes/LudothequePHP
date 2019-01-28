@@ -98,8 +98,7 @@ else if (htmlspecialchars(isset($_POST['supprimerAlerte'])) && htmlspecialchars(
 } /* Après clic sur bouton maj alerte */
 else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(isset($_POST['idAlerte']))) {
     $idAlerte = htmlspecialchars($_POST['idAlerte']);
-    $alerte = new Alerte($idAlerte, "", "", "", "");
-    $alerte = $daoAlerte->read($alerte);
+    $alerte = $daoAlerte->read($idAlerte);
     afficherFormulaireAlerte($alerte);
 } else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
     
