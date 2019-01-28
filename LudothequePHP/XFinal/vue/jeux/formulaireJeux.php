@@ -140,7 +140,7 @@ function afficherFomulaireAjout($jeu)
 		<tr>
 
 			<td>Id Règle :</td>
-			<td><input type="text" name="idRegle" value=" "></td>
+			<td><input type="url" name="idRegle" value=" "></td>
 
 		</tr>
 		<tr>

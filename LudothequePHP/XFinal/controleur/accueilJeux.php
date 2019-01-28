@@ -5,7 +5,7 @@ include '../vue/jeux/formulaireJeux.php';
 
 if (htmlspecialchars(isset($_POST['ajouterJeu']))) {
     
-    $idRegle = htmlspecialchars($_POST['idRegle']);
+    $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
     $anneeSortie = htmlspecialchars($_POST['anneSortie']);
     $auteur = htmlspecialchars($_POST['auteur']);
@@ -14,12 +14,12 @@ if (htmlspecialchars(isset($_POST['ajouterJeu']))) {
     $univers = htmlspecialchars($_POST['univers']);
     $contenuInitial = htmlspecialchars($_POST['contenuInitial']);
     
-    $jeu = new Jeu("", $idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
+    $jeu = new Jeu("", $Regle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
     $dao = new JeuDAO();
     $dao->create($jeu);
     
     $messageErreur = "Erreur";
-    $idRegle = isset($idRegle) && $idRegle != " " ? $idRegle : $messageErreur;
+    $Regle = isset($Regle) && $Regle != " " ? $Regle : $messageErreur;
     $titre = isset($titre) && $titre != "" ? $titre : $messageErreur;
     $anneeSortie = isset($anneeSortie) && $anneeSortie != "" ? $anneeSortie : $messageErreur;
     $auteur = isset($auteur) && $auteur != "" ? $auteur : $messageErreur;
@@ -34,7 +34,7 @@ elseif (htmlspecialchars(isset($_POST['majJeu'])))
 {
     formulaireMaj();
     $idJeu = htmlspecialchars($_POST['idJeu']);
-    $idRegle = htmlspecialchars($_POST['idRegle']);
+    $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
     $anneeSortie = htmlspecialchars($_POST['anneSortie']);
     $auteur = htmlspecialchars($_POST['auteur']);
@@ -43,7 +43,7 @@ elseif (htmlspecialchars(isset($_POST['majJeu'])))
     $univers = htmlspecialchars($_POST['univers']);
     $contenuInitial = htmlspecialchars($_POST['contenuInitial']);
     
-    $jeu = new Jeu($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
+    $jeu = new Jeu($idJeu, $Regle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
     $dao = new JeuDAO();
     $dao->update($jeu);
     echo "Le jeu à bien été mis à jour <a href=\"../vue/index.php?page=jeux\">Retour</a></p>";
@@ -51,7 +51,7 @@ elseif (htmlspecialchars(isset($_POST['majJeu'])))
 elseif (htmlspecialchars(isset($_POST['supprimerJeu'])))
 {
     $idJeu = htmlspecialchars($_POST['idJeu']);
-    $idRegle = htmlspecialchars($_POST['idRegle']);
+    $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
     $anneeSortie = htmlspecialchars($_POST['anneSortie']);
     $auteur = htmlspecialchars($_POST['auteur']);
@@ -60,7 +60,7 @@ elseif (htmlspecialchars(isset($_POST['supprimerJeu'])))
     $univers = htmlspecialchars($_POST['univers']);
     $contenuInitial = htmlspecialchars($_POST['contenuInitial']);
     
-    $jeu = new Jeu($idJeu, $idRegle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
+    $jeu = new Jeu($idJeu, $Regle, $titre, $anneeSortie, $auteur, $idEditeur, $categorie, $univers, $contenuInitial);
     $jeu->setIdJeu($idJeu);
     $dao = new JeuDAO();
     $dao->delete($jeu);
