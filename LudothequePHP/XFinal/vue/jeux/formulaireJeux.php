@@ -5,7 +5,7 @@ function afficherJeu()
 {
     ?>
 <h1>Gérér les Jeux</h1>
-<form action="../controleur/accueilJeux.php" method="post" class="AfficheJeu">
+<form action="../index.php?page=jeux" method="post" class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
 			<th><input type="submit" name="mise a jour" value="Mettre à jour"></th>
