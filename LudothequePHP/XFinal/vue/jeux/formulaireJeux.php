@@ -54,7 +54,7 @@ function formulaireMaj($jeu)
 {
     ?>
 
-<form class="formulaireMaj" method="post" action="accueilJeux.php">
+<form class="formulaireMaj" method="post" action="../../controleur/accueilJeux.php">
     <?php
 
     ?>
