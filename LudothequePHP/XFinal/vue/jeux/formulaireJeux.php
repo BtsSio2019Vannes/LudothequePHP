@@ -53,13 +53,14 @@ function afficherJeu()
 
 <?php
 
-function formulaireMaj($jeu)
+function formulaireMaj()
 {
     ?>
 
 <form class="formulaireMaj" method="post" action="index.php?page=jeux" >
     <?php
-
+    $dao = new JeuDAO();
+    $jeu = $dao->read($_POST['idJeu']);
     ?>
     <table>
 
@@ -120,7 +121,7 @@ function formulaireMaj($jeu)
 		</tr>
 		<?php
 
-    afficherFormulaireAjout($jeu)?>
+    afficherFormulaireAjout()?>
     </table>
     <?php
 
@@ -131,7 +132,7 @@ function formulaireMaj($jeu)
 <?php }?>
 <?php
 
-function afficherFormulaireAjout($jeu)
+function afficherFormulaireAjout()
 {
     ?>
 <form method="post" action="index.php?page=jeux" class="ajoutJeu">
