@@ -159,7 +159,7 @@ function afficherFormulaireEmprunt($emprunt)
         }
         ?>
 				</select>
-				<a href="index.php?page=emprunts&action=ajouterAlerte">Créer une nouvelle alerte</a> 
+				<a href="index.php?page=emprunts&action=ajouterAlerte">Créer une nouvelle alerte</a>
 			</div>
 		</fieldset>
 		<div class="form-group">

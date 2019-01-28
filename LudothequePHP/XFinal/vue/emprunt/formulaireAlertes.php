@@ -81,7 +81,7 @@ function afficherFormulaireAlerte($alerte)
 			</div>
 			<div class="form-group">
 				<label for="typeAlerte">Type d'Alerte :</label> <select
-					class=" form-control" name="typeAlerte" id="typeAlerte">
+					class="form-control" name="typeAlerte" id="typeAlerte">
 					<option value="" selected>Aucun</option>				
 <?php
     $listeAdherents = AdherentDAO::getAdherents();

@@ -588,7 +588,7 @@ namespace DAO\Alerte
             return $listeAlertes;
         }
         
-        static function getTypesAlerte() 
+        static function getTypesAlerte()
         {
             $sql = "SELECT * FROM typealerte";
             $listeTypeAlerte = array();

@@ -76,7 +76,7 @@ else if (htmlspecialchars(isset($_POST['formulaireAjout'])) || htmlspecialchars(
     if ($dateEmprunt != "" && $dateRetourEffectif != "" && $idAdherent != "" && $idJeuPhysique != "") {
         if (htmlspecialchars(isset($_POST['formulaireAjout']))) {
             $daoEmprunt->create($emprunt);
-            echo "<p><b>Emprunt bien ajoutée !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>"; 
+            echo "<p><b>Emprunt bien ajoutée !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
         } else if (htmlspecialchars(isset($_POST['formulaireMaj']))) {
             $daoEmprunt->update($emprunt);
             echo "<p><b>Emprunt bien mise à jour !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
