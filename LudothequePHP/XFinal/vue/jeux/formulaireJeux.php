@@ -66,7 +66,7 @@ function formulaireMaj()
 
 		<tr>
 			<td>Règle :</td>
-			<td><input type="url" name="idRegle"
+			<td><input type="text" name="idRegle"
 				value="<?php echo $jeu->getIdRegle();?>"></td>
 		</tr>
 
