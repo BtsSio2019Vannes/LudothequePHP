@@ -135,7 +135,7 @@ function formulaireMaj($jeu)
 function afficherFomulaireAjout($jeu)
 {
     ?>
-<form method="post" action="index.php?page=jeux" class="majJeu">
+<form method="post" action="../index.php?page=jeux" class="majJeu">
 	<table>
 		<tr>
 
