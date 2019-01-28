@@ -10,7 +10,7 @@ function afficherGestionAlerte($listeAlertes)
 		<thead>
 			<tr>
 				<td colspan="5"><button type="submit" class="btn btn-success"
-						name="nouvelleAlerte">Nouvelle Alerte</button></td>
+						name="nouvelleAlerte"><span class="glyphicon glyphicon-plus"></span> Nouvelle Alerte</button></td>
 			</tr>
 			<tr>
 				<th>Nom de l'alerte</th>
@@ -18,9 +18,9 @@ function afficherGestionAlerte($listeAlertes)
 				<th>Type d'alerte</th>
 				<th>Commentaire</th>
 				<th><button type="submit" class="btn btn-danger"
-						name="supprimerAlerte">Supprimer</button>
+						name="supprimerAlerte"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
 					<button type="submit" class="btn btn-primary"
-						name="modifierAlerte">Mettre à Jour</button></th>
+						name="modifierAlerte"><span class="glyphicon glyphicon-edit"></span> Mettre à Jour</button></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,7 +30,7 @@ function afficherGestionAlerte($listeAlertes)
     if (array_key_exists(0, $listeAlertes)) {
         foreach ($listeAlertes as $alerte) {
             $commentaire = $alerte->getCommentaire();
-            $commentaire = ($commentaire != "") ? substr($commentaire, 0, 20) . "..." : "";
+            $commentaire = ($commentaire != "") ? substr($commentaire, 0, 30) . "..." : "";
             ?>
 			<tr>
 				<td><?php echo $alerte->getNom(); ?></td>
@@ -98,8 +98,7 @@ function afficherFormulaireAlerte($alerte)
 				</select>
 			</div>
 			<div class="form-group">
-				<label for="commentaire">Commentaire :</label> <textarea class="form-control" name="commentaire" id="commentaire">
-				<?php echo $alerte->getCommentaire(); ?></textarea>
+				<label for="commentaire">Commentaire :</label> <textarea class="form-control" name="commentaire" id="commentaire"><?php echo $alerte->getCommentaire(); ?></textarea>
 			</div>
 <?php if ($isNouvelleAlerte) {?>
 	<div class="form-group">

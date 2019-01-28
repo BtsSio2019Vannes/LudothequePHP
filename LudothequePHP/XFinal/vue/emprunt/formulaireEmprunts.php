@@ -12,7 +12,7 @@ function afficherGestionEmprunt($listeEmprunts)
 		<thead>
 			<tr>
 				<td colspan="6"><button type="submit" class="btn btn-success"
-						name="nouvelEmprunt">Nouvel Emprunt</button>
+						name="nouvelEmprunt"><span class="glyphicon glyphicon-plus"></span> Nouvel Emprunt</button>
 						<a href="index.php?page=emprunts&action=gererAlerte" class="btn btn-info"><span class="glyphicon glyphicon-exclamation-sign"></span> Gérer les Alertes</a></td>
 			</tr>
 			<tr>
@@ -22,9 +22,9 @@ function afficherGestionEmprunt($listeEmprunts)
 				<th>Jeu</th>
 				<th>Alerte</th>
 				<th><button type="submit" class="btn btn-danger"
-						name="supprimerEmprunt">Supprimer</button>
+						name="supprimerEmprunt"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
 					<button type="submit" class="btn btn-primary"
-						name="modifierEmprunt">Mettre à Jour</button></th>
+						name="modifierEmprunt"><span class="glyphicon glyphicon-edit"></span> Mettre à Jour</button></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -121,7 +121,7 @@ function afficherFormulaireEmprunt($emprunt)
     $listeJeuxPhysiques = JeuPhysiqueDAO::getJeuxPhysiquesTries();
     if (array_key_exists(0, $listeJeuxPhysiques)) {
         foreach ($listeJeuxPhysiques as $jeuxPhysique) {
-            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdAlerte()) ? "selected" : "";
+            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? "selected" : "";
             ?>
                 <option
 						value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"
