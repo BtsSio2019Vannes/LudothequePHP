@@ -39,30 +39,29 @@ foreach (EmpruntDAO::getEmprunts() as $emprunt) {
         'jeuPhysique' => $jeuPhysique,
         'alerte' => $alerte
     );
-
     $index ++;
 }
 
 /* Affichage des formulaires en fonction des variables POST reçues */
 
-/* Après clic sur bouton ajouter */
+/* Après clic sur bouton ajouter emprunt */
 if (htmlspecialchars(isset($_POST['nouvelEmprunt']))) {
     $date = new DateTime();
     $emprunt = new Emprunt("", "", $date->format('Y-m-d'), "", "");
     afficherFormulaireEmprunt($emprunt);
-} /* Après clic sur bouton supprimer */
+} /* Après clic sur bouton supprimer emprunt */
 else if (htmlspecialchars(isset($_POST['supprimerEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
     list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
     $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
     $daoEmprunt->delete($emprunt);
     echo "<p><b>Emprunt bien supprimé !</b><br /><a href=\"index.php?page=emprunts\">Retour</a></p>";
-} /* Après clic sur bouton maj */
+} /* Après clic sur bouton maj emprunt */
 else if (htmlspecialchars(isset($_POST['modifierEmprunt'])) && htmlspecialchars(isset($_POST['idEmprunt']))) {
     list ($idJeuPhysique, $idAdherent, $dateEmprunt) = explode("/", htmlspecialchars($_POST['idEmprunt']));
     $emprunt = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, "", "");
     $emprunt = $daoEmprunt->read($emprunt);
     afficherFormulaireEmprunt($emprunt);
-} /* Après validation du formulaire */
+} /* Après validation du formulaire emprunt */
 else if (htmlspecialchars(isset($_POST['formulaireAjoutEmprunt'])) || htmlspecialchars(isset($_POST['formulaireMajEmprunt']))) {
 
     $dateEmprunt = htmlspecialchars($_POST['dateEmprunt']);
@@ -100,7 +99,8 @@ else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(i
     $idAlerte = htmlspecialchars($_POST['idAlerte']);
     $alerte = $daoAlerte->read($idAlerte);
     afficherFormulaireAlerte($alerte);
-} else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
+} /* Après validation du formulaire alerte */
+else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecialchars(isset($_POST['formulaireMajAlerte']))) {
     
     $idAlerte = htmlspecialchars(isset($_POST['idAlerte'])) ? htmlspecialchars($_POST['idAlerte']) : "";
     $nom = htmlspecialchars($_POST['nom']);
@@ -122,7 +122,8 @@ else if (htmlspecialchars(isset($_POST['modifierAlerte'])) && htmlspecialchars(i
         echo $messageErreur;
         afficherFormulaireAlerte($alerte);
     }
-} else if (htmlspecialchars(isset($_GET['action']))) {
+} /* Accès liste alertes */
+else if (htmlspecialchars(isset($_GET['action']))) {
     $action = htmlspecialchars($_GET['action']);
     if ($action == "gererAlerte") {
         $listeAlertes = AlerteDAO::getAlertes();
