@@ -36,10 +36,11 @@ if (htmlspecialchars(isset($_POST['ajouter']))) {
     formulaireMaj();
     
 } elseif (htmlspecialchars(isset($_POST['maj']))){
+    
     $idJeu = htmlspecialchars($_POST['idJeu']);
     $Regle = htmlspecialchars($_POST['Regle']);
     $titre = htmlspecialchars($_POST['titre']);
-    $anneeSortie = htmlspecialchars($_POST['anneSortie']);
+    $anneeSortie = htmlspecialchars($_POST['anneeSortie']);
     $auteur = htmlspecialchars($_POST['auteur']);
     $idEditeur = htmlspecialchars($_POST['idEditeur']);
     $categorie = htmlspecialchars($_POST['categorie']);
