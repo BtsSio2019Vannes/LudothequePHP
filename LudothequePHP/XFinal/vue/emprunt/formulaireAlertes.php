@@ -4,56 +4,50 @@ use DAO\Adherent\AdherentDAO;
 use DAO\JeuPhysique\JeuPhysiqueDAO;
 use DAO\Alerte\AlerteDAO;
 
-function afficherGestionEmprunt($listeEmprunts)
+function afficherGestionAlerte($listeAlertes)
 {
     ?>
-<form method="post" action="index.php?page=emprunts">
+<form method="post" action="index.php?page=emprunts&action=gererAlerte">
 	<table class="table">
 		<thead>
 			<tr>
-				<td colspan="6"><button type="submit" class="btn btn-success"
-						name="nouvelEmprunt">Nouvel Emprunt</button></td>
+				<td colspan="5"><button type="submit" class="btn btn-success"
+						name="nouvelleAlerte">Nouvelle Alerte</button></td>
 			</tr>
 			<tr>
-				<th>Date d'emprunt</th>
+				<th>Nom de l'alerte</th>
 				<th>Date de retour</th>
-				<th>Adhérent</th>
-				<th>Jeu</th>
-				<th>Alerte</th>
+				<th>Type d'alerte</th>
+				<th>Commentaire</th>
 				<th><button type="submit" class="btn btn-danger"
-						name="supprimerEmprunt">Supprimer</button>
+						name="supprimerAlerte">Supprimer</button>
 					<button type="submit" class="btn btn-primary"
-						name="modifierEmprunt">Mettre à Jour</button></th>
+						name="modifierAlerte">Mettre à Jour</button></th>
 			</tr>
 		</thead>
 		<tbody>
 
 <?php
 
-    if (array_key_exists(0, $listeEmprunts)) {
-        foreach ($listeEmprunts as $emprunt) {
-            $adherent = $emprunt['adherent'];
-            $jeu = $emprunt['jeu'];
-            $jeuPhysique = $emprunt['jeuPhysique'];
-            $alerte = $emprunt['alerte'];
-            $alerte = ($alerte != "Aucune") ? $alerte->getNom() : "Aucune";
-
+    if (array_key_exists(0, $listeAlertes)) {
+        foreach ($listeAlertes as $alerte) {
+            $commentaire = $alerte->getCommentaire();
+            $commentaire = ($commentaire != "") ? substr($commentaire, 0, 20) . "..." : "";
             ?>
 			<tr>
-				<td><?php echo $emprunt['dateEmprunt']; ?></td>
-				<td><?php echo $emprunt['dateRetourEffectif']; ?></td>
-				<td><?php echo strtoupper($adherent->getPrenom()) . " " . $adherent->getNom(); ?></td>
-				<td><?php echo $jeu->getTitre(); ?></td>
-				<td><?php echo $alerte; ?></td>
-				<td><input type="radio" name="idEmprunt"
-					value="<?php echo $jeuPhysique->getIdAlerte()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
+				<td><?php echo $alerte->getNom(); ?></td>
+				<td><?php echo $alerte->getDateRetour(); ?></td>
+				<td><?php echo $alerte->getTypeAlerte(); ?></td>
+				<td><?php echo $commentaire; ?></td>
+				<td><input type="radio" name="idAlerte"
+					value="<?php echo $alerte->getIdAlerte(); ?>"></td>
 			</tr>
 <?php
         }
     } else {
         ?>
 			<tr>
-				<td colspan="6">Aucun emprunt dans la base de donnée</td>
+				<td colspan="6">Aucune Alerte dans la base de donnée</td>
 			</tr>
 <?php
     }
@@ -64,43 +58,36 @@ function afficherGestionEmprunt($listeEmprunts)
 <?php
 }
 
-function afficherFormulaireEmprunt($emprunt)
+function afficherFormulaireAlerte($alerte)
 {
-    $isNouvelEmprunt = ($emprunt->getIdAlerte() == "" && $emprunt->getIdAdherent() == "");
-    $intituleFormulaire = $isNouvelEmprunt ? "Ajout d'un nouvel emprunt" : "Modification d'un emprunt";
-    $idEmprunt = $isNouvelEmprunt ? "" : $emprunt->getIdAlerte() . "/" . $emprunt->getIdAdherent() . "/" . $emprunt->getDateEmprunt();
-    // $daoAdherent = new AdherentDAO();
-    // $daoEmprunt = new EmpruntDAO();
-    // $daoAlerte = new AlerteDAO();
-    // $daoJeu = new JeuDAO();
-    // $daoJeuPhysique = new JeuPhysiqueDAO();
+    $isNouvelleAlerte = ($alerte->getIdAlerte() == "");
+    $intituleFormulaire = $isNouvelleAlerte ? "Ajout d'une nouvelle alerte" : "Modification d'une alerte";
+    $idAlerte = $isNouvelleAlerte ? "" : $alerte->getIdAlerte();
 
     ?>
 <h3><?php echo $intituleFormulaire; ?></h3>
 <div class="col-lg-offset-4 col-lg-4">
-	<form method="post" action="index.php?page=emprunts">
-		<fieldset>
-			<legend>Détails de l'emprunt</legend>
+	<form method="post" action="index.php?page=emprunts&action=gererAlerte">
 			<div class="form-group">
-				<label for="dateEmprunt">Date d'emprunt :</label> <input type="date"
-					class="form-control" name="dateEmprunt" id="dateEmprunt"
-					value="<?php echo $emprunt->getDateEmprunt(); ?>">
+				<label for="nom">Nom :</label> <input type="text"
+					class="form-control" name="nom" id="nom"
+					value="<?php echo $alerte->getNom(); ?>">
 			</div>
 			<div class="form-group">
-				<label for="dateRetourEffectif">Date de Retour :</label> <input
-					type="date" class="form-control" name="dateRetourEffectif"
-					id="dateRetourEffectif"
-					value="<?php echo $emprunt->getDateRetourEffectif(); ?>">
+				<label for="dateRetour">Date de Retour :</label> <input
+					type="date" class="form-control" name="dateRetour"
+					id="dateRetour"
+					value="<?php echo $alerte->getDateRetour(); ?>">
 			</div>
 			<div class="form-group">
-				<label for="adherent">Adhérent :</label> <select
-					class="form-control" name="adherent" id="adherent">
+				<label for="typeAlerte">Type d'Alerte :</label> <select
+					class="form-control" name="typeAlerte" id="typeAlerte">
 					<option value="" selected>Aucun</option>				
 <?php
     $listeAdherents = AdherentDAO::getAdherents();
     if (array_key_exists(0, $listeAdherents)) {
         foreach ($listeAdherents as $adherent) {
-            $selected = ($adherent->getIdPersonne() == $emprunt->getIdAdherent()) ? "selected" : "";
+            $selected = ($adherent->getIdPersonne() == $alerte->getIdAdherent()) ? "selected" : "";
             ?>
                 <option
 						value="<?php echo $adherent->getIdPersonne(); ?>"
@@ -120,7 +107,7 @@ function afficherFormulaireEmprunt($emprunt)
     $listeJeuxPhysiques = JeuPhysiqueDAO::getJeuxPhysiquesTries();
     if (array_key_exists(0, $listeJeuxPhysiques)) {
         foreach ($listeJeuxPhysiques as $jeuxPhysique) {
-            $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdAlerte()) ? "selected" : "";
+            $selected = ($jeuxPhysique['idJeuPhysique'] == $alerte->getIdAlerte()) ? "selected" : "";
             ?>
                 <option
 						value="<?php echo $jeuxPhysique['idJeuPhysique']; ?>"
@@ -132,7 +119,7 @@ function afficherFormulaireEmprunt($emprunt)
 				</select>
 			</div>
 		</fieldset>
-<?php if ($isNouvelEmprunt) {?>
+<?php if ($isNouvelleAlerte) {?>
 	<div class="form-group">
 			<input type="submit" class="form-control" name="formulaireAjout"
 				value="Créer Nouvel Emprunt">
@@ -150,7 +137,7 @@ function afficherFormulaireEmprunt($emprunt)
         $listeAlertes = AlerteDAO::getAlertes();
         if (array_key_exists(0, $listeAlertes)) {
             foreach ($listeAlertes as $alerte) {
-                $selected = ($alerte->getIdAlerte() == $emprunt->getIdAlerte()) ? "selected" : "";
+                $selected = ($alerte->getIdAlerte() == $alerte->getIdAlerte()) ? "selected" : "";
                 ?>
                 <option value="<?php echo $alerte->getIdAlerte(); ?>"
 						<?php echo $selected; ?>><?php echo $alerte->getNom(); ?></option>
@@ -164,7 +151,7 @@ function afficherFormulaireEmprunt($emprunt)
 		</fieldset>
 		<div class="form-group">
 			<input type="hidden" name="idEmprunt"
-				value="<?php echo $idEmprunt; ?>"> <input type="submit"
+				value="<?php echo $idAlerte; ?>"> <input type="submit"
 				class="form-control" name="formulaireMaj" value="Mettre à Jour">
 		</div>
 <?php
