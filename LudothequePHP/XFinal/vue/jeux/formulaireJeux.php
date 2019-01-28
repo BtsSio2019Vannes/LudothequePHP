@@ -8,7 +8,7 @@ function afficherJeu()
 <form action="index.php?page=jeux" method="post" class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
-			<th><input type="submit" name="miseaJjour" value="Mettre à jour"/></th>
+			<th><input type="submit" name="miseaJour" value="Mettre à jour"/></th>
 			<th><input type="submit" name="supprimer" value="Supprimer Jeu"/></th>
 			<th><input type="submit" name="ajouter" value="Ajouter Jeu"/></th>
 		</tr>
