@@ -9,7 +9,7 @@ function afficherJeu()
 	class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
-			<th><input type="submit" name="mise a jour" value="Mettre à jour"><a href="../controleur/accueiljeux.php"></a></th>
+			<th><input type="submit" name="mise a jour" value="Mettre à jour"></th>
 			<th><input type="submit" name="supprimer" value="Supprimer Jeu"></th>
 			<th><input type="submit" name="ajouter" value="Ajouter Jeu"></th>
 		</tr>
@@ -34,7 +34,7 @@ function afficherJeu()
     $jeux = JeuDAO::getJeu();
     foreach ($jeux as $jeu) {
         $rep .= "<tr><td>" . $jeu->getIdJeu();
-        $rep .= "</td><td><a href=\"" . $jeu->getIdRegle() . "\">Lien</a>";
+        $rep .= "</td><td><a href=\"" . $jeu->getIdRegle() . "\">Règle du jeu</a>";
         $rep .= "</td><td>" . $jeu->getTitre();
         $rep .= "</td><td>" . $jeu->getAnneeSortie();
         $rep .= "</td><td>" . $jeu->getAuteur();
