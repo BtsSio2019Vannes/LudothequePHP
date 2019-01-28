@@ -5,7 +5,7 @@ function afficherJeu()
 {
     ?>
 <h1>Gérér les Jeux</h1>
-<form action="index.php?page=jeux" method="post"
+<form action="../index.php?page=jeux" method="post"
 	class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
