@@ -43,7 +43,7 @@ function afficherJeu()
         $rep .= "</td><td>" . $jeu->getCategorie();
         $rep .= "</td><td>" . $jeu->getUnivers();
         $rep .= "</td><td>" . $jeu->getContenuInitial();
-        $rep .= "</td><td><input type=\"radio\" name=\"idJeu\ value=\"" . $jeu->getIdJeu() . "\" label for =\"idJeu\"></tr></td>";
+        $rep .= "</td><td><input type=\"radio\" name=\"idJeu\ value=\"" . $jeu->getIdJeu() . "\" label for =\"idJeu\"></td></tr>";
     }
     echo $rep;
 }
