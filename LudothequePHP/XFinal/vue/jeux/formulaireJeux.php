@@ -12,7 +12,7 @@ function afficherJeu()
 			<td>Id</td>
 			<td>Id Règle</td>
 			<td>Titre</td>
-			<td>Année de sorite</td>
+			<td>Année de sortie</td>
 			<td>Auteur</td>
 			<td>Id Editeur</td>
 			<td>Catégorie</td>
@@ -35,7 +35,7 @@ function afficherJeu()
         $rep .= "<tr><td>" . $jeu->getTitre();
         $rep .= "<tr><td>" . $jeu->getAnneeSortie();
         $rep .= "<tr><td>" . $jeu->getAuteur();
-        $rep .= "<tr><td>" . $jeu->getIdEditeur();
+        $rep .= "<tr><td>" . $jeu->getEditeur();
         $rep .= "<tr><td>" . $jeu->getCategorie();
         $rep .= "<tr><td>" . $jeu->getUnivers();
         $rep .= "<tr><td>" . $jeu->getContenuInitial();
