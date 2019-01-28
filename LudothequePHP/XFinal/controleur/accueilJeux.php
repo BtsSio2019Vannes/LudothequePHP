@@ -1,11 +1,7 @@
 <?php
 use Jeu\Jeu;
 use DAO\Jeu\JeuDAO;
-?>
-<section>
-		<h1>Gérer les Jeux</h1>
 
-<?php
 if (htmlspecialchars(isset($_POST['ajouter un jeu']))) {
     
     $idRegle = htmlspecialchars($_POST['idRegle']);
@@ -36,6 +32,7 @@ if (htmlspecialchars(isset($_POST['ajouter un jeu']))) {
 elseif (htmlspecialchars(isset($_POST['mettre à jour un jeu'])))
 {
     formulaireMaj();
+    $idJeu = htmlspecialchars($_POST['idJeu']);
     $idRegle = htmlspecialchars($_POST['idRegle']);
     $titre = htmlspecialchars($_POST['titre']);
     $anneeSortie = htmlspecialchars($_POST['anneSortie']);
@@ -77,4 +74,3 @@ else
 
 ?>
 		
-</section>
