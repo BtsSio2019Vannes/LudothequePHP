@@ -35,7 +35,7 @@ function afficherJeu()
         $rep .= "<tr><td>" . $jeu->getTitre();
         $rep .= "<tr><td>" . $jeu->getAnneeSortie();
         $rep .= "<tr><td>" . $jeu->getAuteur();
-        $rep .= "<tr><td>" . $jeu->getEditeur();
+        $rep .= "<tr><td>" . $jeu->getEditeur()->getIdEditeur();
         $rep .= "<tr><td>" . $jeu->getCategorie();
         $rep .= "<tr><td>" . $jeu->getUnivers();
         $rep .= "<tr><td>" . $jeu->getContenuInitial();
