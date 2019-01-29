@@ -8,9 +8,9 @@ function afficherJeu()
 <form action="index.php?page=jeux" method="post" class="AfficheJeu">
 	<table style="width: 90%">
 		<tr>
-			<th><input type="submit" name="miseaJour" value="Mettre à jour"/></th>
-			<th><input type="submit" name="supprimer" value="Supprimer Jeu"/></th>
-			<th><input type="submit" name="ajouter" value="Ajouter Jeu"/></th>
+			<th><input type="submit" name="miseaJour" value="Mettre à jour" /></th>
+			<th><input type="submit" name="supprimer" value="Supprimer Jeu" /></th>
+			<th><input type="submit" name="ajouter" value="Ajouter Jeu" /></th>
 		</tr>
 
 		<tr>
@@ -57,7 +57,7 @@ function formulaireMaj()
 {
     ?>
 
-<form class="formulaireMaj" method="post" action="index.php?page=jeux" >
+<form class="formulaireMaj" method="post" action="index.php?page=jeux">
     <?php
     $dao = new JeuDAO();
     $jeu = $dao->read($_POST['idJeu']);
@@ -98,6 +98,12 @@ function formulaireMaj()
 			<td>Catégorie :</td>
 			<td><input type="text" name="categorie"
 				value="<?php echo $jeu->getCategorie();?>"></td>
+			<select name="catégorie">
+				<option value="Commerce">Commerce</option>
+				<option value="Conquête">Conquête 2</option>
+				<option value="jeu de réflexion">Choix 3</option>
+				<option value="Deck-Building">Choix 4</option>
+			</select>
 		</tr>
 
 		<tr>
@@ -134,6 +140,8 @@ function formulaireMaj()
 
 function afficherFormulaireAjout()
 {
+    $daoJeu = new JeuDAO();
+    $jeu = $daoJeu->read($_POST['idJeu']);
     ?>
 <form method="post" action="index.php?page=jeux" class="ajoutJeu">
 	<table>
