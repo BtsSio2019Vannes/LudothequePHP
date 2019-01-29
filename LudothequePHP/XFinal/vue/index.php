@@ -1,11 +1,5 @@
 <?php
-include_once ("../db/Daos.php");
-include_once ("../metier/emprunts.php");
-include_once ("../metier/jeux.php");
-include_once ("../metier/parametres.php");
-include_once ("../metier/adherents.php");
-include_once ("adherent/formulaireAdherents.php");
-
+include_once ("include.php");
 ?>
 <!DOCTYPE html>
 
