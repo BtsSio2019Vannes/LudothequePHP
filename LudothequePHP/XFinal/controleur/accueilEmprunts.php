@@ -10,8 +10,6 @@ use Jeu\Alerte;
 
 <h1>Gérer les Emprunts</h1>
 <?php
-include ("../vue/emprunt/formulaireEmprunts.php");
-include ("../vue/emprunt/formulaireAlertes.php");
 
 $daoAdherent = new AdherentDAO();
 $daoEmprunt = new EmpruntDAO();
