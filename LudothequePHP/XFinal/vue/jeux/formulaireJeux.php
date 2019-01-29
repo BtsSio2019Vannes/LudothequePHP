@@ -98,12 +98,7 @@ function formulaireMaj()
 			<td>Catégorie :</td>
 			<td><input type="text" name="categorie"
 				value="<?php echo $jeu->getCategorie();?>"></td>
-			<select name="catégorie">
-				<option value="Commerce">Commerce</option>
-				<option value="Conquête">Conquête 2</option>
-				<option value="jeu de réflexion">Choix 3</option>
-				<option value="Deck-Building">Choix 4</option>
-			</select>
+			
 		</tr>
 
 		<tr>
@@ -190,7 +185,12 @@ function afficherFormulaireAjout()
 		<tr>
 
 			<td>Contenu Initial :</td>
-			<td><input type="text" name="contenu" value=" "></td>
+			<td><input type="text" name="contenu" value=" <select name="catégorie">
+				<option value="Commerce">Commerce</option>
+				<option value="Conquête">Conquête 2</option>
+				<option value="jeu de réflexion">Choix 3</option>
+				<option value="Deck-Building">Choix 4</option>
+			</select>"></td>
 
 		</tr>
 		<tr>
