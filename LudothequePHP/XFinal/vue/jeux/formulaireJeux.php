@@ -65,7 +65,9 @@ function formulaireMaj()
     
 	<table style="width: 60%">
 			<tr>
-				<td>Règle :</td>
+				<label for="Regle">Règle :</label><select class="form-control">
+				<option value="" selected=" ">Aucune</option>
+				</select>
 				<td><input type="text" name="regle"
 					value="<?php echo $jeu->getRegle();?>"></td>
 			</tr>
