@@ -56,80 +56,80 @@ function afficherJeu()
 function formulaireMaj()
 {
     ?>
-
-<form class="formulaireMaj" method="post" action="index.php?page=jeux">
+<div class="form-group">
+	<form class="formulaireMaj" method="post" action="index.php?page=jeux">
     <?php
     $dao = new JeuDAO();
     $jeu = $dao->read($_POST['idJeu']);
     ?>
-    <table>
+    
+	<table style="width: 60%">
+			<tr>
+				<td>Règle :</td>
+				<td><input type="text" name="regle"
+					value="<?php echo $jeu->getRegle();?>"></td>
+			</tr>
 
-		<tr>
-			<td>Règle :</td>
-			<td><input type="text" name="regle"
-				value="<?php echo $jeu->getRegle();?>"></td>
-		</tr>
+			<tr>
+				<td>Titre :</td>
+				<td><input type="text" name="titre"
+					value="<?php echo $jeu->getTitre();?>"></td>
+			</tr>
 
-		<tr>
-			<td>Titre :</td>
-			<td><input type="text" name="titre"
-				value="<?php echo $jeu->getTitre();?>"></td>
-		</tr>
+			<tr>
+				<td>Année de Sortie :</td>
+				<td><input type="text" name="anneeSortie"
+					value="<?php echo $jeu->getAnneeSortie();?>"></td>
+			</tr>
 
-		<tr>
-			<td>Année de Sortie :</td>
-			<td><input type="text" name="anneeSortie"
-				value="<?php echo $jeu->getAnneeSortie();?>"></td>
-		</tr>
+			<tr>
+				<td>Auteur :</td>
+				<td><input type="text" name="auteur"
+					value="<?php echo $jeu->getAuteur();?>"></td>
+			</tr>
 
-		<tr>
-			<td>Auteur :</td>
-			<td><input type="text" name="auteur"
-				value="<?php echo $jeu->getAuteur();?>"></td>
-		</tr>
+			<tr>
+				<td>Id Editeur :</td>
+				<td><input type="text" name="idEditeur"
+					value="<?php echo $jeu->getIdEditeur();?>"></td>
+			</tr>
 
-		<tr>
-			<td>Id Editeur :</td>
-			<td><input type="text" name="idEditeur"
-				value="<?php echo $jeu->getIdEditeur();?>"></td>
-		</tr>
+			<tr>
+				<td>Catégorie :</td>
+				<td><input type="text" name="categorie"
+					value="<?php echo $jeu->getCategorie();?>"></td>
 
-		<tr>
-			<td>Catégorie :</td>
-			<td><input type="text" name="categorie"
-				value="<?php echo $jeu->getCategorie();?>"></td>
-			
-		</tr>
+			</tr>
 
-		<tr>
-			<td>Univers :</td>
-			<td><input type="text" name="univers"
-				value="<?php echo $jeu->getUnivers();?>"></td>
-		</tr>
+			<tr>
+				<td>Univers :</td>
+				<td><input type="text" name="univers"
+					value="<?php echo $jeu->getUnivers();?>"></td>
+			</tr>
 
-		<tr>
-			<td>Contenu Initial :</td>
-			<td><input type="text" name="contenuInitial"
-				value="<?php echo $jeu->getContenuInitial();?>"></td>
-		</tr>
+			<tr>
+				<td>Contenu Initial :</td>
+				<td><input type="text" name="contenuInitial"
+					value="<?php echo $jeu->getContenuInitial();?>"></td>
+			</tr>
 
-		<tr>
-			<td colspan="3">
-				<button type="submit" name="maj">Mettre à jour Jeu</button>
-			</td>
-			<td colspan="3"><button type="submit" name="supprimer">Supprimer Jeu</button></td>
+			<tr>
+				<td colspan="3">
+					<button type="submit" name="maj">Mettre à jour Jeu</button>
+				</td>
+				<td colspan="3"><button type="submit" name="supprimer">Supprimer Jeu</button></td>
 
-		</tr>
+			</tr>
 		<?php
 
     afficherFormulaireAjout()?>
-    </table>
+    
     <?php
 
     ?>
-
-</form>
-
+</table>
+	</form>
+</div>
 <?php }?>
 <?php
 
@@ -185,12 +185,7 @@ function afficherFormulaireAjout()
 		<tr>
 
 			<td>Contenu Initial :</td>
-			<td><input type="text" name="contenu" value=" <select name="catégorie">
-				<option value="Commerce">Commerce</option>
-				<option value="Conquête">Conquête 2</option>
-				<option value="jeu de réflexion">Choix 3</option>
-				<option value="Deck-Building">Choix 4</option>
-			</select>"></td>
+			<td><input type="text" name="contenu" value=" "></td>
 
 		</tr>
 		<tr>
