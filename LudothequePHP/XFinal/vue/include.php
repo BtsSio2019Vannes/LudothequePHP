@@ -4,7 +4,7 @@ include_once ("../metier/emprunts.php");
 include_once ("../metier/jeux.php");
 include_once ("../metier/parametres.php");
 include_once ("../metier/adherents.php");
-include_once ("adherent/formulaireAdherents.php");
+include_once ("adherent/formulaireAdherent.php");
 include_once ("emprunt/formulaireAlertes.php");
 include_once ("emprunt/formulaireEmprunts.php");
 include_once ("jeux/formulaireJeux.php");
