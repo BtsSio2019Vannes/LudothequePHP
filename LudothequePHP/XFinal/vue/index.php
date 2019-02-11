@@ -1,5 +1,11 @@
 <?php
-include_once ("include.php");
+include_once ("../db/Daos.php");
+include_once ("../metier/emprunts.php");
+include_once ("../metier/jeux.php");
+include_once ("../metier/parametres.php");
+include_once ("../metier/adherents.php");
+include_once ("adherent/formulaireAdherent.php");
+
 ?>
 <!DOCTYPE html>
 
@@ -17,7 +23,7 @@ include_once ("include.php");
 <?php
 $page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "adherents";
 ?>
-<div class="row">
+<div id="menu" class="row">
 		<div class="col-lg-2">
 			<nav class="nav navbar .navbar-left">
 				<div class="container-fluid">
@@ -30,6 +36,8 @@ $page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "adherents";
 								src="../images/emprunt.png"><br />Gérer les Emprunts</a></li>
 						<li><a href="index.php?page=parametres"><img alt="Ludotheque"
 								src="../images/setup.png"><br />Gérer Ludothèque</a></li>
+						<li><a href="https://www.facebook.com/bettonludique/" target="_blank"><img alt="facebook"
+								src="../images/facebook.png"><br />Facebook</a></li>
 					</ul>
 				</div>
 			</nav>
