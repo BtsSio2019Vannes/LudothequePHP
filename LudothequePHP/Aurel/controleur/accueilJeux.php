@@ -66,7 +66,7 @@ if(htmlspecialchars(isset ($_POST['supprimer'])) && isset ($_POST['personne'])){
     echo "La personne a bien été supprimée";
 }
 
-if (htmlspecialchars(isset($_POST['Modifier Peronne'])) && isset ($_POST['personne'])) {
+if (htmlspecialchars(isset($_POST['Modifier Personne'])) && isset ($_POST['personne'])) {
     $idPersonne = htmlspecialchars($_POST['personne']);
     $personne->read($idPersonne);
     $daoPersonne->update($personne);

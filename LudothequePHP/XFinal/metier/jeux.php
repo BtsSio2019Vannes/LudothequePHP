@@ -15,13 +15,13 @@ namespace Jeu
         private $univers;
         private $contenuInitial;
         
-        function __construct($idJeu, $regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){
-            $this->idJeu = $idJeu;
+        function __construct($regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial){
+           // $this->idJeu = $idJeu;
             $this->regle = $regle;
             $this->titre = $titre;
             $this->anneeSortie = $anneeSortie;
             $this->auteur = $auteur;
-            $this->editeur = $editeur;
+            $this->editeur =$editeur;
             $this->categorie =$categorie;
             $this->univers =$univers;
             $this->contenuInitial = $contenuInitial;
@@ -77,7 +77,6 @@ namespace Jeu
             $this->idJeu = $idJeu;
         }
         
-               
         public function setRegle($regle)
         {
             $this->regle = $regle;
@@ -298,6 +297,40 @@ namespace Jeu
             $this->idCoordonnees = $idCoordonnees;
         }        
     }
+    
+    /*class Regle{
+        private $idRegle;
+        private $regle;
+        
+       
+        function __construct($idRegle, $regle){
+            $this->idRegle = $idRegle;
+            $this->idRegle= $regle;
+        }
+        
+        public function getIdRegle()
+        {
+            return $this->idRegle;
+        }
+    
+        public function getRegle()
+        {
+            return $this->regle;
+        }
+    
+        public function setIdRegle($idRegle)
+        {
+            $this->idRegle = $idRegle;
+        }
+    
+        
+        public function setRegle($regle)
+        {
+            $this->regle = $regle;
+        }
+    
+        
+    }*/
 }
 
 ?>
