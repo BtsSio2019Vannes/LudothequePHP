@@ -245,27 +245,27 @@ function formulaireModifPersonnes()
 		
 
 		<div id="bouton">
-			<button id="click" type="submit" class="btn btn-warning" name="retour"
-			onclick="history.go(-1)">
-			<span class="glyphicon glyphicon-backward"></span>Retour
-		</button>
-		<button id="click" type="submit" class="btn btn-primary" name="modifier">
-			<span class="glyphicon glyphicon-edit"></span>Mettre à jour
-		</button>
-
-		<button id="click" type="submit" class="btn btn-danger" name="supprimer">
-			<span class="glyphicon glyphicon-remove"></span>Supprimer
-		</button>
-			<?php 
-			if (isset ($adherent)){
-				if(AdherentDAO::isAdherent($personne) && !adhesionExpiree($adherent)){
-					afficherBoutonGestionAdh();}
-				elseif (!AdherentDAO::isAdherent($personne)) {
-					afficherBoutonPasserAdh();}
-				elseif (adhesionExpiree($adherent)) {
-					afficherBoutonAdhesionExpiree($adherent);
-				}
-			}?>
+    			<button id="click" type="submit" class="btn btn-warning" name="retour"
+    			onclick="history.go(-1)">
+    			<span class="glyphicon glyphicon-backward"></span>Retour
+    		</button>
+    		<button id="click" type="submit" class="btn btn-primary" name="modifier">
+    			<span class="glyphicon glyphicon-edit"></span>Mettre à jour
+    		</button>
+    
+    		<button id="click" type="submit" class="btn btn-danger" name="supprimer">
+    			<span class="glyphicon glyphicon-remove"></span>Supprimer
+    		</button>
+    			<?php 
+    			if (isset ($adherent)){
+    				if(AdherentDAO::isAdherent($personne) && !adhesionExpiree($adherent)){
+    					afficherBoutonGestionAdh();}
+    				elseif (!AdherentDAO::isAdherent($personne)) {
+    					afficherBoutonPasserAdh();}
+    				elseif (adhesionExpiree($adherent)) {
+    					afficherBoutonAdhesionExpiree($adherent);
+    				}
+    			}?>
 		</div>
 
 		<div id="adh">

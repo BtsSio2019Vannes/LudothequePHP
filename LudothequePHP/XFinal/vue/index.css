@@ -51,13 +51,98 @@ button {
 	font-size: 10px;!importan
 	text-align: justify;
 }
+/* CSS de Texte */
+
+h1 {
+	text-align: center;
+	text-decoration: underline;
+	font-size: xx-large;
+	
+}
+
+b, a, p {
+	text-align: center;
+}"XFinal/vue/index.css"
 
 
 /* CSS des Pages */
+.accueil, section {
+	background-color: LightGray;
+}
 
+section {
+	width : 800px;
+	float: left;
+	margin-left: 120px;
+}
+
+.accueil {
+	width: 80%;
+
+}
+
+.accueil ul {
+	list-style: none;
+	padding: 0px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+.accueil li {
+	display: inline-block;
+	margin: 50px;
+}
+
+.accueil img {
+	width: 50px;
+}
 
 /* CSS de Formulaires */
-/* Adhérent*/
+
+form {
+	margin: auto;
+}
+
+table {
+	width: 70%;
+	border-collapse: collapse;
+	margin: auto;
+}
+
+.headerPersonne{
+	position:fixed;
+}
+
+tr {
+
+}
+
+th {
+	background-color: Gray;
+	padding: 10px;
+	padding-top: 2px;
+	padding-bottom : 2px;
+}
+
+td {
+	text-align: center;
+	padding: 5px;
+}
+
+td p, input[type=text] {
+	text-align: left;
+}
+
+
+input[type=text] {
+	width: 100%;
+	
+}
+
+button {
+	width : auto;
+	lenght : auto;
+}
 
 #date{
 	display: block;
@@ -128,7 +213,3 @@ button {
 
 
 }
-
-
-
-

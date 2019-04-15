@@ -9,4 +9,3 @@ include_once ("emprunt/formulaireAlertes.php");
 include_once ("emprunt/formulaireEmprunts.php");
 include_once ("jeux/formulaireJeux.php");
 include_once ("parametres/formulaireParametres.php");
-
