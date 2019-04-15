@@ -1,4 +1,9 @@
 <?php
+include_once ("../metier/emprunts.php");
+include_once ("../db/Daos.php");
+include_once ("../vue/emprunt/formulaireEmprunts.php");
+include_once ("../vue/emprunt/formulaireAlertes.php");
+
 use DAO\Adherent\AdherentDAO;
 use DAO\Alerte\AlerteDAO;
 use DAO\Emprunt\EmpruntDAO;

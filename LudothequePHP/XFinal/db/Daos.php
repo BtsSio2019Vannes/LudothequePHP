@@ -346,6 +346,18 @@ namespace DAO\Adherent
             // echo "****".$existe;
             return $existe;
         }
+        
+        static function getAdherents()
+        {
+            $sql = "SELECT * FROM personne, adherent WHERE idPersonne = idAdherent";
+            $listeAdherents = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $daoAdherent = new AdherentDAO();
+                $adherent = $daoAdherent->read($row["idAdherent"]);
+                $listeAdherents->append($adherent);
+            }
+            return $listeAdherents;
+        }
     }
 }
 namespace DAO\Coordonnees
@@ -532,18 +544,18 @@ namespace DAO\Reglement
 }
 namespace DAO\Alerte
 {
-
+    
     use DB\Connexion\Connexion;
-
+    
     class AlerteDAO extends \DAO\DAO
     {
-
+        
         function __construct()
         {
             parent::__construct("idAlerte", "alerte");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-
+        
         public function read($idAlerte)
         {
             // On utilise le prepared statemet qui simplifie les typages
@@ -551,19 +563,19 @@ namespace DAO\Alerte
             $stmt = Connexion::getInstance()->prepare($sql);
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
-
+            
             $row = $stmt->fetch();
             $idAlerte = $row["idAlerte"];
             $nom = $row["nom"];
             $dateRetour = $row["dateRetour"];
             $typeAlerte = $row["typeAlerte"];
             $commentaire = $row["commentaire"];
-
+            
             $alerte = new \Jeu\Alerte($idAlerte, $nom, $dateRetour, $typeAlerte, $commentaire);
-
+            
             return $alerte;
         }
-
+        
         public function update($objet)
         {
             // On utilise le prepared statemet qui simplifie les typages
@@ -581,7 +593,7 @@ namespace DAO\Alerte
             $stmt->bindParam(':commentaire', $commentaire);
             $stmt->execute();
         }
-
+        
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idAlerte";
@@ -590,7 +602,7 @@ namespace DAO\Alerte
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
-
+        
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (nom,dateRetour,typeAlerte,commentaire) VALUES (:nom, :dateRetour, :typeAlerte, :commentaire)";
@@ -605,6 +617,31 @@ namespace DAO\Alerte
             $stmt->bindParam(':commentaire', $commentaire);
             $stmt->execute();
             $objet->setIdAlerte(parent::getLastKey());
+        }
+        
+        static function getAlertes()
+        {
+            $sql = "SELECT * FROM alerte";
+            $listeAlertes = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $daoAlerte = new AlerteDAO();
+                $alerte = $daoAlerte->read($row["idAlerte"]);
+                $listeAlertes->append($alerte);
+            }
+            return $listeAlertes;
+        }
+        
+        static function getTypesAlerte()
+        {
+            $sql = "SELECT * FROM typealerte";
+            $listeTypeAlerte = array();
+            $index = 0;
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $typeAlerte = $row["designation"];
+                $listeTypeAlerte[$index] = $typeAlerte;
+                $index++;
+            }
+            return $listeTypeAlerte;
         }
     }
 }
@@ -678,19 +715,19 @@ namespace DAO\Editeur
 }
 namespace DAO\Emprunt
 {
-
+    
     use DB\Connexion\Connexion;
     use Emprunt\Emprunt;
-
+    
     class EmpruntDAO extends \DAO\DAO
     {
-
+        
         function __construct()
         {
             parent::__construct("idJeuPhysique", "emprunt");
             // echo "constructeur de DAO ", __NAMESPACE__,"<br/>";
         }
-
+        
         public function read($objet)
         {
             $sql = "SELECT * FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
@@ -698,29 +735,28 @@ namespace DAO\Emprunt
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
-
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':dateEmprunt', $dateEmprunt);
             $stmt->execute();
-
+            
             $row = $stmt->fetch();
-
+            
             $dateRetourEffectif = $row["dateRetourEffectif"];
             $idAlerte = $row["idAlerte"];
-
+            
             // echo "contenu de la base $num $nom $adr $sal ";
             $rep = new Emprunt($idJeuPhysique, $idAdherent, $dateEmprunt, $dateRetourEffectif, $idAlerte);
-
+            
             return $rep;
         }
-
+        
         public function update($objet)
         {
             $sql = "UPDATE $this->table SET idJeuPhysique = :idJeuPhysique, idAdherent = :idAdherent, dateEmprunt = :dateEmprunt,
             dateRetourEffectif = :dateRetourEffectif, idAlerte = :idAlerte
             WHERE $this->key=:idJeuPhysique";
-
+            
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
@@ -734,11 +770,11 @@ namespace DAO\Emprunt
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
-
+        
         public function create($objet)
         {
             $sql = "INSERT INTO $this->table (idJeuPhysique, idAdherent, dateEmprunt, dateRetourEffectif, idAlerte)
-             VALUES (:idAdherent, :dateEmprunt, :dateRetourEffectif, :idAlerte)";
+             VALUES (:idJeuPhysique, :idAdherent, :dateEmprunt, :dateRetourEffectif, :idAlerte)";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
@@ -752,7 +788,7 @@ namespace DAO\Emprunt
             $stmt->bindParam(':idAlerte', $idAlerte);
             $stmt->execute();
         }
-
+        
         public function delete($objet)
         {
             $sql = "DELETE FROM $this->table WHERE $this->key=:idJeuPhysique AND idAdherent = :idAdherent AND dateEmprunt = :dateEmprunt";
@@ -760,23 +796,49 @@ namespace DAO\Emprunt
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $idAdherent = $objet->getIdAdherent();
             $dateEmprunt = $objet->getDateEmprunt();
-
+            
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->bindParam(':idAdherent', $idAdherent);
             $stmt->bindParam(':dateEmprunt', $dateEmprunt);
             $stmt->execute();
         }
-
+        
         static function getEmprunts()
         {
             $sql = "SELECT * FROM emprunt";
             $listeEmprunts = new \ArrayObject();
             foreach (Connexion::getInstance()->query($sql) as $row) {
-                $daoEmprunt = new EmpruntDAO();
-                $emprunt = $daoEmprunt->read($row["idPersonne"]);
+                $emprunt = new Emprunt($row["idJeuPhysique"], $row["idAdherent"], $row["dateEmprunt"], $row["dateRetourEffectif"], $row["idAlerte"]);
                 $listeEmprunts->append($emprunt);
             }
             return $listeEmprunts;
+        }
+        
+        public function retrouverNbEmpruntEnCours($idAdherent) {
+            
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idAdherent = :idAdherent AND dateRetourEffectif > :dateActuelle";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $dateActuelle = date('Y-m-d');
+            $stmt->bindParam(':idAdherent', $idAdherent);
+            $stmt->bindParam(':dateActuelle', $dateActuelle);
+            $stmt->execute();
+            $rep = $stmt->fetch();
+            
+            return $rep[0];
+        }
+        
+        public function isEmprunte($idJeuPhysique) {
+            
+            $sql = "SELECT COUNT(*) FROM $this->table WHERE idJeuPhysique = :idJeuPhysique AND dateRetourEffectif > :dateActuelle";
+            $stmt = Connexion::getInstance()->prepare($sql);
+            $dateActuelle = date('Y-m-d');
+            $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
+            $stmt->bindParam(':dateActuelle', $dateActuelle);
+            $stmt->execute();
+            $rep = $stmt->fetch();
+            $rep = ($rep[0] != 0) ? true : false;
+            
+            return $rep;
         }
     }
 }
@@ -850,6 +912,22 @@ namespace DAO\JeuPhysique
             $idJeuPhysique = $objet->getIdJeuPhysique();
             $stmt->bindParam(':idJeuPhysique', $idJeuPhysique);
             $stmt->execute();
+        }
+        
+        static function getJeuxPhysiquesTries()
+        {
+            $sql = "SELECT * FROM jeu INNER JOIN jeuphysique ON jeu.idJeu = jeuphysique.idJeu ORDER BY jeu.idJeu, jeuphysique.idJeuPhysique;";
+            $listeJeuxPhysiques = array();
+            $titreJeu = "";
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                if ($titreJeu != $row['titre']) {
+                    $titreJeu = $row['titre'];
+                    $index = 0;
+                }
+                $listeJeuxPhysiques[$titreJeu][$index] = $row;
+                $index++;
+            }
+            return $listeJeuxPhysiques;
         }
     }
 }
