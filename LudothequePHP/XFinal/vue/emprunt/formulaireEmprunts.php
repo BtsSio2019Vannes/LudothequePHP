@@ -16,9 +16,10 @@ function afficherGestionEmprunt($listeEmprunts)
 				<td colspan="6"><button type="submit" class="btn btn-success"
 						name="nouvelEmprunt">
 						<span class="glyphicon glyphicon-plus"></span> Nouvel Emprunt
-					</button> <a href="index.php?page=emprunts&action=gererAlerte"><button class="btn btn-info"><span
+					</button> <a href="index.php?page=emprunts&action=gererAlerte"
+					class="btn btn-info"><span
 						class="glyphicon glyphicon-exclamation-sign"></span> Gérer les
-						Alertes</button></a>
+						Alertes</a>
 						<button type="submit" class="btn btn-danger"
 						name="supprimerEmprunt">
 						<span class="glyphicon glyphicon-remove"></span> Supprimer
