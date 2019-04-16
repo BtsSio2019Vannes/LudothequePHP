@@ -870,9 +870,22 @@ namespace DAO\JeuPhysique
             $contenuActuel = $row["contenuActuel"];
 
             // echo "contenu de la base $num $nom $adr $sal ";
-            $rep = new JeuPhysique($idJeuPhysique, $idJeu, $contenuActuel);
+            $jeuPhysique = new JeuPhysique($idJeuPhysique, $contenuActuel);
+            
+            $daoJeu = new \DAO\Jeu\JeuDAO();
+            $jeu = $daoJeu->read($idJeu);
+            
+            $jeuPhysique->setIdJeu($jeu->getIdJeu());
+            $jeuPhysique->setRegle($jeu->getRegle());
+            $jeuPhysique->setTitre($jeu->getTitre());
+            $jeuPhysique->setAnneeSortie($jeu->getAnneeSortie());
+            $jeuPhysique->setAuteur($jeu->getAuteur());
+            $jeuPhysique->setIdEditeur($jeu->getIdEditeur());
+            $jeuPhysique->setCategorie($jeu->getCategorie());
+            $jeuPhysique->setUnivers($jeu->getunivers());
+            $jeuPhysique->setContenuInitial($jeu->getContenuInitial());
 
-            return $rep;
+            return $jeuPhysique;
         }
 
         public function update($objet)

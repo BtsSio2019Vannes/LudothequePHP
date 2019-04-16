@@ -5,7 +5,7 @@ use DAO\JeuPhysique\JeuPhysiqueDAO;
 use DAO\Alerte\AlerteDAO;
 use DAO\Reglement\ReglementDAO;
 use DAO\Emprunt\EmpruntDAO;
- 
+
 function afficherGestionEmprunt($listeEmprunts) 
 {
     ?>

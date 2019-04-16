@@ -118,7 +118,7 @@ namespace Jeu
         }        
 
     }
-     
+
     class JeuPhysique extends Jeu {
         
         private $idJeuPhysique;
