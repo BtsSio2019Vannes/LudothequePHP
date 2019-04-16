@@ -7,7 +7,6 @@ include_once ("../vue/emprunt/formulaireAlertes.php");
 use DAO\Adherent\AdherentDAO;
 use DAO\Alerte\AlerteDAO;
 use DAO\Emprunt\EmpruntDAO;
-use DAO\Jeu\JeuDAO;
 use DAO\JeuPhysique\JeuPhysiqueDAO;
 use Emprunt\Emprunt;
 use Jeu\Alerte;
@@ -19,7 +18,6 @@ use Jeu\Alerte;
 $daoAdherent = new AdherentDAO();
 $daoEmprunt = new EmpruntDAO();
 $daoAlerte = new AlerteDAO();
-$daoJeu = new JeuDAO();
 $daoJeuPhysique = new JeuPhysiqueDAO();
 $messageErreur = "<button class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-remove-sign\"></span> Erreur de saisie !</button>";
 
@@ -28,7 +26,6 @@ $listeEmprunts = array();
 $index = 0;
 foreach (EmpruntDAO::getEmprunts() as $emprunt) {
     $jeuPhysique = $daoJeuPhysique->read($emprunt->getIdJeuPhysique());
-    $jeu = $daoJeu->read($jeuPhysique->getIdJeu());
     $adherent = $daoAdherent->read($emprunt->getIdAdherent());
     $dateEmprunt = $emprunt->getDateEmprunt();
     $dateRetourEffectif = $emprunt->getDateRetourEffectif();
@@ -38,7 +35,6 @@ foreach (EmpruntDAO::getEmprunts() as $emprunt) {
         'dateEmprunt' => $dateEmprunt,
         'dateRetourEffectif' => $dateRetourEffectif,
         'adherent' => $adherent,
-        'jeu' => $jeu,
         'jeuPhysique' => $jeuPhysique,
         'alerte' => $alerte
     );

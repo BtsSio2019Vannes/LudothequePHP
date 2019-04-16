@@ -122,23 +122,16 @@ namespace Jeu
     class JeuPhysique extends Jeu {
         
         private $idJeuPhysique;
-        private $idJeu;
         private $contenuActuel;
         
-        function  __construct($idJeuPhysique, $idJeu, $contenuActuel){
+        function  __construct($idJeuPhysique, $contenuActuel){
             $this->idJeuPhysique = $idJeuPhysique;
-            $this->idJeu = $idJeu;
             $this->contenuActuel = $contenuActuel;            
         }
         
         public function getIdJeuPhysique()
         {
             return $this->idJeuPhysique;
-        }
-    
-        public function getIdJeu()
-        {
-            return $this->idJeu;
         }
    
         public function getContenuActuel()
@@ -150,12 +143,7 @@ namespace Jeu
         {
             $this->idJeuPhysique = $idJeuPhysique;
         }
-    
-        public function setIdJeu($idJeu)
-        {
-            $this->idJeu = $idJeu;
-        }
-    
+
         public function setContenuActuel($contenuActuel)
         {
             $this->contenuActuel = $contenuActuel;

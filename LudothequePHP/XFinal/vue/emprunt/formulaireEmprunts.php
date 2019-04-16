@@ -44,7 +44,6 @@ function afficherGestionEmprunt($listeEmprunts)
     if (array_key_exists(0, $listeEmprunts)) {
         foreach ($listeEmprunts as $emprunt) {
             $adherent = $emprunt['adherent'];
-            $jeu = $emprunt['jeu'];
             $jeuPhysique = $emprunt['jeuPhysique'];
             $alerte = $emprunt['alerte'];
             $alerte = ($alerte != "Aucune") ? $alerte->getNom() : "Aucune";
@@ -54,7 +53,7 @@ function afficherGestionEmprunt($listeEmprunts)
 				<td><?php echo $emprunt['dateEmprunt']; ?></td>
 				<td><?php echo $emprunt['dateRetourEffectif']; ?></td>
 				<td><?php echo strtoupper($adherent->getPrenom()) . " " . $adherent->getNom(); ?></td>
-				<td><?php echo $jeu->getTitre(); ?></td>
+				<td><?php echo $jeuPhysique->getTitre(); ?></td>
 				<td><?php echo $alerte; ?></td>
 				<td><input type="radio" name="idEmprunt"
 					value="<?php echo $jeuPhysique->getIdJeuPhysique()."/".$adherent->getIdPersonne()."/".$emprunt['dateEmprunt']; ?>"></td>
