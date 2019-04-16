@@ -880,7 +880,7 @@ namespace DAO\JeuPhysique
             $jeuPhysique->setTitre($jeu->getTitre());
             $jeuPhysique->setAnneeSortie($jeu->getAnneeSortie());
             $jeuPhysique->setAuteur($jeu->getAuteur());
-            $jeuPhysique->setIdEditeur($jeu->getIdEditeur());
+            $jeuPhysique->setIdEditeur($jeu->getEditeur()->getIdEditeur());
             $jeuPhysique->setCategorie($jeu->getCategorie());
             $jeuPhysique->setUnivers($jeu->getunivers());
             $jeuPhysique->setContenuInitial($jeu->getContenuInitial());
@@ -1000,7 +1000,7 @@ namespace DAO\Jeu
             $titre = $objet->getTitre();
             $anneeSortie = $objet->getAnneeSortie();
             $auteur = $objet->getAuteur();
-            $idEditeur = $objet->getIdEditeur();
+            $idEditeur = $objet->getEditeur()->getIdEditeur();
             $categorie = $objet->getCategorie();
             $univers = $objet->getunivers();
             $contenuInitial = $objet->getContenuInitial();
