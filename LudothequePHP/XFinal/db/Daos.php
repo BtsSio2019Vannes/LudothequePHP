@@ -880,7 +880,7 @@ namespace DAO\JeuPhysique
             $jeuPhysique->setTitre($jeu->getTitre());
             $jeuPhysique->setAnneeSortie($jeu->getAnneeSortie());
             $jeuPhysique->setAuteur($jeu->getAuteur());
-            $jeuPhysique->setIdEditeur($jeu->getEditeur()->getIdEditeur());
+            $jeuPhysique->setEditeur($jeu->getEditeur());
             $jeuPhysique->setCategorie($jeu->getCategorie());
             $jeuPhysique->setUnivers($jeu->getunivers());
             $jeuPhysique->setContenuInitial($jeu->getContenuInitial());
@@ -982,7 +982,8 @@ namespace DAO\Jeu
             $editeur = $doaEditeur->read($idEditeur);
 
             // echo "contenu de la base $num $nom $adr $sal ";
-            $rep = new Jeu($idJeu, $regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial);
+            $rep = new Jeu($regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial);
+            $rep->setIdJeu($idJeu);
 
             return $rep;
         }
