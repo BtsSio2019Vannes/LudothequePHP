@@ -30,7 +30,7 @@ foreach (EmpruntDAO::getEmprunts() as $emprunt) {
     $dateEmprunt = $emprunt->getDateEmprunt();
     $dateRetourEffectif = $emprunt->getDateRetourEffectif();
     $alerte = ($emprunt->getIdAlerte() != 0) ? $daoAlerte->read($emprunt->getIdAlerte()) : "Aucune";
-
+ 
     $listeEmprunts[$index] = array(
         'dateEmprunt' => $dateEmprunt,
         'dateRetourEffectif' => $dateRetourEffectif,
