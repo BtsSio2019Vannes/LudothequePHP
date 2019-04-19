@@ -27,38 +27,39 @@ $page = (isset($_GET['page'])) ? htmlentities($_GET['page']) : "adherents";
 		<div class="col-lg-2">
 			<nav class="nav navbar .navbar-left">
 				<div class="container-fluid">
-					<ul class="nav navbar-nav">
+					<div class="container-fluid">
+					<div class="nav navbar-nav">
 						<div class="nav_icons <?php if($_GET['page']=="adherents") echo 'active' ?>">
-								<a href="index.php?page=adherents">
-									<img alt="Adherents" src="../images/personne.png">
-									<div class="nav-icon-label">Gérer les Adhérents</div>
-								</a>
-							</div>
-							<div class="nav_icons <?php if($_GET['page']=="jeux") echo 'active' ?>">
-								<a href="index.php?page=jeux">
-									<img alt="Jeux"	src="../images/jeu.png">
-									<div class="nav-icon-label">Gérer les Jeux</div>
-								</a>
-							</div>
-							<div class="nav_icons <?php if($_GET['page']=="emprunts") echo 'active' ?>">
-								<a href="index.php?page=emprunts">
-									<img alt="Emprunts" src="../images/emprunt.png">
-									<div class="nav-icon-label">Gérer les Emprunts</div>
-								</a>
-							</div>
-							<div class="nav_icons <?php if($_GET['page']=="parametres") echo 'active' ?>">
-								<a href="index.php?page=parametres">
-									<img alt="Ludotheque" src="../images/setup.png">
-									<div class="nav-icon-label">Gérer Ludothèque</div>
-								</a>
-							</div>
-							<div class="nav_icons">
-								<a href="https://www.facebook.com/bettonludique/" target="_blank">
-									<img alt="facebook" src="../images/facebook.png">
-									<div class="nav-icon-label">Facebook</div>
-								</a>
-							</div>
-					</ul>
+							<a href="index.php?page=adherents">
+								<img alt="Adherents" src="../images/personne.png">
+								<span class="nav-icon-label">Gérer les Adhérents</span>
+							</a>
+						</div>
+						<div class="nav_icons <?php if($_GET['page']=="jeux") echo 'active' ?>">
+							<a href="index.php?page=jeux">
+								<img alt="Jeux"	src="../images/jeu.png">
+								<span class="nav-icon-label">Gérer les Jeux</span>
+							</a>
+						</div>
+						<div class="nav_icons <?php if($_GET['page']=="emprunts") echo 'active' ?>">
+							<a href="index.php?page=emprunts">
+								<img alt="Emprunts" src="../images/emprunt.png">
+								<span class="nav-icon-label">Gérer les Emprunts</span>
+							</a>
+						</div>
+						<div class="nav_icons <?php if($_GET['page']=="parametres") echo 'active' ?>">
+							<a href="index.php?page=parametres">
+								<img alt="Ludotheque" src="../images/setup.png">
+								<span class="nav-icon-label">Gérer Ludothèque</span>
+							</a>
+						</div>
+						<div class="nav_icons">
+							<a href="https://www.facebook.com/bettonludique/" target="_blank">
+								<img alt="facebook" src="../images/facebook.png">
+								<span class="nav-icon-label">Facebook</span>
+							</a>
+						</div>
+					</div>
 				</div>
 			</nav>
 		</div>

@@ -47,6 +47,9 @@ nav {
 		border-radius: 5px;
 		margin-bottom: 35px;
 	}
+		.nav-icon-label{
+					display : block;
+				}
 
 
 nav ul {
