@@ -246,13 +246,13 @@ namespace Jeu
         
         private $idEditeur;
         private $nom;
-        private $idCoordonnees;
+        private $coordonnees;
         
         
-        function __construct($idEditeur, $nom, $idCoordonnees){
+        function __construct($idEditeur, $nom, $coordonnees){
             $this->idEditeur = $idEditeur;
             $this->nom = $nom;
-            $this->idCoordonnees = $idCoordonnees;            
+            $this->coordonnees = $coordonnees;            
         }
        
         public function getIdEditeur()
@@ -265,9 +265,9 @@ namespace Jeu
             return $this->nom;
         }
     
-        public function getIdCoordonnees()
+        public function getCoordonnees()
         {
-            return $this->idCoordonnees;
+            return $this->coordonnees;
         }
     
         public function setIdEditeur($idEditeur)
@@ -280,9 +280,9 @@ namespace Jeu
             $this->nom = $nom;
         }
     
-        public function setIdCoordonnees($idCoordonnees)
+        public function setCoordonnees($coordonnees)
         {
-            $this->idCoordonnees = $idCoordonnees;
+            $this->coordonnees = $coordonnees;
         }        
     }
     

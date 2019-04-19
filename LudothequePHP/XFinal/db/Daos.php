@@ -649,6 +649,7 @@ namespace DAO\Editeur
 {
 
     use DB\Connexion\Connexion;
+    use DAO\Coordonnees\CoordonneesDAO;
 
     class EditeurDAO extends \DAO\DAO
     {
@@ -671,8 +672,11 @@ namespace DAO\Editeur
             $idEditeur = $row["idEditeur"];
             $nom = $row["nom"];
             $idCoordonnees = $row["idCoordonnees"];
+            
+            $daoCoordonnees = new CoordonneesDAO();
+            $coordonnees = $daoCoordonnees->read($idCoordonnees);
 
-            $editeur = new \Jeu\Editeur($idEditeur, $nom, $idCoordonnees);
+            $editeur = new \Jeu\Editeur($idEditeur, $nom, $coordonnees);
             return $editeur;
         }
 
@@ -684,7 +688,7 @@ namespace DAO\Editeur
             $stmt = Connexion::getInstance()->prepare($sql);
             $idEditeur = $objet->getIdEditeur();
             $nom = $objet->getNom();
-            $idCoordonnees = $objet->getIdCoordonnees();
+            $idCoordonnees = $objet->getCoordonnees()->getIdCoordonnees();
             $stmt->bindParam(':idEditeur', $idEditeur);
             $stmt->bindParam(':nom', $nom);
             $stmt->bindParam(':idCoordonnees', $idCoordonnees);
@@ -705,11 +709,23 @@ namespace DAO\Editeur
             $sql = "INSERT INTO $this->table (nom,idCoordonnees) VALUES (:nom, :idCoordonnees)";
             $stmt = Connexion::getInstance()->prepare($sql);
             $nom = $objet->getNom();
-            $idCoordonnees = $objet->getIdCoordonnees();
+            $idCoordonnees = $objet->getCoordonnees()->getIdCoordonnees();
             $stmt->bindParam(':nom', $nom);
             $stmt->bindParam(':idCoordonnees', $idCoordonnees);
             $stmt->execute();
             $objet->setIdEditeur(parent::getLastKey());
+        }
+        
+        static function getEditeurs()
+        {
+            $sql = "SELECT * FROM editeur";
+            $listeEditeurs = new \ArrayObject();
+            foreach (Connexion::getInstance()->query($sql) as $row) {
+                $daoEditeur = new EditeurDAO();
+                $editeur = $daoEditeur->read($row["idEditeur"]);
+                $listeEditeurs->append($editeur);
+            }
+            return $listeEditeurs;
         }
     }
 }
@@ -890,9 +906,7 @@ namespace DAO\JeuPhysique
 
         public function update($objet)
         {
-            $sql = "UPDATE $this->table SET idJeuPhysique = :idJeuPhysique, idJeu = :idJeu,
-            contenuActuel = :contenuActuel
-            WHERE $this->key=:idJeuPhysique";
+            $sql = "UPDATE $this->table SET idJeuPhysique = :idJeuPhysique, idJeu = :idJeu, contenuActuel = :contenuActuel WHERE $this->key=:idJeuPhysique";
 
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeuPhysique = $objet->getIdJeuPhysique();
@@ -907,8 +921,7 @@ namespace DAO\JeuPhysique
 
         public function create($objet)
         {
-            $sql = "INSERT INTO $this->table (idJeu,contenuActuel)
-             VALUES (:idJeu, :contenuActuel)";
+            $sql = "INSERT INTO $this->table (idJeu,contenuActuel) VALUES (:idJeu, :contenuActuel)";
             $stmt = Connexion::getInstance()->prepare($sql);
             $idJeu = $objet->getIdJeu();
             $contenuActuel = $objet->getContenuActuel();
@@ -978,8 +991,8 @@ namespace DAO\Jeu
             $univers = $row["univers"];
             $contenuInitial = $row["contenuInitial"];
 
-            $doaEditeur = new EditeurDAO();
-            $editeur = $doaEditeur->read($idEditeur);
+            $daoEditeur = new EditeurDAO();
+            $editeur = $daoEditeur->read($idEditeur);
 
             // echo "contenu de la base $num $nom $adr $sal ";
             $rep = new Jeu($regle, $titre, $anneeSortie, $auteur, $editeur, $categorie, $univers, $contenuInitial);

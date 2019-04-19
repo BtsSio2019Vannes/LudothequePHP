@@ -1,205 +1,172 @@
+<!-- Contenu HTML affichage des formulaires -->
 <?php
-use DAO\Jeu\JeuDAO;
+use DAO\Editeur\EditeurDAO;
 
-function afficherJeu()
+function afficherGestionJeu($listeJeux)
 {
     ?>
-<h1>Gérér les Jeux</h1>
-<form action="index.php?page=jeux" method="post" class="AfficheJeu">
-	<table style="width: 90%">
-		<tr>
-			<th><input type="submit" name="miseaJour" value="Mettre à jour" /></th>
-			<th><input type="submit" name="supprimer" value="Supprimer Jeu" /></th>
-			<th><input type="submit" name="ajouter" value="Ajouter Jeu" /></th>
-		</tr>
+<form method="post" action="index.php?page=jeux">
+	<table class="table">
+		<thead>
+			<tr>
+				<td colspan="8"><button type="submit" class="btn btn-success"
+						name="nouveauJeu">
+						<span class="glyphicon glyphicon-plus"></span> Nouveau Jeu
+					</button>
+					<button type="submit" class="btn btn-danger" name="supprimerJeu">
+						<span class="glyphicon glyphicon-remove"></span> Supprimer
+					</button>
+					<button type="submit" class="btn btn-primary" name="modifierJeu">
+						<span class="glyphicon glyphicon-edit"></span> Mettre à Jour
+					</button> <a href="index.php?page=jeux&action=gererEditeurs"
+					class="btn btn-info"><span
+						class="glyphicon glyphicon-exclamation-sign"></span> Gérer les
+						éditeurs</a></td>
+			</tr>
+			<tr>
+				<th>Nom du Jeu</th>
+				<th>Catégorie</th>
+				<th>Univers</th>
+				<th>Editeur</th>
+				<th>Auteur</th>
+				<th>Année de sortie</th>
+				<th>Règles</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
 
-		<tr>
-			<th>Id</th>
-			<th>Règle</th>
-			<th>Titre</th>
-			<th>Année de sortie</th>
-			<th>Auteur</th>
-			<th>Id Editeur</th>
-			<th>Catégorie</th>
-			<th>Univers</th>
-			<th>Contenu Initial</th>
-
-		</tr>
-		<tr>
-			<th colspan="8"></th>
-		</tr>
-		<?php
-
-    $jeux = JeuDAO::getJeu();
-    foreach ($jeux as $jeu) {
-        $rep .= "<tr><td>" . $jeu->getIdJeu();
-        $rep .= "</td><td><a href=\"" . $jeu->getRegle() . "\">Règle du jeu</a>";
-        $rep .= "</td><td>" . $jeu->getTitre();
-        $rep .= "</td><td>" . $jeu->getAnneeSortie();
-        $rep .= "</td><td>" . $jeu->getAuteur();
-        $rep .= "</td><td>" . $jeu->getEditeur()->getIdEditeur();
-        $rep .= "</td><td>" . $jeu->getCategorie();
-        $rep .= "</td><td>" . $jeu->getUnivers();
-        $rep .= "</td><td>" . $jeu->getContenuInitial();
-        $rep .= "</td><td><input type=\"radio\" name=\"idJeu\ value=\"" . $jeu->getIdJeu() . "\" label for =\"idJeu\"></td></tr>";
+<?php
+    if (sizeof($listeJeux)) {
+        foreach ($listeJeux as $jeu) {
+            ?>
+			<tr>
+				<td><?php echo $jeu->getTitre(); ?></td>
+				<td><?php echo $jeu->getCategorie(); ?></td>
+				<td><?php echo $jeu->getUnivers(); ?></td>
+				<td><?php echo $jeu->getEditeur()->getNom(); ?></td>
+				<td><?php echo $jeu->getAuteur(); ?></td>
+				<td><?php echo $jeu->getAnneeSortie(); ?></td>
+				<td><a href="<?php echo $jeu->getRegle(); ?>">Règles</a></td>
+				<td><input type="radio" name="idJeu"
+					value="<?php echo $jeu->getIdJeu(); ?>"></td>
+			</tr>
+<?php
+        }
+    } else {
+        ?>
+			<tr>
+				<td colspan="8">Aucun jeu dans la base de données</td>
+			</tr>
+<?php
     }
-    echo $rep;
+    ?>
+		
+		
+		</tbody>
+	</table>
+</form>
+<?php
 }
-?>
 
-	</table>
-
-</form>
-
-<?php
-
-function formulaireMaj()
+function afficherFormulaireJeu($jeu)
 {
+    $isNouveauJeu = ($jeu->getIdJeu() == "");
+    $intituleFormulaire = $isNouveauJeu ? "Ajout d'un nouveau jeu" : "Modification d'un jeu";
+    $idJeu = $isNouveauJeu ? "" : $jeu->getIdJeu();
+
     ?>
-<div class="form-group">
-	<form class="formulaireMaj" method="post" action="index.php?page=jeux">
-    <?php
-    $dao = new JeuDAO();
-    $jeu = $dao->read($_POST['idJeu']);
+<h3><?php echo $intituleFormulaire; ?></h3>
+    <a href="index.php?page=jeux&action=gererJeux"
+					class="btn btn-warning"><span
+						class="glyphicon glyphicon-backward"></span> Gérer les Jeux</a>
+<div class="col-lg-offset-4 col-lg-4">
+	<form method="post" action="index.php?page=jeux">
+		<fieldset>
+			<legend>Détails du jeu</legend>
+			<div class="form-group">
+				<label for="titre">Titre :</label> <input type="text"
+					class="form-control" name="titre" id="titre"
+					value="<?php echo $jeu->getTitre(); ?>">
+			</div>
+			<div class="form-group">
+				<label for="categorie">Catégorie :</label> <input type="text"
+					class="form-control" name="categorie" id="categorie"
+					value="<?php echo $jeu->getCategorie(); ?>">
+			</div>
+			<div class="form-group">
+				<label for="univers">Univers :</label> <input type="text"
+					class="form-control" name="univers" id="univers"
+					value="<?php echo $jeu->getUnivers(); ?>">
+			</div>
+			<div class="form-group">
+				<label for="regle">Url de Règles du Jeu :</label> <input type="text"
+					class="form-control" name="regle" id="regle"
+					value="<?php echo $jeu->getRegle(); ?>">
+			</div>
+			<div class="form-group">
+				<label for="contenuInitial">Contenu Initial :</label>
+				<textarea class="form-control" name="contenuInitial"
+					id="contenuInitial"><?php echo $jeu->getContenuInitial(); ?></textarea>
+			</div>
+			<div class="form-group">
+				<label for="anneeSortie">Année de Sortie :</label> <select class="form-control"
+					name="anneeSortie" id="anneeSortie">
+					<?php
+    for ($i = date('Y'); $i >= 1980; $i --) {
+        $selected = ($i == $jeu->getAnneeSortie()) ? " selected" : "";
+        ?>
+					    <option value="<?php echo $i; ?>" <?php echo $selected; ?>><?php echo $i; ?></option>
+					    <?php
+    }
     ?>
-    
-	<table style="width: 60%">
-			<tr>
-				<label for="Regle">Règle :</label><select class="form-control">
-				<option value="" selected=" ">Aucune</option>
+					
+									</select>
+			</div>
+						<div class="form-group">
+				<label for="auteur">Auteur :</label> <input type="text"
+					class="form-control" name="auteur" id="auteur"
+					value="<?php echo $jeu->getAuteur(); ?>">
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Editeur</legend>
+			<div class="form-group">
+				<label for="idEditeur">Editeur :</label> <select class="form-control"
+					name="idEditeur" id="idEditeur">
+					<option value="" selected>Aucun</option>				
+<?php
+        $listeEditeurs = EditeurDAO::getEditeurs();
+        if (array_key_exists(0, $listeEditeurs)) {
+            foreach ($listeEditeurs as $editeur) {
+                $selected = ($editeur->getIdEditeur() == $jeu->getEditeur()->getIdEditeur()) ? "selected" : "";
+                ?>
+                <option value="<?php echo $editeur->getIdEditeur(); ?>"
+						<?php echo $selected; ?>><?php echo $editeur->getNom(); ?></option>
+<?php
+            }
+        }
+        ?>
 				</select>
-				<td><input type="text" name="regle"
-					value="<?php echo $jeu->getRegle();?>"></td>
-			</tr>
-
-			<tr>
-				<td>Titre :</td>
-				<td><input type="text" name="titre"
-					value="<?php echo $jeu->getTitre();?>"></td>
-			</tr>
-
-			<tr>
-				<td>Année de Sortie :</td>
-				<td><input type="text" name="anneeSortie"
-					value="<?php echo $jeu->getAnneeSortie();?>"></td>
-			</tr>
-
-			<tr>
-				<td>Auteur :</td>
-				<td><input type="text" name="auteur"
-					value="<?php echo $jeu->getAuteur();?>"></td>
-			</tr>
-
-			<tr>
-				<td>Id Editeur :</td>
-				<td><input type="text" name="idEditeur"
-					value="<?php echo $jeu->getIdEditeur();?>"></td>
-			</tr>
-
-			<tr>
-				<td>Catégorie :</td>
-				<td><input type="text" name="categorie"
-					value="<?php echo $jeu->getCategorie();?>"></td>
-
-			</tr>
-
-			<tr>
-				<td>Univers :</td>
-				<td><input type="text" name="univers"
-					value="<?php echo $jeu->getUnivers();?>"></td>
-			</tr>
-
-			<tr>
-				<td>Contenu Initial :</td>
-				<td><input type="text" name="contenuInitial"
-					value="<?php echo $jeu->getContenuInitial();?>"></td>
-			</tr>
-
-			<tr>
-				<td colspan="3">
-					<button type="submit" name="maj">Mettre à jour Jeu</button>
-				</td>
-				<td colspan="3"><button type="submit" name="supprimer">Supprimer Jeu</button></td>
-
-			</tr>
-		<?php
-
-    afficherFormulaireAjout()?>
-    
-    <?php
-
-    ?>
-</table>
-	</form>
-</div>
-<?php }?>
+			</div>
+		</fieldset>
+<?php if ($isNouveauJeu) {?>
+	<div class="form-group">
+			<input type="submit" class="form-control" name="formulaireAjoutJeu"
+				value="Créer Nouveau Jeu">
+		</div>
 <?php
-
-function afficherFormulaireAjout()
-{
-    $daoJeu = new JeuDAO();
-    $jeu = $daoJeu->read($_POST['idJeu']);
+    } else {
+        ?>
+        <div class="form-group">
+			<input type="hidden" name="idJeu" value="<?php echo $idJeu; ?>"> <input
+				type="submit" class="form-control" name="formulaireMajJeu"
+				value="Mettre à Jour">
+		</div>
+<?php
+    }
     ?>
-<form method="post" action="index.php?page=jeux" class="ajoutJeu">
-	<table>
-		<tr>
-
-			<td>Id Règle :</td>
-			<td><input type="url" name="idRegle" value=" "></td>
-
-		</tr>
-		<tr>
-
-			<td>Titre :</td>
-			<td><input type="text" name="titre" value=" "></td>
-
-		</tr>
-		<tr>
-
-			<td>Année de Sortie :</td>
-			<td><input type="text" name="anneeSortie" value=""></td>
-
-		</tr>
-		<tr>
-
-			<td>Auteur :</td>
-			<td><input type="text" name="auteur" value=" "></td>
-
-		</tr>
-		<tr>
-
-			<td>Id Editeur :</td>
-			<td><input type="text" name="idEditeur" value=" "></td>
-
-		</tr>
-		<tr>
-
-			<td>Catégorie :</td>
-			<td><input type="text" name="categorie" value=" "></td>
-
-		</tr>
-		<tr>
-
-			<td>Univers :</td>
-			<td><input type="text" name="univers" value=" "></td>
-
-		</tr>
-		<tr>
-
-			<td>Contenu Initial :</td>
-			<td><input type="text" name="contenu" value=" "></td>
-
-		</tr>
-		<tr>
-			<td colspan="3">
-				<button type="submit" name="maj">Ajouter Jeu</button>
-			</td>
-
-		</tr>
-	</table>
 </form>
-
-
-<?php }?>
-
-
+</div>
+<?php
+}

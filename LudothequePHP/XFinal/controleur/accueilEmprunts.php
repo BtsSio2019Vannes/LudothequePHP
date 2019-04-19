@@ -20,6 +20,7 @@ $daoEmprunt = new EmpruntDAO();
 $daoAlerte = new AlerteDAO();
 $daoJeuPhysique = new JeuPhysiqueDAO();
 $messageErreur = "<button class=\"btn btn-danger\"><span class=\"glyphicon glyphicon-remove-sign\"></span> Erreur de saisie !</button>";
+$listeAlertes = AlerteDAO::getAlertes();
 
 /* Création de la liste des emprunts */
 $listeEmprunts = array();
@@ -125,7 +126,6 @@ else if (htmlspecialchars(isset($_POST['formulaireAjoutAlerte'])) || htmlspecial
 else if (htmlspecialchars(isset($_GET['action']))) {
     $action = htmlspecialchars($_GET['action']);
     if ($action == "gererAlerte") {
-        $listeAlertes = AlerteDAO::getAlertes();
         afficherGestionAlerte($listeAlertes);
     } else {
         afficherGestionEmprunt($listeEmprunts);

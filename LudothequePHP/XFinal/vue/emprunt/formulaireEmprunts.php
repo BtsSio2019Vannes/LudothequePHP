@@ -16,10 +16,7 @@ function afficherGestionEmprunt($listeEmprunts)
 				<td colspan="6"><button type="submit" class="btn btn-success"
 						name="nouvelEmprunt">
 						<span class="glyphicon glyphicon-plus"></span> Nouvel Emprunt
-					</button> <a href="index.php?page=emprunts&action=gererAlerte"
-					class="btn btn-info"><span
-						class="glyphicon glyphicon-exclamation-sign"></span> Gérer les
-						Alertes</a>
+					</button>
 						<button type="submit" class="btn btn-danger"
 						name="supprimerEmprunt">
 						<span class="glyphicon glyphicon-remove"></span> Supprimer
@@ -27,7 +24,10 @@ function afficherGestionEmprunt($listeEmprunts)
 					<button type="submit" class="btn btn-primary"
 						name="modifierEmprunt">
 						<span class="glyphicon glyphicon-edit"></span> Mettre à Jour
-					</button>
+					</button> <a href="index.php?page=emprunts&action=gererAlerte"
+					class="btn btn-info"><span
+						class="glyphicon glyphicon-exclamation-sign"></span> Gérer les
+						Alertes</a>
 						</td>
 			</tr>
 			<tr>
@@ -65,7 +65,7 @@ function afficherGestionEmprunt($listeEmprunts)
     } else {
         ?>
 			<tr>
-				<td colspan="6">Aucun emprunt dans la base de donnée</td>
+				<td colspan="6">Aucun emprunt dans la base de données</td>
 			</tr>
 <?php
     }
@@ -78,18 +78,17 @@ function afficherGestionEmprunt($listeEmprunts)
 
 function afficherFormulaireEmprunt($emprunt)
 {
-    $isNouvelEmprunt = ($emprunt->getIdAlerte() == "" && $emprunt->getIdAdherent() == "");
+    $isNouvelEmprunt = ($emprunt->getIdJeuPhysique() == "" && $emprunt->getIdAdherent() == "");
     $intituleFormulaire = $isNouvelEmprunt ? "Ajout d'un nouvel emprunt" : "Modification d'un emprunt";
     $idEmprunt = $isNouvelEmprunt ? "" : $emprunt->getIdAlerte() . "/" . $emprunt->getIdAdherent() . "/" . $emprunt->getDateEmprunt();
     $daoReglement = new ReglementDAO();
-    // $daoAdherent = new AdherentDAO();
     $daoEmprunt = new EmpruntDAO();
-    // $daoAlerte = new AlerteDAO();
-    // $daoJeu = new JeuDAO();
-    // $daoJeuPhysique = new JeuPhysiqueDAO();
 
     ?>
 <h3><?php echo $intituleFormulaire; ?></h3>
+    <a href="index.php?page=emprunts"
+					class="btn btn-warning"><span
+						class="glyphicon glyphicon-backward"></span> Gérer les Emprunts</a>
 <div class="col-lg-offset-4 col-lg-4">
 	<form method="post" action="index.php?page=emprunts">
 		<fieldset>
@@ -133,16 +132,16 @@ function afficherFormulaireEmprunt($emprunt)
 					<option value="" selected>Aucun</option>	
 <?php
     $titreJeu = "";
-    $listeJeuxPhysiquesTriee = JeuPhysiqueDAO::getJeuxPhysiquesTries();
-    if (sizeof($listeJeuxPhysiquesTriee)) {
-        foreach ($listeJeuxPhysiquesTriee as $cle => $listejeuxPhysique) {
+    $listeJeuxPhysiquesTries = JeuPhysiqueDAO::getJeuxPhysiquesTries();
+    if (sizeof($listeJeuxPhysiquesTries)) {
+        foreach ($listeJeuxPhysiquesTries as $cle => $listeJeuxPhysiques) {
             if ($titreJeu != $cle) {
                 $titreJeu = $cle;
                 ?>
             	<optgroup label="<?php echo $titreJeu; ?>">
             	<?php
             }
-            foreach ($listejeuxPhysique as $jeuxPhysique) {
+            foreach ($listeJeuxPhysiques as $jeuxPhysique) {
                 $isEmprunte = $daoEmprunt->isEmprunte($jeuxPhysique['idJeuPhysique']);
                 $selected = ($jeuxPhysique['idJeuPhysique'] == $emprunt->getIdJeuPhysique()) ? " selected" : "";
                 $disabled = ($isEmprunte == 1 && $selected == "") ? " disabled" : "";
@@ -190,8 +189,6 @@ function afficherFormulaireEmprunt($emprunt)
         }
         ?>
 				</select>
-				<button type="submit" class="btn btn-success" name="nouvelleAlerte">Créer
-					une nouvelle alerte</button>
 			</div>
 		</fieldset>
 		<div class="form-group">

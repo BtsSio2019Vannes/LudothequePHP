@@ -116,6 +116,9 @@ function afficherFormulaireAlerte($alerte)
 <?php
     }
     ?>
+        <a href="index.php?page=emprunts&action=gererAlerte"
+					class="btn btn-warning"><span
+						class="glyphicon glyphicon-backward"></span> Gérer les Alertes</a>
 </form>
 </div>
 <?php
